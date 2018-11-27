@@ -1,7 +1,5 @@
 <?php
 
-// only for test github repo commit
-
 namespace FitnessBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
