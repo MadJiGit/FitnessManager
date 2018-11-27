@@ -3,6 +3,7 @@
 namespace FitnessBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="FitnessBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int
@@ -71,9 +72,9 @@ class User
     private $gender;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="data_create", type="datetime")
+     * @ORM\Column(name="data_create")
      */
     private $dataCreate;
 
@@ -259,7 +260,7 @@ class User
     /**
      * Set dataCreate.
      *
-     * @param \DateTime $dataCreate
+     * @param $dataCreate
      *
      * @return User
      */
@@ -273,10 +274,52 @@ class User
     /**
      * Get dataCreate.
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDataCreate()
     {
         return $this->dataCreate;
     }
+
+	/**
+	 * Returns the roles granted to the user.
+	 *
+	 *     public function getRoles()
+	 *     {
+	 *         return array('ROLE_USER');
+	 *     }
+	 *
+	 * Alternatively, the roles might be stored on a ``roles`` property,
+	 * and populated in any number of different ways when the user object
+	 * is created.
+	 *
+	 * @return array (Role|string)[] The user roles
+	 */
+	public function getRoles()
+	{
+		return [];
+	}
+
+	/**
+	 * Returns the salt that was originally used to encode the password.
+	 *
+	 * This can return null if the password was not encoded using a salt.
+	 *
+	 * @return string|null The salt
+	 */
+	public function getSalt()
+	{
+		// TODO: Implement getSalt() method.
+	}
+
+	/**
+	 * Removes sensitive data from the user.
+	 *
+	 * This is important if, at any given point, sensitive information like
+	 * the plain-text password is stored on this object.
+	 */
+	public function eraseCredentials()
+	{
+		// TODO: Implement eraseCredentials() method.
+	}
 }
