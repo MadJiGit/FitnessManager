@@ -4,9 +4,9 @@ namespace FitnessBundle\Controller;
 
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends Controller
 {
@@ -36,4 +36,21 @@ class UserController extends Controller
 
 		return $this->render('user/register.html.twig');
 	}
+
+	/**
+	 * @Route("/profile", name="user_profile")
+	 */
+	public function profile()
+	{
+
+		$userId = $this->getUser()->getId();
+		$user = $this->getDoctrine()
+			->getRepository(User::class)
+			->find($userId);
+
+		return $this->render('user/profile.html.twig',
+		['user' => $user]);
+
+	}
+
 }

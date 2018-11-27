@@ -2,8 +2,9 @@
 
 namespace FitnessBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SecurityController extends Controller
 {
@@ -14,5 +15,15 @@ class SecurityController extends Controller
 	public function loginAction()
 	{
 		return $this->render('security/login.html.twig');
+	}
+
+
+	/**
+	 * @Route("/logout", name="security_logout")
+	 * @throws \Exception
+	 */
+	public function logoutAction()
+	{
+		throw new \Exception('Logout failed!');
 	}
 }
