@@ -9,7 +9,7 @@
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <introspection-schemas>*:fitness_manager_app</introspection-schemas>
+      <introspection-schemas>*:fitness_manager_app_test</introspection-schemas>
     </data-source>
   </component>
 </project>

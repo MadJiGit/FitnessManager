@@ -5,7 +5,7 @@ namespace FitnessBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Article
+ * ArticleType
  *
  * @ORM\Table(name="articles")
  * @ORM\Entity(repositoryClass="FitnessBundle\Repository\ArticleRepository")
@@ -38,7 +38,7 @@ class Article
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateAdded", type="datetime")
+     * @ORM\Column(name="date_added", type="datetime")
      */
     private $dateAdded;
 
@@ -50,7 +50,7 @@ class Article
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="authorId", type="integer")
+	 * @ORM\Column(name="author_id", type="integer")
 	 */
     private $authorId;
 
@@ -60,12 +60,12 @@ class Article
 	 *
 	 * @ORM\ManyToOne(targetEntity="FitnessBundle\Entity\User", inversedBy="articles")
 	 *
-	 * @ORM\JoinColumn(name="authorId", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
 	 */
     private $author;
 
 	/**
-	 * Article constructor.
+	 * ArticleType constructor.
 	 * @throws \Exception
 	 */
 	public function __construct()

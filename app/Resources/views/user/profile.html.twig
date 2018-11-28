@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block user_first_name %}
+
+    Hello, {{ user.firstName }}
+
+{% endblock %}
+
+
 {% block main %}
 
-    Hello
-
-    <h1>Hello, {{ user.firstName }}</h1>
+    <a href="{{ path('article_view_all') }}">View articles</a>
 
 {% endblock %}

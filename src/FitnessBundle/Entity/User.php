@@ -73,9 +73,9 @@ class User implements UserInterface
     private $gender;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="data_create")
+     * @ORM\Column(name="data_create", type="datetime")
      */
     private $dataCreate;
 
@@ -319,6 +319,14 @@ class User implements UserInterface
 		$this->articles[] = $article;
 
 		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFullName()
+	{
+		return $this->getFirstName() . ' ' . $this->getLastName();
 	}
 
 	/**

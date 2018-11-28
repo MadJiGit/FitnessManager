@@ -982,20 +982,20 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="244" name="dateAdded">
+    <column id="249" parent="244" name="date_added">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="244" name="authorId">
+    <column id="250" parent="244" name="author_id">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="251" parent="244" name="IDX_BFDD3168A196F9FD">
-      <ColNames>authorId</ColNames>
+      <ColNames>author_id</ColNames>
       <Type>btree</Type>
     </index>
     <key id="252" parent="244" name="PRIMARY">
@@ -1004,7 +1004,7 @@
       <Primary>1</Primary>
     </key>
     <foreign-key id="253" parent="244" name="FK_BFDD3168A196F9FD">
-      <ColNames>authorId</ColNames>
+      <ColNames>author_id</ColNames>
       <RefSchemaName>fitness_manager_app_test</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>

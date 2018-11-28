@@ -30,7 +30,7 @@ class UserController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-			return $this->redirectToRoute('security_login');
+			return $this->redirectToRoute('security_login', array('user' => $user));
 		}
 
 		return $this->render('user/register.html.twig');
@@ -47,10 +47,10 @@ class UserController extends Controller
 			->getRepository(User::class)
 			->find($userId);
 
-		return $this->render('user/profile.html.twig', ['user' => $user]);
-
-//		return $this->render('user/profile.html.twig');
+//		return $this->render('default/index.html.twig', array('user' => $user));
+		return $this->render('user/profile.html.twig', array('user' => $user));
 
 	}
+
 
 }
