@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <form name="authenticate" action="{{ path('user_profile') }}" method="post">
-    {#<form name="authenticate" action="{{ path('security_login') }}" method="post">#}
+    <form name="authenticate" action="{{ path('security_login') }}" method="post">
         <h2>Please login </h2>
         <label>
             <input type="text" name="_username" placeholder="Username"/>

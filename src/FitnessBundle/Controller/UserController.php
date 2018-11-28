@@ -42,14 +42,15 @@ class UserController extends Controller
 	 */
 	public function profile()
 	{
-
 		$userId = $this->getUser()->getId();
-		$user = $this->getDoctrine()
+		$user = $this
+			->getDoctrine()
 			->getRepository(User::class)
 			->find($userId);
 
-		return $this->render('user/profile.html.twig',
-		['user' => $user]);
+		return $this->render('user/profile.html.twig', ['user' => $user]);
+
+//		return $this->render('user/profile.html.twig');
 
 	}
 
