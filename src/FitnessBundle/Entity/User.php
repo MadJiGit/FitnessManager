@@ -2,6 +2,7 @@
 
 namespace FitnessBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -79,7 +80,25 @@ class User implements UserInterface
     private $dataCreate;
 
 
-    /**
+	/**
+	 * @var ArrayCollection
+	 *
+	 * @ORM\OneToMany(targetEntity="FitnessBundle\Entity\Article", mappedBy="author")
+	 */
+    private $articles;
+
+	/**
+	 * User constructor.
+	 * @throws \Exception
+	 */
+	public function __construct()
+	{
+		$this->articles = new ArrayCollection();
+		$this->dataCreate = new \DateTime('now');
+	}
+
+
+	/**
      * Get id.
      *
      * @return int
@@ -260,7 +279,7 @@ class User implements UserInterface
     /**
      * Set dataCreate.
      *
-     * @param $dataCreate
+     * @param \DateTime $dataCreate
      *
      * @return User
      */
@@ -274,12 +293,33 @@ class User implements UserInterface
     /**
      * Get dataCreate.
      *
-     * @return string
+     * @return \DateTime
      */
     public function getDataCreate()
     {
         return $this->dataCreate;
     }
+
+
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getArticles()
+	{
+		return $this->articles;
+	}
+
+	/**
+	 * @param Article $article
+	 *
+	 * @return User
+	 */
+	public function setArticles($article)
+	{
+		$this->articles[] = $article;
+
+		return $this;
+	}
 
 	/**
 	 * Returns the roles granted to the user.
