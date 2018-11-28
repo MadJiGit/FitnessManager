@@ -88,11 +88,23 @@ class User implements UserInterface
     private $articles;
 
 	/**
+	 * @var ArrayCollection
+	 *
+	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Role")
+	 * @ORM\JoinTable(name="users_roles",
+	 *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+	 *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+	 *     )
+	 */
+    private $roles;
+
+	/**
 	 * User constructor.
 	 * @throws \Exception
 	 */
 	public function __construct()
 	{
+		$this->roles = new ArrayCollection();
 		$this->articles = new ArrayCollection();
 		$this->dataCreate = new \DateTime('now');
 	}
@@ -345,7 +357,21 @@ class User implements UserInterface
 	 */
 	public function getRoles()
 	{
-		return [];
+		$stringRoles = [];
+		foreach ($this->roles as $role)
+		{
+			/** @var $role Role */
+			$stringRoles[] = $role->getRole();
+		}
+
+		return $stringRoles;
+	}
+
+	public function addRole(Role $role)
+	{
+		$this->roles[] = $role;
+
+		return $this;
 	}
 
 	/**
