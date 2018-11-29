@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block user_first_name %}
+
+    Hello, {{ user.firstName }}
+
+{% endblock %}
+
 {% block main %}
 
-
-    {#TODO да уеднаквя формата с тази на EDIT#}
-
-    <form name="register" action="{{ path('user_register') }}" method="post">
+    <form name="register" action="{{ path('user_register') }}" method="POST">
         <h2>Please Register</h2>
         <label>
             <input type="text" name="user[username]" placeholder="Username"/>

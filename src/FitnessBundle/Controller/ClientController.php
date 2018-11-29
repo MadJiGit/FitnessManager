@@ -3,11 +3,28 @@
 namespace FitnessBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class ClientController extends Controller
 {
-	public function indexAction($name)
+	public function createAction()
 	{
-		return $this->render('', array('name' => $name));
+		return $this->render('');
 	}
+
+	public function editAction($id, Request $request)
+	{
+
+	}
+
+	public function profile($id)
+	{
+
+	}
+
+	public function sorted($criteria)
+	{
+
+	}
+
 }

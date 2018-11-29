@@ -5,6 +5,7 @@ namespace FitnessBundle\Controller;
 use FitnessBundle\Entity\Role;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +26,7 @@ class UserController extends Controller
 		$form->handleRequest($request);
 		// throw ERROR
 //		if ($form->isSubmitted() && $form->isValid()){
-		if ($form->isSubmitted()){
+		if ($form->isSubmitted()) {
 			$password = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
@@ -65,5 +66,35 @@ class UserController extends Controller
 
 	}
 
+	/**
+	 * @Route("/user/edit/{id}", name="user_edit")
+	 * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+	 * @param $id
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+	 * @throws \Exception
+	 */
+	public function editProfile($id, Request $request)
+	{
+		/** @var User $user */
+		$user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+		if ($user === null){
+			return $this->redirectToRoute('user_profile');
+		}
+
+		$form = $this->createForm(UserType::class, $user);
+		$form->handleRequest($request);
+
+//		if ($user->)
+
+
+		return $this->render('user/edit.html.twig',
+			array('user' => $user,
+				'form' => $form->createView()
+			)
+		);
+
+	}
 
 }

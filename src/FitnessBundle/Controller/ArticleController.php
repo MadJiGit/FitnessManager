@@ -81,7 +81,10 @@ class ArticleController extends Controller
 	 */
 	public function editArticle($id, Request $request)
 	{
-		$article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+		$article = $this
+			->getDoctrine()
+			->getRepository(Article::class)
+			->find($id);
 
 		if ($article === null) {
 			return $this->redirectToRoute('article_view_one');
@@ -94,12 +97,17 @@ class ArticleController extends Controller
 		/** @var User $user */
 		$user = $this->getUser();
 
+//		dump($article->getId());
+//		exit;
+
 		if ($user->isAuthor($article) || $user->isSuperAdmin() || $user->isAdmin()) {
 
 			if ($form->isValid() && $form->isSubmitted()) {
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($article);
 				$em->flush();
+
+				//TODO дава грешка с id при едит на test
 
 				return $this->redirectToRoute('article_view_one',
 					array('id' => $article->getId(), 'user' => $user));
