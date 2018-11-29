@@ -14,70 +14,70 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
-     */
-    private $username;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="username", type="string", length=255, unique=true)
+	 */
+	private $username;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    private $password;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="password", type="string", length=255)
+	 */
+	private $password;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=255)
-     */
-    private $firstName;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="first_name", type="string", length=255)
+	 */
+	private $firstName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=255)
-     */
-    private $lastName;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="last_name", type="string", length=255)
+	 */
+	private $lastName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=50, unique=true)
-     */
-    private $email;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="email", type="string", length=50, unique=true)
+	 */
+	private $email;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="phone", type="string", length=50, nullable=true)
-     */
-    private $phone;
+	/**
+	 * @var string|null
+	 *
+	 * @ORM\Column(name="phone", type="string", length=50, nullable=true)
+	 */
+	private $phone;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="gender", type="string", length=1)
-     */
-    private $gender;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="gender", type="string", length=1)
+	 */
+	private $gender;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="data_create", type="datetime")
-     */
-    private $dataCreate;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="data_create", type="datetime")
+	 */
+	private $dataCreate;
 
 
 	/**
@@ -85,7 +85,7 @@ class User implements UserInterface
 	 *
 	 * @ORM\OneToMany(targetEntity="FitnessBundle\Entity\Article", mappedBy="author")
 	 */
-    private $articles;
+	private $articles;
 
 	/**
 	 * @var ArrayCollection
@@ -96,7 +96,7 @@ class User implements UserInterface
 	 *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
 	 *     )
 	 */
-    private $roles;
+	private $roles;
 
 	/**
 	 * User constructor.
@@ -111,206 +111,206 @@ class User implements UserInterface
 
 
 	/**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	 * Get id.
+	 *
+	 * @return int
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * Set username.
-     *
-     * @param string $username
-     *
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
+	/**
+	 * Set username.
+	 *
+	 * @param string $username
+	 *
+	 * @return User
+	 */
+	public function setUsername($username)
+	{
+		$this->username = $username;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get username.
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
+	/**
+	 * Get username.
+	 *
+	 * @return string
+	 */
+	public function getUsername()
+	{
+		return $this->username;
+	}
 
-    /**
-     * Set password.
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
+	/**
+	 * Set password.
+	 *
+	 * @param string $password
+	 *
+	 * @return User
+	 */
+	public function setPassword($password)
+	{
+		$this->password = $password;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get password.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+	/**
+	 * Get password.
+	 *
+	 * @return string
+	 */
+	public function getPassword()
+	{
+		return $this->password;
+	}
 
-    /**
-     * Set firstName.
-     *
-     * @param string $firstName
-     *
-     * @return User
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
+	/**
+	 * Set firstName.
+	 *
+	 * @param string $firstName
+	 *
+	 * @return User
+	 */
+	public function setFirstName($firstName)
+	{
+		$this->firstName = $firstName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get firstName.
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
+	/**
+	 * Get firstName.
+	 *
+	 * @return string
+	 */
+	public function getFirstName()
+	{
+		return $this->firstName;
+	}
 
-    /**
-     * Set lastName.
-     *
-     * @param string $lastName
-     *
-     * @return User
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
+	/**
+	 * Set lastName.
+	 *
+	 * @param string $lastName
+	 *
+	 * @return User
+	 */
+	public function setLastName($lastName)
+	{
+		$this->lastName = $lastName;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get lastName.
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
+	/**
+	 * Get lastName.
+	 *
+	 * @return string
+	 */
+	public function getLastName()
+	{
+		return $this->lastName;
+	}
 
-    /**
-     * Set email.
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+	/**
+	 * Set email.
+	 *
+	 * @param string $email
+	 *
+	 * @return User
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get email.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+	/**
+	 * Get email.
+	 *
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
 
-    /**
-     * Set phone.
-     *
-     * @param string|null $phone
-     *
-     * @return User
-     */
-    public function setPhone($phone = null)
-    {
-        $this->phone = $phone;
+	/**
+	 * Set phone.
+	 *
+	 * @param string|null $phone
+	 *
+	 * @return User
+	 */
+	public function setPhone($phone = null)
+	{
+		$this->phone = $phone;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get phone.
-     *
-     * @return string|null
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
+	/**
+	 * Get phone.
+	 *
+	 * @return string|null
+	 */
+	public function getPhone()
+	{
+		return $this->phone;
+	}
 
-    /**
-     * Set gender.
-     *
-     * @param string $gender
-     *
-     * @return User
-     */
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
+	/**
+	 * Set gender.
+	 *
+	 * @param string $gender
+	 *
+	 * @return User
+	 */
+	public function setGender($gender)
+	{
+		$this->gender = $gender;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get gender.
-     *
-     * @return string
-     */
-    public function getGender()
-    {
-        return $this->gender;
-    }
+	/**
+	 * Get gender.
+	 *
+	 * @return string
+	 */
+	public function getGender()
+	{
+		return $this->gender;
+	}
 
-    /**
-     * Set dataCreate.
-     *
-     * @param \DateTime $dataCreate
-     *
-     * @return User
-     */
-    public function setDataCreate($dataCreate)
-    {
-        $this->dataCreate = $dataCreate;
+	/**
+	 * Set dataCreate.
+	 *
+	 * @param \DateTime $dataCreate
+	 *
+	 * @return User
+	 */
+	public function setDataCreate($dataCreate)
+	{
+		$this->dataCreate = $dataCreate;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get dataCreate.
-     *
-     * @return \DateTime
-     */
-    public function getDataCreate()
-    {
-        return $this->dataCreate;
-    }
+	/**
+	 * Get dataCreate.
+	 *
+	 * @return \DateTime
+	 */
+	public function getDataCreate()
+	{
+		return $this->dataCreate;
+	}
 
 
 	/**
@@ -358,8 +358,7 @@ class User implements UserInterface
 	public function getRoles()
 	{
 		$stringRoles = [];
-		foreach ($this->roles as $role)
-		{
+		foreach ($this->roles as $role) {
 			/** @var $role Role */
 			$stringRoles[] = $role->getRole();
 		}
@@ -373,6 +372,75 @@ class User implements UserInterface
 
 		return $this;
 	}
+
+
+	/**
+	 * @param Article $article
+	 * @return bool
+	 */
+	public function isAuthor(Article $article)
+	{
+		return $article->getAuthorId() === $this->getId();
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isSuperAdmin()
+	{
+		return in_array('super_admin', $this->getRoles(), true);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isAdmin()
+	{
+		return in_array('admin', $this->getRoles(), true);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isManager()
+	{
+		return in_array('manager', $this->getRoles(), true);
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isReceptionist()
+	{
+		return in_array('receptionist', $this->getRoles(), true);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isTrainer()
+	{
+		return in_array('trainer', $this->getRoles(), true);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isAccountant()
+	{
+		return in_array('accountant', $this->getRoles(), true);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isClient()
+	{
+		return in_array('client', $this->getRoles(), true);
+	}
+
 
 	/**
 	 * Returns the salt that was originally used to encode the password.

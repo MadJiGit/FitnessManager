@@ -9,6 +9,15 @@
 
 {% block main %}
 
-    <a href="{{ path('article_view_all') }}">View articles</a>
+    <a href="{{ path('article_view_all') }}">View articles</a></br>
+    {% if user.superAdmin  %}
+        I'm SUPER ADMIN
+    {% endif %}
+    {% if user.admin %}
+        I'm ADMIN
+    {% endif %}
+    {% if user.manager  %}
+        I'm MANAGER
+    {% endif %}
 
 {% endblock %}

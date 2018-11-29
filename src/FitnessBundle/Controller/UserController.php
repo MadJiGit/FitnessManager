@@ -23,17 +23,19 @@ class UserController extends Controller
 		$user = new User();
 		$form = $this->createForm(UserType::class, $user);
 		$form->handleRequest($request);
-		if ($form->isSubmitted() && $form->isValid()){
+		// throw ERROR
+//		if ($form->isSubmitted() && $form->isValid()){
+		if ($form->isSubmitted()){
 			$password = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
 
-			$roleRepository = $this
-				->getDoctrine()
-				->getRepository(Role::class);
-			$userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
-
-			$user->addRole($userRole);
+//			$roleRepository = $this
+//				->getDoctrine()
+//				->getRepository(Role::class);
+//			$userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
+//
+//			$user->addRole($userRole);
 
 			$em = $this
 				->getDoctrine()

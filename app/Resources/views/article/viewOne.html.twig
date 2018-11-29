@@ -27,10 +27,10 @@
 
                     <footer>
                         <div class="pull-right">
-                            {#{% if app.getUser() and ( app.getUser.isAuthor(article) or app.getUser.isAdmin() ) %}#}
+                            {% if app.getUser() and ( app.getUser.isAuthor(article) or app.getUser.isAdmin() or app.getUser.isSuperAdmin() ) %}
                                 <a class="btn btn-default btn-danger" href="{{ path('article_delete', {'id':article.id}) }}">delete &raquo;</a>
                                 <a class="btn btn-success btn-xs" href="{{ path('article_edit', {'id':article.id}) }}">edit &raquo;</a>
-                            {#{% endif %}#}
+                            {% endif %}
                             <a class="btn btn-default btn-xs" href="{{ path('article_view_all') }}">back &raquo;</a>
                         </div>
                     </footer>

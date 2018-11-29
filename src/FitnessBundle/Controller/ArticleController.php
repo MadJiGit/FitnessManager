@@ -3,6 +3,7 @@
 namespace FitnessBundle\Controller;
 
 use FitnessBundle\Entity\Article;
+use FitnessBundle\Entity\User;
 use FitnessBundle\Form\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -76,6 +77,7 @@ class ArticleController extends Controller
 	 * @param $id
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+	 * @throws \Exception
 	 */
 	public function editArticle($id, Request $request)
 	{
@@ -89,22 +91,37 @@ class ArticleController extends Controller
 
 		$form->handleRequest($request);
 
+		/** @var User $user */
 		$user = $this->getUser();
 
-		if ($form->isSubmitted() && $form->isValid()) {
+		if ($user->isAuthor($article) || $user->isSuperAdmin() || $user->isAdmin()) {
 
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($article);
-			$em->flush();
+			if ($form->isValid() && $form->isSubmitted()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($article);
+				$em->flush();
+
+				return $this->redirectToRoute('article_view_one',
+					array('id' => $article->getId(), 'user' => $user));
+
+			}
+
+			$message = ('Mr/s, ' . $user->getFullName() . '! You have no rights to edit this article');
 
 			return $this->redirectToRoute('article_view_one',
-				array('id' => $article->getId(), 'user' => $user));
+				array('article' => $article,
+					'form' => $form->createView(),
+					'user' => $user,
+					'message' => $message)
+			);
+
 		}
 
 		return $this->render('article/edit.html.twig',
 			array('article' => $article,
 				'form' => $form->createView(),
-				'user' => $user));
+				'user' => $user)
+		);
 	}
 
 	/**
@@ -128,7 +145,7 @@ class ArticleController extends Controller
 
 		$user = $this->getUser();
 
-		if ($form->isSubmitted() && $form->isValid()){
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->remove($article);
 			$em->flush();
