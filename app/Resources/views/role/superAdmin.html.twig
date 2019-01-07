@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <form name="superAdmin" action="{{ path('user_role_register') }}" method="post">
+        <h2>Please Register</h2>
+        {#<label>#}
+            {#<input type="text" name="user[username]" placeholder="Username"/>#}
+        {#</label><br/>#}
+        <label>
+            <input type="password" name="user[password]" placeholder="Password"/>
+        </label><br/>
+        <label>
+            <input type="text" name="user[firstName]" placeholder="First name"/>
+        </label><br/>
+        <label>
+            <input type="text" name="user[lastName]" placeholder="Last name"/>
+        </label><br/>
+        <label>
+            <input type="email" name="user[email]" placeholder="Email"/>
+        </label><br/>
+        <label>
+            <input type="text" name="user[phone]" placeholder="Phone"/>
+        </label><br/>
+        <label>
+            Gender: <select typeof="text" name="user[gender]">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        </label><br/>
+        <label>
+            Position: <select typeof="text" name="user[role]">
+                <option value="Client">Client</option>
+                <option value="Trainer">Trainer</option>
+                <option value="Receptionist">Receptionist</option>
+                <option value="Accountant">Accountant</option>
+                <option value="Manager">Manager</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </label><br/>
+
+
+        {#<input type="hidden" name="_csrf_token" value="{{ csrf_token('register') }}"/><br/>#}
+        <input type="submit" value="Register"/>
+
+
+    </form>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 {% block user_first_name %}
 
-    Hello, {{ user.firstName }}
+    Welcome, {{ user.firstName }}!
 
 {% endblock %}
 
@@ -10,17 +10,170 @@
 {% block main %}
 
     {#TODO да довърша показването на бутоните според ролите#}
-
-    <a href="{{ path('article_view_all') }}">View articles</a></br>
-    <a href="{{ path('user_edit', {'id':user.id}) }}">Edit user information</a></br>
-    {% if user.superAdmin  %}
-        I'm SUPER ADMIN
-    {% endif %}
-    {% if user.admin %}
-        I'm ADMIN
-    {% endif %}
-    {% if user.manager  %}
-        I'm MANAGER
-    {% endif %}
+    <header>
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        {% if user.superAdmin %}
+                            <li>
+                                <a href="">
+                                SUPER ADMIN
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Client
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Trainer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Receptionist
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Manager
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Account
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Admin
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('user_role_register') }}">
+                                    Role
+                                </a>
+                            </li>
+                        {#{% else %}#}
+                            {#<li>#}
+                                {#<a href="{{ path('article_create') }}">#}
+                                    {#Register new client#}
+                                {#</a>#}
+                            {#</li>#}
+                            {#<li>#}
+                                {#<a href="">#}
+                                    {#View client details#}
+                                {#</a>#}
+                            {#</li>#}
+                        {% endif %}
+                        {% if user.admin %}
+                            <li>
+                                <a href="">
+                                    ADMIN
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Client
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Trainer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Receptionist
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Manager
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Account
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Admin
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user.accountant %}
+                            <li>
+                                <a href="">
+                                    ACCOUNTANT
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Account
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user.manager %}
+                            <li>
+                                <a href="">
+                                    MANAGER
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Client
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Trainer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Receptionist
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user.receptionist %}
+                            <li>
+                                <a href="">
+                                    RECEPTIONIST
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Receptionist
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user.trainer %}
+                            <li>
+                                <a href="">
+                                    TRAINER
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Trainer
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user.client %}
+                            <li>
+                                <a href="">
+                                    Client
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
 
 {% endblock %}

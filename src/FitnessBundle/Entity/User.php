@@ -375,11 +375,15 @@ class User implements UserInterface
 
 
 	/**
-	 * @param Article $article
+	 * @param $article
 	 * @return bool
 	 */
 	public function isAuthor(Article $article)
 	{
+//		dump($article->getAuthorId());
+//		dump($this->getId());
+//		exit;
+
 		return $article->getAuthorId() === $this->getId();
 	}
 
