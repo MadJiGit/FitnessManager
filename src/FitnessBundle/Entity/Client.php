@@ -43,6 +43,29 @@ class Client
 	private $bookings;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="name", type="string", length=255)
+	 */
+	private $name;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="username", type="string", length=255, unique=true)
+	 */
+	private $username;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="password", type="string", length=255)
+	 */
+	private $password;
+
+
+
+	/**
 	 * Client constructor.
 	 * @throws \Exception
 	 */
@@ -129,5 +152,78 @@ class Client
 		return $this;
 	}
 
+
+	/**
+	 * Set name.
+	 *
+	 * @param string $name
+	 *
+	 * @return Client
+	 */
+	public function setName($name)
+	{
+		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * Get name.
+	 *
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * Set username.
+	 *
+	 * @param string $username
+	 *
+	 * @return Client
+	 */
+	public function setUsername($username)
+	{
+		$this->username = $username;
+
+		return $this;
+	}
+
+	/**
+	 * Get username.
+	 *
+	 * @return string
+	 */
+	public function getUsername()
+	{
+		return $this->username;
+	}
+
+
+	/**
+	 * Set password.
+	 *
+	 * @param string $password
+	 *
+	 * @return Client
+	 */
+	public function setPassword($password)
+	{
+		$this->password = $password;
+
+		return $this;
+	}
+
+	/**
+	 * Get password.
+	 *
+	 * @return string
+	 */
+	public function getPassword()
+	{
+		return $this->password;
+	}
 
 }

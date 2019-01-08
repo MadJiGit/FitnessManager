@@ -1,3 +1,15 @@
+<form name="registerClient" action="{{ path('register_client') }}" method="post">
+    <h2>Please add client data</h2>
+    <label>
+        <input type="text" name="client[username]" placeholder="Username"/>
+    </label><br/>
+    <label>
+        <input type="password" name="client[password]" placeholder="Password"/>
+    </label><br/>
+    <label>
+        <input type="text" name="client[name]" placeholder="Name"/>
+    </label><br/>
 
-
-{#TODO формата за създаване на нов КЛИЕНТ#}
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('register') }}"/><br/>
+    <input type="submit" value="Register"/>
+</form>
