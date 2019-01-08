@@ -2,43 +2,43 @@
 
 namespace FitnessBundle\Controller;
 
-use FitnessBundle\Entity\Client;
-use FitnessBundle\Form\ClientType;
+use FitnessBundle\Entity\Trainer;
+use FitnessBundle\Form\TrainerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ClientController extends Controller
+class TrainerController extends Controller
 {
 	/**
-	 * @Route ("/create", name="register_client")
+	 * @Route ("/create", name="register_trainer")
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
 	 * @throws \Exception
 	 */
 	public function registerAction(Request $request)
 	{
-		$client = new Client();
-		$form = $this->createForm(ClientType::class, $client);
+		$trainer = new Trainer();
+		$form = $this->createForm(TrainerType::class, $trainer);
 		$form->handleRequest($request);
 
 
 
 		if ($form->isSubmitted()) {
 			$password = $this->get('security.password_encoder')
-				->encodePassword($client, $client->getPassword());
-			$client->setPassword($password);
+				->encodePassword($trainer, $trainer->getPassword());
+			$trainer->setPassword($password);
 
 
 			$em = $this
 				->getDoctrine()
 				->getManager();
-			$em->persist($client);
+			$em->persist($trainer);
 			$em->flush();
 
-			return $this->redirectToRoute('security_login', array('' => $client));
+			return $this->redirectToRoute('security_login', array('' => $trainer));
 		}
 
-		return $this->render('client/create.html.twig');
+		return $this->render('trainer/create.html.twig');
 	}
 }
