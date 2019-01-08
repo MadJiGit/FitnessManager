@@ -25,7 +25,10 @@
                 <div class="navbar-header">
                     <a href="{{ path('fitness_index') }}" class="navbar-brand">FITNESS MANAGER</a>
                     {% if app.user %}
-                        <a class="navbar-brand">{% block user_first_name %} {% endblock %}</a>
+                        {#<a class="navbar-brand">{% block user_first_name %} {% endblock %}</a>#}
+                        <a class="navbar-brand">
+                            Welcome, {{ app.user.firstName }}!
+                        </a>
                         {#<a class="navbar-brand"></a>#}
                     {% endif %}
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

@@ -2,7 +2,7 @@
 
 {% block main %}
 
-    <form name="superAdmin" action="{{ path('user_role_register') }}" method="post">
+    <form name="superAdmin" action="" method="post">
         <h2>Please Register</h2>
         {#<label>#}
             {#<input type="text" name="user[username]" placeholder="Username"/>#}
@@ -38,7 +38,6 @@
                 <option value="Admin">Admin</option>
             </select>
         </label><br/>
-
 
         {#<input type="hidden" name="_csrf_token" value="{{ csrf_token('register') }}"/><br/>#}
         <input type="submit" value="Register"/>

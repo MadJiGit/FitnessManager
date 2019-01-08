@@ -2,6 +2,7 @@
 
 namespace FitnessBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,13 +37,19 @@ class Client
 	private $dateAdded;
 
 	/**
+	 * @var Booking
+	 * @ORM\OneToMany(targetEntity="FitnessBundle\Entity\Booking", mappedBy="client")
+	 */
+	private $bookings;
+
+	/**
 	 * Client constructor.
 	 * @throws \Exception
 	 */
 	public function __construct()
 	{
 		$this->dateAdded = new \DateTime('now');
-
+		$this->bookings = new ArrayCollection();
 	}
 
 	/**
@@ -102,4 +109,25 @@ class Client
 	{
 		return $this->dateAdded;
 	}
+
+	/**
+	 * @return Booking
+	 */
+	public function getBookings()
+	{
+		return $this->bookings;
+	}
+
+	/**
+	 * @param Booking $booking
+	 * @return Client
+	 */
+	public function addBookings($booking)
+	{
+		$this->bookings = $booking;
+
+		return $this;
+	}
+
+
 }

@@ -99,6 +99,12 @@ class User implements UserInterface
 	private $roles;
 
 	/**
+	 * @var Booking
+	 * @ORM\OneToMany(targetEntity="FitnessBundle\Entity\Booking", mappedBy="trainer")
+	 */
+	private $bookings;
+
+	/**
 	 * User constructor.
 	 * @throws \Exception
 	 */
@@ -107,6 +113,7 @@ class User implements UserInterface
 		$this->roles = new ArrayCollection();
 		$this->articles = new ArrayCollection();
 		$this->dataCreate = new \DateTime('now');
+		$this->bookings = new ArrayCollection();
 	}
 
 
@@ -443,6 +450,27 @@ class User implements UserInterface
 	public function isClient()
 	{
 		return in_array('client', $this->getRoles(), true);
+	}
+
+
+	/**
+	 * @return Booking
+	 */
+	public function getBookings()
+	{
+		return $this->bookings;
+
+	}
+
+	/**
+	 * @param Booking $booking
+	 * @return User
+	 */
+	public function addBookings($booking)
+	{
+		$this->bookings[] = $booking;
+
+		return $this;
 	}
 
 

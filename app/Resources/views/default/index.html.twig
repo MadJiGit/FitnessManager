@@ -1,22 +1,175 @@
 {% extends 'base.html.twig' %}
 
+{% block main %}
 
-{#{% block user_first_name %}#}
+    {#TODO да довърша показването на бутоните според ролите#}
+    <header>
+        {% if app.user %}
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                            {% if app.user.superAdmin %}
+                                <li>
+                                    <a href="">
+                                        SUPER ADMIN
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Client
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Trainer
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Receptionist
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Manager
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Account
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Admin
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Role
+                                    </a>
+                                </li>
+                                {#{% else %}#}
+                                {#<li>#}
+                                {#<a href="{{ path('article_create') }}">#}
+                                {#Register new client#}
+                                {#</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                {#<a href="">#}
+                                {#View client details#}
+                                {#</a>#}
+                                {#</li>#}
+                            {% endif %}
+                            {% if app.user.admin %}
+                                <li>
+                                    <a href="">
+                                        ADMIN
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Client
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Trainer
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Receptionist
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Manager
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Account
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Admin
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if app.user.accountant %}
+                                <li>
+                                    <a href="">
+                                        ACCOUNTANT
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Account
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if app.user.manager %}
+                                <li>
+                                    <a href="">
+                                        MANAGER
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Client
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Trainer
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Receptionist
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if app.user.receptionist %}
+                                <li>
+                                    <a href="">
+                                        RECEPTIONIST
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Receptionist
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if app.user.trainer %}
+                                <li>
+                                    <a href="">
+                                        TRAINER
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        Trainer
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if app.user.client %}
+                                <li>
+                                    <a href="">
+                                        Client
+                                    </a>
+                                </li>
+                                {% include 'client/clientView.html.twig' %}
+                            {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </header>
 
-    {#Hello, {{ user.firstName }}#}
-
-{#{% endblock %}#}
-
-
-{% block body %}
-    {#<h2>Hello, Guest!</h2>#}
-    {#<br/>#}
-    {#<h4>If you already a member, please login.</h4>#}
-    {#<form>#}
-        {#<input class="MyButton" type="button" value="Login" onclick="window.location.href='/login'" />#}
-    {#</form>#}
-    {#<h4>If not, register</h4>#}
-    {#<form>#}
-        {#<input class="MyButton" type="button" value="Register" onclick="window.location.href='/register'" />#}
-    {#</form>#}
 {% endblock %}
