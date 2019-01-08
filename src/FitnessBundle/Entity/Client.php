@@ -126,11 +126,11 @@ class Client
 	/**
 	 * Get dateAdded.
 	 *
-	 * @return \DateTime
+	 * @return string
 	 */
 	public function getDateAdded()
 	{
-		return $this->dateAdded;
+		return $this->dateAdded->format('Y-m-d H:i:s');
 	}
 
 	/**

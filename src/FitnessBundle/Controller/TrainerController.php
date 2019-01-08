@@ -22,13 +22,9 @@ class TrainerController extends Controller
 		$form = $this->createForm(TrainerType::class, $trainer);
 		$form->handleRequest($request);
 
-
-
 		if ($form->isSubmitted()) {
-			$password = $this->get('security.password_encoder')
-				->encodePassword($trainer, $trainer->getPassword());
+			$password = $trainer->getPassword();
 			$trainer->setPassword($password);
-
 
 			$em = $this
 				->getDoctrine()
@@ -36,9 +32,27 @@ class TrainerController extends Controller
 			$em->persist($trainer);
 			$em->flush();
 
-			return $this->redirectToRoute('security_login', array('' => $trainer));
+			return $this->allTrainer();
 		}
 
 		return $this->render('trainer/create.html.twig');
+
+	}
+
+
+	/**
+	 * @Route ("/all", name="all_trainers")
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function allTrainer()
+	{
+		$trainer = $this
+			->getDoctrine()
+			->getRepository(Trainer::class)
+			->findAll();
+
+		return $this->render('trainer/all.html.twig', array('trainer' => $trainer));
+
+
 	}
 }

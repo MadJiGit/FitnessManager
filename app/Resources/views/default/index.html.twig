@@ -2,7 +2,6 @@
 
 {% block main %}
 
-    {#TODO да довърша показването на бутоните според ролите#}
     <header>
         {% if app.user %}
         <div class="navbar navbar-default navbar-static-top" role="navigation">
@@ -17,39 +16,39 @@
                                 </li>
                                 <li>
                                     <a href="{{ path('register_client') }}">
-                                        Client
+                                        Add new client
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('all_clients') }}">
+                                        View all clients
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ path('register_trainer') }}">
-                                        Trainer
+                                        Add new trainer
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
-                                        Receptionist
+                                    <a href="{{ path('all_trainers') }}">
+                                        View all trainers
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="">
-                                        Manager
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Account
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Admin
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Role
-                                    </a>
-                                </li>
+                                {#<li>#}
+                                    {#<a href="">#}
+                                        {#Account#}
+                                    {#</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="">#}
+                                        {#Admin#}
+                                    {#</a>#}
+                                {#</li>#}
+                                {#<li>#}
+                                    {#<a href="">#}
+                                        {#Role#}
+                                    {#</a>#}
+                                {#</li>#}
                                 {#{% else %}#}
                                 {#<li>#}
                                 {#<a href="{{ path('article_create') }}">#}
