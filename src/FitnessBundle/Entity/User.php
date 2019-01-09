@@ -88,6 +88,14 @@ class User implements UserInterface
 	private $articles;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="role", type="string", length=25)
+	 */
+	private $role;
+
+
+	/**
 	 * @var ArrayCollection
 	 *
 	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Role")
@@ -98,11 +106,7 @@ class User implements UserInterface
 	 */
 	private $roles;
 
-	/**
-	 * @var Booking
-	 * @ORM\OneToMany(targetEntity="FitnessBundle\Entity\Booking", mappedBy="trainer")
-	 */
-	private $bookings;
+
 
 	/**
 	 * User constructor.
@@ -113,7 +117,6 @@ class User implements UserInterface
 		$this->roles = new ArrayCollection();
 		$this->articles = new ArrayCollection();
 		$this->dataCreate = new \DateTime('now');
-		$this->bookings = new ArrayCollection();
 	}
 
 
@@ -349,6 +352,23 @@ class User implements UserInterface
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getRole()
+	{
+		return $this->role;
+	}
+
+	/**
+	 * @param string $role
+	 */
+	public function setRole($role)
+	{
+		$this->role = $role;
+	}
+
+
+	/**
 	 * Returns the roles granted to the user.
 	 *
 	 *     public function getRoles()
@@ -387,10 +407,6 @@ class User implements UserInterface
 	 */
 	public function isAuthor(Article $article)
 	{
-//		dump($article->getAuthorId());
-//		dump($this->getId());
-//		exit;
-
 		return $article->getAuthorId() === $this->getId();
 	}
 
@@ -450,27 +466,6 @@ class User implements UserInterface
 	public function isClient()
 	{
 		return in_array('client', $this->getRoles(), true);
-	}
-
-
-	/**
-	 * @return Booking
-	 */
-	public function getBookings()
-	{
-		return $this->bookings;
-
-	}
-
-	/**
-	 * @param Booking $booking
-	 * @return User
-	 */
-	public function addBookings($booking)
-	{
-		$this->bookings[] = $booking;
-
-		return $this;
 	}
 
 

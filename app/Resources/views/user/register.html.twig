@@ -2,9 +2,6 @@
 
 {% block main %}
 
-
-    {#TODO да уеднаквя формата с тази на EDIT#}
-
     <form name="register" action="{{ path('user_register') }}" method="post">
         <h2>Please Register</h2>
         <label>
@@ -26,9 +23,18 @@
             <input type="text" name="user[phone]" placeholder="Phone"/>
         </label><br/>
         <label>
-            Gender: <select typeof="text" name="user[gender]">
+            Select Gender: <select typeof="text" name="user[gender]">
                 <option value="M">Male</option>
                 <option value="F">Female</option>
+            </select>
+        </label><br/>
+        <label>
+            Select Role: <select typeof="text" name="user[role]">
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Receptionist">Receptionist</option>
+                <option value="Client">Client</option>
+                <option value="Trainer">Trainer</option>
             </select>
         </label><br/>
 
