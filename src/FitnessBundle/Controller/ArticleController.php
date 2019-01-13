@@ -44,7 +44,9 @@ class ArticleController extends Controller
 	public function viewAll()
 	{
 		$user = $this->getUser();
-		$articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+		$articles = $this->getDoctrine()
+			->getRepository(Article::class)
+			->findAll();
 		return $this->render('article/viewAll.html.twig',
 			array('articles' => $articles, 'user' => $user));
 	}

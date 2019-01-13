@@ -2,41 +2,82 @@
 
 
 {% block main %}
+    {% for msg in app.session.flashbag.get('info') %}
+        <div class="flashback">
+            <p style="color: red">{{ msg }}</p>
+        </div>
+    {% endfor %}
     <div class="container body-content span=8 offset=2">
         <div class="well">
             <form class="form-horizontal" action="{{ path('user_edit', {id: user.id}) }}" method="POST">
                 <fieldset>
-                    <legend>Edit User Information</legend>
+                    <legend>Edit Client</legend>
 
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="">Username</label>
-                        <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="username" placeholder="Username"
-                                   name="user[username]" value="{{ user.username }}">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="password">Password</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="password"
-                                  name="user[password]">"{{ user.password }}">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="first_name">First name</label>
-                        <div class="col-sm-6">
-                        <textarea class="form-control" rows="6" id="password"
-                                  name="user[first_name]">{{ user.firstName }}</textarea>
-                        </div>
-                    </div>
+                    <h2>Please Register</h2>
+                    <label>
+                        <input type="text" name="user[username]" placeholder="Username" value="{{ user.username }}"/>
+                    </label><br/>
+                    {#<label>#}
+                        {#<input type="text"  name="oldPassword" placeholder="Enter Password"/>#}
+                    {#</label><br/>#}
+                    <label>ONLY IF YOU WANT TO CHANGE THE PASSWORD</label><br/>
+                    <label>
+                        <input type="text" style="background-color: darkorange" name="newPassword" placeholder="Enter New Password"/>
+                    </label><br/>
+                    <label>
+                        <input type="text" style="background-color: darkorange" name="repeatNewPassword" placeholder="Repeat New Password"/>
+                    </label><br/>
+                    <label>
+                        <input type="text" name="user[firstName]" placeholder="First name"
+                               value="{{ user.firstName }}"/>
+                    </label><br/>
+                    <label>
+                        <input type="text" name="user[lastName]" placeholder="Last name" value="{{ user.lastName }}"/>
+                    </label><br/>
+                    <label>
+                        <input type="email" name="user[email]" placeholder="Email" value="{{ user.email }}"/>
+                    </label><br/>
+                    <label>
+                        <input type="text" name="user[phone]" placeholder="Phone" value="{{ user.phone }}"/>
+                    </label><br/>
+                    {#<label>#}
+                    {#<input type="text" name="user[phone]" placeholder="Phone" value="{{ user.gender }}"/>#}
+                    {#</label><br/>#}
+                    <label>
+                        Current Gender - " {{ user.gender }} " -
+                        {#</label><br/>#}
+                        {#<label>#}
+                        Select new  <select typeof="text" name="user[gender]" value="{{ user.gender}}">
+                            <option value=""></option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </label><br/>
+                    <label>
+                        Current Sport - {{ user.sport }}
+                        <select typeof="text" name="user[sport]">
+                            <option value=""></option>
+                            <option value="fitness">Fitness</option>
+                            <option value="yoga">Yoga</option>
+                        </select>
+                    </label><br/>
+                    <label>
+                        Current Role - {{ user.role }}
+                        <select typeof="text" name="user[role]">
+                            <option value=""></option>
+                            <option value="Admin">Admin</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Receptionist">Receptionist</option>
+                            <option value="Client">Client</option>
+                            <option value="Trainer">Trainer</option>
+                        </select>
+                    </label><br/>
 
                     {{ form_row(form._token) }}
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
-                            <a class="btn btn-default" href="{{ path('user_edit', {id: user.id} ) }}">Cancel</a>
+                            <a class="btn btn-default" href="{{ path('user_view_one', {id: user.id} ) }}">Cancel</a>
                             <button type="submit" class="btn btn-success">Edit</button>
                         </div>
                     </div>
@@ -47,4 +88,6 @@
 
 
 {% endblock %}
+
+
 

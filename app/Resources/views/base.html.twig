@@ -47,8 +47,8 @@
                             {#</li>#}
                             <li>
                             <li>
-                                <a href="{{ path('fitness_index') }}">
-                                    My Profile
+                                <a href="{{ path('user_profile') }}">
+                                    Home
                                 </a>
                             </li>
                             <li>
@@ -57,11 +57,11 @@
                                 </a>
                             </li>
                         {% else %}
-                            <li>
-                                <a href="{{ path('user_register') }}">
-                                    REGISTER
-                                </a>
-                            </li>
+                            {#<li>#}
+                                {#<a href="{{ path('user_register') }}">#}
+                                    {#REGISTER#}
+                                {#</a>#}
+                            {#</li>#}
                             <li>
                                 <a href="{{ path('security_login') }}">
                                     LOGIN

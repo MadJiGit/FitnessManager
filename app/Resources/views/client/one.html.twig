@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+
+{% block main %}
+    {% for msg in app.session.flashbag.get('info') %}
+        <div class="flashback">
+            <p style="color: red">{{ msg }}</p>
+        </div>
+    {% endfor %}
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+                    <h3>
+                        User View
+                    </h3>
+                    <p>
+                        Username: {{ client.username }}
+                    </p>
+                    <p>
+                        Card Number: {{ client.cardNumber }}
+                    </p>
+                    <p>
+                        First Name: {{ client.firstName }}
+                    </p>
+                    <p>
+                        Last Name: {{ client.lastName }}
+                    </p>
+                    <p>
+                        e-mail: {{ client.email }}
+                    </p>
+                    <p>
+                        phone: {{ client.phone }}
+                    </p>
+                    <p>
+                        gender: {{ client.gender }}
+                    </p>
+                    <p>
+                        Date created: {{ client.dataCreate }}
+                    </p>
+                    <p>
+                        Role: {{ client.role }}
+                    </p>
+                    <p>
+                        Sport: {{ client.sport }}
+                    </p>
+
+                    <footer>
+                        <div class="pull-left">
+                            <a class="btn btn-success btn-xs" href="{{ path('client_edit', {'id':client.id}) }}">edit &raquo;</a>
+                            <a class="btn btn-default btn-xs" href="{{ path('fitness_index', {'id':client.id}) }}}">back &raquo;</a>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

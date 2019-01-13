@@ -24,8 +24,9 @@ class UserType extends AbstractType
 	        ->add('lastName', TextType::class)
 	        ->add('email', EmailType::class)
 	        ->add('phone', TextType::class)
-	        ->add('gender', TextType::class);
-//	        ->add('dataCreate', DateType::class);
+	        ->add('gender', TextType::class)
+	        ->add('role', TextType::class)
+	        ->add('sport', TextType::class);
     }
 
     /**

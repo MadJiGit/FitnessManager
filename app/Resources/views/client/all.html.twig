@@ -2,41 +2,41 @@
 
 
 {% block main %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>Bootstrap Example</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
+
     <body>
     <div class="container">
-        <h2>All Clients</h2>
-        {#<p>The .table-condensed class makes a table more compact by cutting cell padding in half:</p>#}
+        <h3>All Clients</h3><br/>
+        <a class="btn btn-primary btn-xs" href="{{ path('user_register') }}" role="button">Add client</a><br/><br/>
         <table class="table table-condensed">
             <thead>
             <tr>
-                <th>Name</th>
+
+                <th>Card Number</th>
+                <th>Client name</th>
                 <th>Username</th>
+                <th>Sport</th>
                 <th>Date added</th>
+                <th></th>
             </tr>
-            </thead>
-            {% for cl in client %}
-                <tbody>
-                <tr>
-                    <td>{{ cl.name }}</td>
-                    <td>{{ cl.username }}</td>
-                    <td>{{ cl.dateAdded }}</td>
-                </tr>
-                </tbody>
+
+            {% for cl in clients %}
+
+            <tbody>
+            <tr>
+                <td><a href="{{ path('client_view_one', {'id': cl.id}) }}">{{ cl.cardNumber }}</a></td>
+                <td>{{ cl.fullName }}</td>
+                <td>{{ cl.username }}</td>
+                <td>{{ cl.sport }}</td>
+                <td>{{ cl.dataCreate }}</td>
+                <td><a class="btn btn-default btn-xs"
+                   href="{{ path('client_view_one', {'id': cl.id}) }}">View more &raquo;</a></td>
+            </tr>
+            </tbody>
+
             {% endfor %}
 
         </table>
     </div>
     </body>
-    </html>
 
 {% endblock %}

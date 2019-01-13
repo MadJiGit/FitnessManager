@@ -9,13 +9,13 @@
     {% endfor %}
     <div class="container body-content span=8 offset=2">
         <div class="well">
-            <form class="form-horizontal" action="{{ path('client_edit', {id: client.id}) }}" method="POST">
+            <form class="form-horizontal" action="{{ path('trainer_edit', {id: trainer.id}) }}" method="POST">
                 <fieldset>
-                    <legend>Edit Client</legend>
+                    <legend>Edit Trainer</legend>
 
                     <h2>Update Info</h2>
                     <label>
-                        <input type="text" name="user[username]" placeholder="Username" value="{{ client.username }}"/>
+                        <input type="text" name="user[username]" placeholder="Username" value="{{ trainer.username }}"/>
                     </label><br/>
                     <label>
                         <input type="text"  name="oldPassword" placeholder="Enter Password"/>
@@ -29,25 +29,22 @@
                     </label><br/>
                     <label>
                         <input type="text" name="user[firstName]" placeholder="First name"
-                               value="{{ client.firstName }}"/>
+                               value="{{ trainer.firstName }}"/>
                     </label><br/>
                     <label>
-                        <input type="text" name="user[lastName]" placeholder="Last name" value="{{ client.lastName }}"/>
+                        <input type="text" name="user[lastName]" placeholder="Last name" value="{{ trainer.lastName }}"/>
                     </label><br/>
                     <label>
-                        <input type="email" name="user[email]" placeholder="Email" value="{{ client.email }}"/>
+                        <input type="email" name="user[email]" placeholder="Email" value="{{ trainer.email }}"/>
                     </label><br/>
                     <label>
-                        <input type="text" name="user[phone]" placeholder="Phone" value="{{ client.phone }}"/>
+                        <input type="text" name="user[phone]" placeholder="Phone" value="{{ trainer.phone }}"/>
                     </label><br/>
-                    {#<label>#}
-                    {#<input type="text" name="user[phone]" placeholder="Phone" value="{{ client.gender }}"/>#}
-                    {#</label><br/>#}
                     <label>
-                        Current Gender - " {{ client.gender }} " -
+                        Current Gender - " {{ trainer.gender }} " -
                         {#</label><br/>#}
                         {#<label>#}
-                        Select new  <select typeof="text" name="user[gender]" value="{{ client.gender}}">
+                        Select new  <select typeof="text" name="user[gender]" value="{{ trainer.gender}}">
                             <option value=""></option>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
@@ -77,7 +74,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-4">
-                            <a class="btn btn-default" href="{{ path('client_view_one', {id: client.id} ) }}">Cancel</a>
+                            <a class="btn btn-default" href="{{ path('trainer_view_one', {id: trainer.id} ) }}">Cancel</a>
                             <button type="submit" class="btn btn-success">Edit</button>
                         </div>
                     </div>

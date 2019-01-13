@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+
+{% block main %}
+    {% for msg in app.session.flashbag.get('info') %}
+        <div class="flashback">
+            <p style="color: red">{{ msg }}</p>
+        </div>
+    {% endfor %}
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+                    <h3>
+                        User View
+                    </h3>
+                    <p>
+                        Username: {{ receptionist.username }}
+                    </p>
+                    <p>
+                        Card Number: {{ receptionist.cardNumber }}
+                    </p>
+                    <p>
+                        First Name: {{ receptionist.firstName }}
+                    </p>
+                    <p>
+                        Last Name: {{ receptionist.lastName }}
+                    </p>
+                    <p>
+                        e-mail: {{ receptionist.email }}
+                    </p>
+                    <p>
+                        phone: {{ receptionist.phone }}
+                    </p>
+                    <p>
+                        gender: {{ receptionist.gender }}
+                    </p>
+                    <p>
+                        Date created: {{ receptionist.dataCreate }}
+                    </p>
+                    <p>
+                        Role: {{ receptionist.role }}
+                    </p>
+                    <p>
+                        Sport: {{ receptionist.sport }}
+                    </p>
+
+                    <footer>
+                        <div class="pull-left">
+                            <a class="btn btn-success btn-xs" href="{{ path('receptionist_edit', {'id':receptionist.id}) }}">edit &raquo;</a>
+                            <a class="btn btn-default btn-xs" href="{{ path('fitness_index', {'id':receptionist.id}) }}}">back &raquo;</a>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

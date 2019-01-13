@@ -106,6 +106,23 @@ class User implements UserInterface
 	 */
 	private $roles;
 
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="sport", type="string", length=25, nullable=true)
+	 */
+	private $sport;
+
+	/**
+	 * @var string
+	 */
+	private $cardNumber;
+
+	/**
+	 * @var string
+	 */
+	private $fullName;
+
 
 
 	/**
@@ -315,11 +332,11 @@ class User implements UserInterface
 	/**
 	 * Get dataCreate.
 	 *
-	 * @return \DateTime
+	 * @return string
 	 */
 	public function getDataCreate()
 	{
-		return $this->dataCreate;
+		return $this->dataCreate->format('Y-m-d H:m:s');
 	}
 
 
@@ -342,6 +359,15 @@ class User implements UserInterface
 
 		return $this;
 	}
+
+	/**
+	 * @param string $fullName
+	 */
+	public function setFullName($fullName)
+	{
+		$this->fullName = $fullName;
+	}
+
 
 	/**
 	 * @return string
@@ -416,7 +442,9 @@ class User implements UserInterface
 	 */
 	public function isSuperAdmin()
 	{
-		return in_array('super_admin', $this->getRoles(), true);
+		if ($this->getRole() === 'super_admin') {
+			return true;
+		}
 	}
 
 	/**
@@ -424,7 +452,7 @@ class User implements UserInterface
 	 */
 	public function isAdmin()
 	{
-		return in_array('admin', $this->getRoles(), true);
+		return $this->getRole() === 'Admin';
 	}
 
 	/**
@@ -432,7 +460,7 @@ class User implements UserInterface
 	 */
 	public function isManager()
 	{
-		return in_array('manager', $this->getRoles(), true);
+		return $this->getRole() === 'Manager';
 	}
 
 
@@ -441,7 +469,7 @@ class User implements UserInterface
 	 */
 	public function isReceptionist()
 	{
-		return in_array('receptionist', $this->getRoles(), true);
+		return $this->getRole() === 'Receptionist';
 	}
 
 	/**
@@ -449,7 +477,7 @@ class User implements UserInterface
 	 */
 	public function isTrainer()
 	{
-		return in_array('trainer', $this->getRoles(), true);
+		return $this->getRole() === 'Trainer';
 	}
 
 	/**
@@ -457,7 +485,7 @@ class User implements UserInterface
 	 */
 	public function isAccountant()
 	{
-		return in_array('accountant', $this->getRoles(), true);
+		return $this->getRole() === 'Accountant';
 	}
 
 	/**
@@ -465,7 +493,41 @@ class User implements UserInterface
 	 */
 	public function isClient()
 	{
-		return in_array('client', $this->getRoles(), true);
+		return $this->getRole() === 'Client';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSport()
+	{
+		return $this->sport;
+	}
+
+	/**
+	 * @param string $sport
+	 */
+	public function setSport($sport)
+	{
+		$this->sport = $sport;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function setCardNumber()
+	{
+		return str_pad((int)$this->getId(), 8, '0', STR_PAD_LEFT);
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getCardNumber()
+	{
+//		return $this->cardNumber;
+		return str_pad((int)$this->getId(), 8, '0', STR_PAD_LEFT);
 	}
 
 
@@ -491,4 +553,5 @@ class User implements UserInterface
 	{
 		// TODO: Implement eraseCredentials() method.
 	}
+
 }

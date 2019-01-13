@@ -2,30 +2,12 @@
 
 
 {% block main %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>Bootstrap Example</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
+
+    <a class="btn btn-primary btn-xs" href="{{ path('user_register') }}" role="button">Add trainer</a>
+
     <body>
     <div class="container">
-        <div class="row">
-            {% for tr in trainer %}
-                <div class="col-md-6">
-                    <article>
-                        <h2>{{ tr.name }}</h2>
-
-                    </article>
-                </div>
-            {% endfor %}
-        </div>
-        <h2>Condensed Table</h2>
-        <p>The .table-condensed trass makes a table more compact by cutting cell padding in half:</p>
+        <h2>All Trainers</h2>
         <table class="table table-condensed">
             <thead>
             <tr>
@@ -34,12 +16,12 @@
                 <th>Date added</th>
             </tr>
             </thead>
-            {% for tr in trainer %}
+            {% for trainer in trainers %}
                 <tbody>
                 <tr>
-                    <td>{{ tr.name }}</td>
-                    <td>{{ tr.username }}</td>
-                    {#<td>{{ tr.dateAdded }}</td>#}
+                    <td>{{ trainer.name }}</td>
+                    <td>{{ trainer.username }}</td>
+                    <td>{{ trainer.dateAdded }}</td>
                 </tr>
                 </tbody>
             {% endfor %}
