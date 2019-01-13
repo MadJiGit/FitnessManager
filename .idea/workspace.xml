@@ -2,35 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f83a051e-78e9-4d1d-8a75-78dd2601879c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/client/one.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/receptionist/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/receptionist/one.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/trainer/allClients.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/trainer/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/trainer/one.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/user/all.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/user/delete.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/user/one.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/ClientController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/ReceptionistController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/TrainerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/client/all.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/client/all.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/client/create.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/client/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/client/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/trainer/all.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/trainer/all.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/trainer/create.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/register.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/test.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/ArticleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/ArticleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Form/UserType.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -94,34 +66,7 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/user/edit.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="22" column="33" lean-forward="true" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
-              <folding>
-                <element signature="e#12#26#0#Twig" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Controller/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="186" column="46" lean-forward="true" selection-start-line="186" selection-start-column="46" selection-end-line="186" selection-end-column="46" />
-              <folding>
-                <element signature="e#44#74#0#PHP" expanded="true" />
-                <element signature="e#1155#1389#0#PHP" />
-                <element signature="e#1676#2113#0#PHP" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -441,7 +386,7 @@
       <workItem from="1545988237498" duration="3680000" />
       <workItem from="1546506919458" duration="55000" />
       <workItem from="1546506996853" duration="24585000" />
-      <workItem from="1546947376655" duration="63318000" />
+      <workItem from="1546947376655" duration="63576000" />
     </task>
     <task id="LOCAL-00001" summary="test commit">
       <created>1543313224219</created>
@@ -590,11 +535,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547024878461</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="general update">
+      <created>1547414220781</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1547414220781</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158694000" />
+    <option name="totallyTimeSpent" value="158952000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -607,7 +559,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1280" height="777" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2374798" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -672,7 +623,8 @@
     <MESSAGE value="new roles" />
     <MESSAGE value="add client &amp; trainer menu" />
     <MESSAGE value="delete some files" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete some files" />
+    <MESSAGE value="general update" />
+    <option name="LAST_COMMIT_MESSAGE" value="general update" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Entity/Trainer.php">
@@ -1033,20 +985,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11/schema/fitness_manager_app/table/users.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11/schema/fitness_manager_app/table/users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/client/edit.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1067,17 +1005,31 @@
     <entry file="file://$PROJECT_DIR$/app/Resources/views/user/edit.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
-          <caret line="22" column="33" lean-forward="true" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
+          <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
           <folding>
             <element signature="e#12#26#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="das://d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11/schema/fitness_manager_app/table/users.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11/schema/fitness_manager_app/table/users">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Controller/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="186" column="46" lean-forward="true" selection-start-line="186" selection-start-column="46" selection-end-line="186" selection-end-column="46" />
+        <state relative-caret-position="730">
+          <caret line="200" selection-start-line="200" selection-end-line="200" />
           <folding>
             <element signature="e#44#74#0#PHP" expanded="true" />
             <element signature="e#1155#1389#0#PHP" />
