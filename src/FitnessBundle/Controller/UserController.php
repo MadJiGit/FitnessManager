@@ -2,6 +2,7 @@
 
 namespace FitnessBundle\Controller;
 
+use FitnessBundle\Entity\Role;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -23,10 +24,20 @@ class UserController extends Controller
 		$user = new User();
 		$form = $this->createForm(UserType::class, $user);
 		$form->handleRequest($request);
+
 		if ($form->isSubmitted()) {
+
 			$password = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
+
+
+
+//			$roleRepo = $this->getDoctrine()->getRepository(Role::class);
+//			$roleUser = $roleRepo->findOneBy(['name' => 'ROLE_CLIENT']);
+//
+//			$user->addRole($roleUser);
+
 
 			$em = $this
 				->getDoctrine()
