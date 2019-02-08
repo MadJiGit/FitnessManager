@@ -98,7 +98,7 @@ class User implements UserInterface
 	/**
 	 * @var ArrayCollection
 	 *
-	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Role", inversedBy="users")
+	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Role")
 	 * @ORM\JoinTable(name="users_roles",
 	 *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
 	 *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
@@ -419,11 +419,6 @@ class User implements UserInterface
 		return $stringRoles;
 	}
 
-	/**
-	 * @param Role $role
-	 *
-	 * @return User
-	 */
 	public function addRole(Role $role)
 	{
 		$this->roles[] = $role;

@@ -1,18 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
     <form name="authenticate" action="{{ path('security_login')}}" method="post">
         <h2>Please login </h2>
         <label>
-            <input type="text" id="username" name="_username" placeholder="Username"/>
+            <input type="text" name="_username" placeholder="Username"/>
         </label><br/>
         <label>
-            <input type="password" id="password" name="_password" placeholder="Password"/>
+            <input type="password" name="_password" placeholder="Password"/>
         </label><br/>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/><br/>
         <input type="submit" value="Login"/>

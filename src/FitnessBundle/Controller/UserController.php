@@ -2,7 +2,6 @@
 
 namespace FitnessBundle\Controller;
 
-use FitnessBundle\Entity\Role;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,20 +23,10 @@ class UserController extends Controller
 		$user = new User();
 		$form = $this->createForm(UserType::class, $user);
 		$form->handleRequest($request);
-
 		if ($form->isSubmitted()) {
-
 			$password = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($password);
-
-
-
-//			$roleRepo = $this->getDoctrine()->getRepository(Role::class);
-//			$roleUser = $roleRepo->findOneBy(['name' => 'ROLE_CLIENT']);
-//
-//			$user->addRole($roleUser);
-
 
 			$em = $this
 				->getDoctrine()
@@ -185,38 +174,44 @@ class UserController extends Controller
 
 		if ($user->isAdmin() || $user->isReceptionist()) {
 			if ($form->isValid() && $form->isSubmitted()) {
+				$oldPass = $request->get('oldPassword');
 				$newPass = $request->get('newPassword');
 				$repeatNewPass = $request->get('repeatNewPassword');
 
 				$newPassHash = password_hash($newPass, PASSWORD_BCRYPT);
 
-				if ($newPass === $repeatNewPass) {
-					if ($newPass === '') {
-						$client->setPassword($pass);
+				$passCheck = password_verify($oldPass, $pass);
+
+				if ($passCheck) {
+					if ($newPass === $repeatNewPass) {
+						if ($newPass === '') {
+							$client->setPassword($pass);
+						} else {
+							$client->setPassword($newPassHash);
+						}
+						$em = $this->getDoctrine()->getManager();
+						$em->persist($client);
+						$em->flush();
+						$message = ('Mr/s, ' . $user->getFullName() . 'update successful');
+
 					} else {
-						$client->setPassword($newPassHash);
+						$message = ('Mr/s, ' . $user->getFullName() . 'password not match');
 					}
-					$em = $this->getDoctrine()->getManager();
-					$em->persist($client);
-					$em->flush();
-					$message = ('Mr/s, ' . $user->getFullName() . 'update successful');
 
 				} else {
-					$message = ('Mr/s, ' . $user->getFullName() . 'password not match');
+					$message = ('Mr/s, ' . $user->getFullName() . 'Wrong password');
 				}
 
 				$this->addFlash('info', $message);
 				return $this->redirectToRoute('user_view_one',
 					array('id' => $client->getId(), 'user' => $user));
 			}
-
+		} else {
+			$message = ('Mr/s, ' . $user->getFullName() . '! You have no rights to edit this client');
+			$this->addFlash('info', $message);
+			return $this->redirectToRoute('user_view_one',
+				array('id' => $client->getId(), 'user' => $user));
 		}
-// else {
-//			$message = ('Mr/s, ' . $user->getFullName() . '! You have no rights to edit this client');
-//			$this->addFlash('info', $message);
-//			return $this->redirectToRoute('user_view_one',
-//				array('id' => $client->getId(), 'user' => $user));
-//		}
 
 
 		return $this->render('user/edit.html.twig',
