@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h4>View one order</h4><hr><br/>
+
+
+    <table style="width:50%" border="1">
+        <tr>
+            <th>Order valid from </th>
+            <th>Order valid to </th>
+            <th>Visits ordered</th>
+            <th>Visits left</th>
+            <th colspan="1"> Edit </th>
+        </tr>
+
+            <tr>
+                <td>{{ order.startDate|date("d/m/Y") }}</td>
+                <td>{{ order.dueDate|date("d/m/Y") }}</td>
+                <td>{{ order.visitsOrder }}</td>
+                <td>{{ order.visitsLeft }}</td>
+                {#<td><a href="{{ path('edit_order', {id: order.getId}) }}">Edit order</a></td>#}
+                <td><a href="{{path('edit_order', {id: order.id}) }}">Edit order</a></td>
+            </tr>
+
+    </table>
+
+    <a href="{{ path('view_all_orders', {id: order.cardId}) }}">View All Orders
+    </a><br/>
+
+{% endblock %}
+

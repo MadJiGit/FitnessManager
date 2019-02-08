@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h4>Register user</h4><hr><br/>
+
+{#{% block body %}#}
+
+
+    {{ form_start(form, {'attr': {'novalidate':'validate'}}) }}
+
+    {{ form_errors(form) }}
+
+
+    {{ form_end(form) }}
+
+    {#<a href="{{ path('security_login') }}">#}
+        {#Login#}
+    {#</a><br/>#}
+    {#<a href="{{ path('index') }}">#}
+        {#Back#}
+    {#</a><br/>#}
+
+{% endblock %}

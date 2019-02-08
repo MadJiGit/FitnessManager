@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <h4>Edit profile</h4><hr><br/>
+
+    {#{% for msg in app.session.flashbag.get('info') %}#}
+    {#<div class="flashback">#}
+    {#<p style="color: red">{{ msg }}</p>#}
+    {#</div>#}
+    {#{% endfor %}#}
+    {#{% if error %}#}
+    {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+    {#{% endif %}#}
+
+    <h3>My Profile </h3>
+
+    <h4>{{ user.username }}</h4>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.old_password) }}
+                    {{ form_row(form.new_password) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {#{{ form_row(form.roles) }}#}
+                </div>
+                <div class="col-md-6">
+                    {#{{ form_row(form.enabled) }}#}
+                    {#{{ form_label(form.enabled) }}#}
+                    {#{{ form_widget(form.enabled) }}#}
+
+                    {#{{ form_row(form_label(form.enabled)) }}#}
+                    {#{{ form_row(form_widget(form.enabled)) }}#}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark"><i class="fa fa-check"></i> Update </button>
+        </div>
+        <div>
+            <a href="{{ path("index") }}"><button>Back</button></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{#{% block body %}#}
+    {#{% for msg in app.session.flashbag.get('info') %}#}
+        {#<div class="flashback">#}
+            {#<p style="color: red">{{ msg }}</p>#}
+        {#</div>#}
+    {#{% endfor %}#}
+    {#{% if error %}#}
+        {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+    {#{% endif %}#}
+
+
+    {#{{ form_start(form, {'attr': {'novalidate':'validate'}}) }}#}
+    {#{{ form_errors(form) }}#}
+    {#{{ form_end(form) }}#}
+
+    {#{{ form_row(form.username, {'attr': {'novalidate':'validate'}}) }}#}
+    {#{{ form_row(form.email, {'attr': {'novalidate':'validate'}}) }}#}
+    {#{{ form_row(form.chose_role, {'attr': {'novalidate':'validate'}}) }}#}
+
+    {#<label>#}
+        {#Password: <input type="password" name="password" placeholder="Password"/>#}
+    {#</label><br/>#}
+    {#<div><button type="submit" id="user_submit" name="user[submit]">Submit</button></div>#}
+
+    {#<a href="{{ path('hair_index') }}">#}
+        {#Back#}
+    {#</a><br/>#}
+
+{#{% endblock %}#}
+

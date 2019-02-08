@@ -4,15 +4,20 @@ namespace FitnessBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * User
+ * UserType
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="FitnessBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface
+class User  implements UserInterface, \Serializable
 {
 	/**
 	 * @var int
@@ -26,102 +31,88 @@ class User implements UserInterface
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="username", type="string", length=255, unique=true)
+	 * @ORM\Column(name="username", type="string", length=255, unique=true, nullable=false)
+	 *
+	 * @Assert\NotBlank(message="The field is required")
+	 * @Assert\Length(min = 5))
+	 *
 	 */
 	private $username;
 
+
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="password", type="string", length=255)
+	 * @ORM\Column(name="password", type="string", length=191)
+	 * @Assert\NotBlank(message="Паролата е задължителна.", groups={"registration"})
+	 * @Assert\Length(
+	 *     min="6",
+	 *     max="12",
+	 *     minMessage="Паролата трябва да е дълга поне {{ limit }} символа.",
+	 *     maxMessage="Паролата трябва да съдържа не повече от {{ limit }} символа.",
+	 *     groups={"registration"}
+	 * )
+	 * @Assert\Regex(
+	 *     pattern="/^[A-Za-z0-9]+$/",
+	 *     message="Паролата трябва се състои само от малки и главни букви и цифри.",
+	 *     groups={"registration"}
+	 * )
 	 */
 	private $password;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="first_name", type="string", length=255)
-	 */
-	private $firstName;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="last_name", type="string", length=255)
-	 */
-	private $lastName;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="email", type="string", length=50, unique=true)
+	 * @ORM\Column(name="email", type="string", length=255, unique=true)
+	 * @Assert\NotBlank(message="The field is required")
+	 * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
 	 */
 	private $email;
 
 	/**
-	 * @var string|null
+	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="phone", type="string", length=50, nullable=true)
+	 * @ORM\Column(name="created_at", type="datetime")
 	 */
-	private $phone;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="gender", type="string", length=1)
-	 */
-	private $gender;
+	private $createdAt;
 
 	/**
 	 * @var \DateTime
 	 *
-	 * @ORM\Column(name="data_create", type="datetime")
+	 * @ORM\Column(name="updated_at", type="datetime")
 	 */
-	private $dataCreate;
-
+	private $updatedAt;
 
 	/**
-	 * @var ArrayCollection
+	 * @var ArrayCollection|Role[]
 	 *
-	 * @ORM\OneToMany(targetEntity="FitnessBundle\Entity\Article", mappedBy="author")
-	 */
-	private $articles;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="role", type="string", length=25)
-	 */
-	private $role;
-
-
-	/**
-	 * @var ArrayCollection
-	 *
-	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Role")
-	 * @ORM\JoinTable(name="users_roles",
+	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Role", inversedBy="users")
+	 * @ORM\JoinTable(name="roles_users",
 	 *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
 	 *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
-	 *     )
+	 * )
 	 */
 	private $roles;
 
 	/**
-	 * @var string
+	 * @var bool
 	 *
-	 * @ORM\Column(name="sport", type="string", length=25, nullable=true)
+	 * @ORM\Column(name="enabled", type="boolean", nullable=true)
 	 */
-	private $sport;
+	private $enabled;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="FitnessBundle\Entity\Card", mappedBy="user")
+	 *
+	 * @var Card[]/ArrayCollection $cards;
+	 */
+	private $cards;
 
 	/**
 	 * @var string
 	 */
-	private $cardNumber;
-
-	/**
-	 * @var string
-	 */
-	private $fullName;
+	private $role;
 
 
 
@@ -132,29 +123,47 @@ class User implements UserInterface
 	public function __construct()
 	{
 		$this->roles = new ArrayCollection();
-		$this->articles = new ArrayCollection();
-		$this->dataCreate = new \DateTime('now');
+		$this->createdAt = new \DateTime();
+		$this->updatedAt = new \DateTime();
+		$this->setEnabled(true);
+		$this->cards = new ArrayCollection();
 	}
 
 
+	public function __toString()
+	{
+		return $this->getUsername();
+	}
+
+
+	public function getRole()
+	{
+		return $this->role;
+	}
+
+	public function setRole($role)
+	{
+		$this->role = $role;
+	}
+
 	/**
-	 * Get id.
+	 * Get id
 	 *
 	 * @return int
 	 */
-	public function getId()
+	public function getId(): ?int
 	{
 		return $this->id;
 	}
 
 	/**
-	 * Set username.
+	 * Set username
 	 *
 	 * @param string $username
 	 *
 	 * @return User
 	 */
-	public function setUsername($username)
+	public function setUsername($username): User
 	{
 		$this->username = $username;
 
@@ -162,7 +171,7 @@ class User implements UserInterface
 	}
 
 	/**
-	 * Get username.
+	 * Get username
 	 *
 	 * @return string
 	 */
@@ -172,13 +181,13 @@ class User implements UserInterface
 	}
 
 	/**
-	 * Set password.
+	 * Set password
 	 *
 	 * @param string $password
 	 *
 	 * @return User
 	 */
-	public function setPassword($password)
+	public function setPassword($password): User
 	{
 		$this->password = $password;
 
@@ -186,213 +195,57 @@ class User implements UserInterface
 	}
 
 	/**
-	 * Get password.
+	 * Get password
 	 *
 	 * @return string
 	 */
-	public function getPassword()
+	public function getPassword(): ?string
 	{
 		return $this->password;
 	}
 
-	/**
-	 * Set firstName.
-	 *
-	 * @param string $firstName
-	 *
-	 * @return User
-	 */
-	public function setFirstName($firstName)
-	{
-		$this->firstName = $firstName;
+//	/**
+//	 * @return string
+//	 */
+//	public function getPlainPassword(): ?string
+//	{
+//		return $this->plainPassword;
+//	}
+//
+//	/**
+//	 * @param string $plainPassword
+//	 * @return string
+//	 */
+//	public function setPlainPassword($plainPassword): string
+//	{
+//		$this->plainPassword = $plainPassword;
+//	}
 
-		return $this;
-	}
 
 	/**
-	 * Get firstName.
+	 * Get email
 	 *
 	 * @return string
 	 */
-	public function getFirstName()
-	{
-		return $this->firstName;
-	}
-
-	/**
-	 * Set lastName.
-	 *
-	 * @param string $lastName
-	 *
-	 * @return User
-	 */
-	public function setLastName($lastName)
-	{
-		$this->lastName = $lastName;
-
-		return $this;
-	}
-
-	/**
-	 * Get lastName.
-	 *
-	 * @return string
-	 */
-	public function getLastName()
-	{
-		return $this->lastName;
-	}
-
-	/**
-	 * Set email.
-	 *
-	 * @param string $email
-	 *
-	 * @return User
-	 */
-	public function setEmail($email)
-	{
-		$this->email = $email;
-
-		return $this;
-	}
-
-	/**
-	 * Get email.
-	 *
-	 * @return string
-	 */
-	public function getEmail()
+	public function getEmail(): ?string
 	{
 		return $this->email;
 	}
 
 	/**
-	 * Set phone.
+	 * Set email
 	 *
-	 * @param string|null $phone
-	 *
-	 * @return User
-	 */
-	public function setPhone($phone = null)
-	{
-		$this->phone = $phone;
-
-		return $this;
-	}
-
-	/**
-	 * Get phone.
-	 *
-	 * @return string|null
-	 */
-	public function getPhone()
-	{
-		return $this->phone;
-	}
-
-	/**
-	 * Set gender.
-	 *
-	 * @param string $gender
+	 * @param string $email
 	 *
 	 * @return User
 	 */
-	public function setGender($gender)
+	public function setEmail($email): User
 	{
-		$this->gender = $gender;
+		$this->email = $email;
 
 		return $this;
+
 	}
-
-	/**
-	 * Get gender.
-	 *
-	 * @return string
-	 */
-	public function getGender()
-	{
-		return $this->gender;
-	}
-
-	/**
-	 * Set dataCreate.
-	 *
-	 * @param \DateTime $dataCreate
-	 *
-	 * @return User
-	 */
-	public function setDataCreate($dataCreate)
-	{
-		$this->dataCreate = $dataCreate;
-
-		return $this;
-	}
-
-	/**
-	 * Get dataCreate.
-	 *
-	 * @return string
-	 */
-	public function getDataCreate()
-	{
-		return $this->dataCreate->format('Y-m-d H:m:s');
-	}
-
-
-	/**
-	 * @return ArrayCollection
-	 */
-	public function getArticles()
-	{
-		return $this->articles;
-	}
-
-	/**
-	 * @param Article $article
-	 *
-	 * @return User
-	 */
-	public function setArticles($article)
-	{
-		$this->articles[] = $article;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $fullName
-	 */
-	public function setFullName($fullName)
-	{
-		$this->fullName = $fullName;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getFullName()
-	{
-		return $this->getFirstName() . ' ' . $this->getLastName();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getRole()
-	{
-		return $this->role;
-	}
-
-	/**
-	 * @param string $role
-	 */
-	public function setRole($role)
-	{
-		$this->role = $role;
-	}
-
 
 	/**
 	 * Returns the roles granted to the user.
@@ -411,124 +264,248 @@ class User implements UserInterface
 	public function getRoles()
 	{
 		$stringRoles = [];
+		/** @var Role $role */
 		foreach ($this->roles as $role) {
-			/** @var $role Role */
 			$stringRoles[] = $role->getRole();
 		}
 
 		return $stringRoles;
+
+//		return $this->roles;
 	}
 
-	public function addRole(Role $role)
+	public function getAllRoles()
+	{
+		return $this->roles;
+	}
+
+
+	/**
+	 * @param Role $role
+	 *
+	 * @return User
+	 */
+	public function addRole(Role $role): User
 	{
 		$this->roles[] = $role;
 
 		return $this;
 	}
 
-
 	/**
-	 * @param $article
-	 * @return bool
+	 * @param array $roles
+	 * @return $this
 	 */
-	public function isAuthor(Article $article)
+	public function setRoles($roles): self
 	{
-		return $article->getAuthorId() === $this->getId();
+		$this->roles = $roles;
+
+		return $this;
 	}
 
 
-	/**
-	 * @return bool
-	 */
-	public function isSuperAdmin()
+	public function removeRole(Role $role)
 	{
-		if ($this->getRole() === 'super_admin') {
-			return true;
+		$this->roles->removeElement($role);
+	}
+
+	/**
+	 * @return Role[]|ArrayCollection
+	 */
+	public function getProfileRoles()
+	{
+		return $this->roles;
+	}
+
+	/**
+	 * @param Role[]|ArrayCollection $roles
+	 * @return User
+	 */
+	public function setProfileRoles($roles): User
+	{
+		foreach ($roles as $role) {
+			$this->addProfileRole($role);
 		}
+
+		return $this;
+	}
+
+	/**
+	 * @param Role $role
+	 * @return User
+	 */
+	public function addProfileRole(Role $role): User
+	{
+		if (!$this->roles->contains($role)) {
+			$this->roles->add($role);
+		}
+
+		return $this;
+	}
+
+	public function getRoleName()
+	{
+		$temp = $this->getRoles();
+
+		$result = explode('_', $temp[0]);
+		return strtolower(end($result));
+
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isAdmin()
+	public function isSuperAdmin(): bool
 	{
-		return $this->getRole() === 'Admin';
+		return in_array('ROLE_SUPER_ADMIN', $this->getRoles(), true);
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isManager()
+	public function isAdmin(): bool
 	{
-		return $this->getRole() === 'Manager';
-	}
-
-
-	/**
-	 * @return bool
-	 */
-	public function isReceptionist()
-	{
-		return $this->getRole() === 'Receptionist';
+		return $this->isSuperAdmin() || in_array('ROLE_ADMIN', $this->getRoles(), true);
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isTrainer()
+	public function isReceptionist(): bool
 	{
-		return $this->getRole() === 'Trainer';
+		return in_array('ROLE_RECEPTIONIST', $this->getRoles(), true);
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isAccountant()
+	public function isClient(): bool
 	{
-		return $this->getRole() === 'Accountant';
+		return in_array('ROLE_CLIENT', $this->getRoles(), true);
 	}
 
+
 	/**
-	 * @return bool
+	 * @param \DateTime $date
+	 * @return User
 	 */
-	public function isClient()
+	public function setUpdatedAt(\DateTime $date): User
 	{
-		return $this->getRole() === 'Client';
+		$this->updatedAt = $date;
+
+		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getSport()
+	public function getUpdatedAt(): string
 	{
-		return $this->sport;
-	}
 
-	/**
-	 * @param string $sport
-	 */
-	public function setSport($sport)
-	{
-		$this->sport = $sport;
+		return $this->updatedAt->format('Y-m-d H:m:s');
 	}
 
 	/**
 	 * @return string
 	 */
-	public function setCardNumber()
+	public function getCreatedAt(): string
 	{
-		return str_pad((int)$this->getId(), 8, '0', STR_PAD_LEFT);
+//		return $this->createdAt;
+
+		return $this->createdAt->format('Y-m-d H:m:s');
 	}
+
+	/**
+	 * @param \DateTime $createdAt
+	 * @return User
+	 */
+	public function setCreatedAt(\DateTime $createdAt): User
+	{
+		$this->createdAt = $createdAt;
+
+		return $this;
+	}
+
+	/**
+	 * Checks whether the user is enabled.
+	 *
+	 * Internally, if this method returns false, the authentication system
+	 * will throw a DisabledException and prevent login.
+	 *
+	 * @return bool true if the user is enabled, false otherwise
+	 *
+	 * @see DisabledException
+	 */
+	public function isEnabled(): bool
+	{
+		return $this->enabled;
+	}
+
+	/**
+	 * @param bool $enabled
+	 */
+	public function setEnabled(bool $enabled): void
+	{
+		$this->enabled = $enabled;
+	}
+
+	/**
+	 * @return Card[]
+	 */
+	public function getCards(): array
+	{
+		return $this->cards->toArray();
+	}
+
+	/**
+	 * @param Card[] $cards
+	 */
+	public function setCards(array $cards): void
+	{
+		$this->cards = $cards;
+	}
+
+
+
 
 
 	/**
-	 * @return string
+	 * String representation of object
+	 * @link https://php.net/manual/en/serializable.serialize.php
+	 * @return string the string representation of the object or null
+	 * @since 5.1.0
 	 */
-	public function getCardNumber()
+	public function serialize()
 	{
-//		return $this->cardNumber;
-		return str_pad((int)$this->getId(), 8, '0', STR_PAD_LEFT);
+		return serialize([
+			$this->id,
+			$this->username,
+			$this->password,
+			// see section on salt below
+			// $this->salt,
+		]);
 	}
+
+	/**
+	 * Constructs the object
+	 * @link https://php.net/manual/en/serializable.unserialize.php
+	 * @param string $serialized <p>
+	 * The string representation of the object.
+	 * </p>
+	 * @return void
+	 * @since 5.1.0
+	 */
+	public function unserialize($serialized)
+	{
+		list (
+			$this->id,
+			$this->username,
+			$this->password,
+			// see section on salt below
+			// $this->salt
+			) = unserialize($serialized, ['allowed_classes' => false]);
+	}
+
 
 
 	/**
@@ -554,4 +531,6 @@ class User implements UserInterface
 		// TODO: Implement eraseCredentials() method.
 	}
 
+
 }
+

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <h4>Edit card</h4>
+    <hr><br/>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_row(form.validFrom) }}<br/>
+    {{ form_row(form.validTo) }}<br/>
+
+    {{ form_end(form , {'render_rest': false}) }}
+
+    <a href="{{ path("view_one_card", {id: id}) }}">
+        <button>Back</button>
+    </a><br/>
+
+
+
+{% endblock %}
+

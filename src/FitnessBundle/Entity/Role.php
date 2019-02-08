@@ -25,45 +25,41 @@ class Role
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true, unique=true)
      */
     private $name;
 
 
 	/**
-	 * @var ArrayCollection
-	 *
+	 * @var ArrayCollection|User[]
 	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\User", mappedBy="roles")
 	 */
     private $users;
 
-	/**
-	 * Role constructor.
-	 */
-	public function __construct()
-	{
-		$this->users = new ArrayCollection();
-	}
+    public function __construct()
+    {
+    	$this->users = new ArrayCollection();
+    }
 
 
 	/**
-     * Get id.
+     * Get id
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name.
+     * Set name
      *
      * @param string $name
      *
      * @return Role
      */
-    public function setName($name)
+    public function setName($name): Role
     {
         $this->name = $name;
 
@@ -71,19 +67,46 @@ class Role
     }
 
     /**
-     * Get name.
+     * Get name
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
+	/**
+	 * @return string
+	 */
 
-    public function getRole()
+    public function getRole(): string
     {
     	return $this->getName();
     }
 
+	/**
+	 * @return ArrayCollection
+	 */
+	public function getUsers(): ArrayCollection
+	{
+		return $this->users;
+	}
+
+	/**
+	 * @param ArrayCollection|User[] $users
+	 * @return Role
+	 */
+	public function setUsers($users): Role
+	{
+		$this->users = $users;
+
+		return $this;
+	}
+
+
+	public function __toString() {
+		return ucfirst(strtolower(explode('_', $this->name)[1]));
+	}
 }
+

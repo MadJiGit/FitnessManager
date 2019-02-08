@@ -29,7 +29,29 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    # add more services, or override services that need manual wiring
-    # FitnessBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+    FitnessBundle\Service\:
+        resource: '../../src/FitnessBundle/Service'
+        public: true
+
+    FitnessBundle\Service\Profile\ProfileService:
+        arguments:
+            - "@security.password_encoder"
+            - "@security.token_storage"
+            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:User')"
+
+    FitnessBundle\Service\Role\RoleService:
+        arguments:
+            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:Role')"
+
+    FitnessBundle\Service\Card\CardService:
+        arguments:
+            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:Card')"
+
+    FitnessBundle\Service\CardOrder\CardOrderService:
+        arguments:
+            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:CardOrder')"
+
+#     add more services, or override services that need manual wiring
+#     FitnessBundle\Service\ExampleService:
+#         arguments:
+#             $someArgument: 'some_value'

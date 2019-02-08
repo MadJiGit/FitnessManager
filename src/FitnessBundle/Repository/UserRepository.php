@@ -2,6 +2,10 @@
 
 namespace FitnessBundle\Repository;
 
+use FitnessBundle\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
+
 /**
  * UserRepository
  *
@@ -10,4 +14,74 @@ namespace FitnessBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+
+	/** @var EntityManagerInterface $em */
+	private $em;
+
+	/**
+	 * CarRepository constructor.
+	 * @param EntityManagerInterface $em
+	 * @param ClassMetadata $class
+	 */
+	public function __construct(EntityManagerInterface $em, ClassMetadata $class)
+	{
+		parent::__construct($em, $class);
+
+		$this->em = $em;
+	}
+
+	/**
+	 * @param User $user
+	 * @return User
+	 */
+	public function save(User $user): User
+	{
+		if (null === $user->getId()) {
+			$this->em->persist($user);
+		}
+
+		$this->em->flush();
+
+		return $user;
+	}
+
+	/**
+	 * @param User $user
+	 */
+	public function delete(User $user): void
+	{
+		$this->em->remove($user);
+		$this->em->flush();
+	}
+
+
+	/**
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	public function selectByIdAsc(): \Doctrine\ORM\QueryBuilder
+	{
+		return $this->createQueryBuilder('user')
+			->select('user')
+			->orderBy('user.id', 'ASC');
+
+
+
+	}
+
+	public function deleteAllRoles($userId, $roleId): void
+	{
+
+		$role = $this->em->getRepository('FitnessBundle:Role')
+			->find($roleId);
+
+		$user = $this->em->getRepository('FitnessBundle:User')
+			->find($userId);
+
+		$user->removeRole($role);
+
+		$this->em->persist($user);
+		$this->em->flush();
+
+	}
+
 }

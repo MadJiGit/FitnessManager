@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    <h4>View one card</h4><hr><br/>
+
+    {{ card.cardNumber }} <br/>
+    {{ card.user }} <br/>
+    {{ card.createdAt|date("d/m/Y") }} <br/>
+    {{ card.validFrom|date("d/m/Y")}} <br/>
+    {{ card.validTo|date("d/m/Y") }} <br/>
+
+    <a href="{{ path('add_new_order', {id: card.id}) }}">Add New Order
+        </a><br/>
+    <a href="{{ path('view_all_orders', {id: card.id}) }}">View All Orders
+        </a><br/>
+
+    <a href="{{ path('edit_card', {id: card.id}) }}">Edit Card
+        </a><br/>
+
+    <div>
+        <a href="{{ path("view_all_cards", {id: card.user.id}) }}"><button>Back</button></a>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h4>View all cards</h4><hr><br/>
+
+
+<table style="width:50%" border="1">
+    <tr>
+        <th>Card Number</th>
+        <th colspan="4">Options</th>
+    </tr>
+    {% for card in cards %}
+    <tr>
+    <td>{{ card.cardNumber }} </td>
+
+    <td><a href="{{ path('add_new_order', {id: card.id}) }}">Add order
+        </a></td>
+    <td><a href="{{ path('view_all_orders', {id: card.id}) }}">View orders
+    </a></td>
+        <td><a href="{{path('view_one_card', {id: card.id} )}}">View card</a></td>
+        <td><a href="{{path('edit_card' , {id: card.id})}}">Edit card</a></td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+    <a href="{{ path('index' )}}">
+        <button>Back to My Profile</button>
+    </a><br/>
+{% endblock %}
+

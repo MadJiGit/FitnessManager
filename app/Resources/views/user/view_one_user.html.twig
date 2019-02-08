@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h4>View user</h4><hr><br/>
+
+    Username: {{ user.username }} <br/>
+    Email: {{ user.email }}<br/>
+    Created at: {{ user.createdAt }}<br/>
+    Changed at: {{ user.updatedAt }}<br/>
+    Enabled:
+    {% if user.enabled > 0 %}
+        <td>Yes</td>
+    {% else %}
+        <td>No</td>
+    {% endif %}<br/>
+    <tr><th> Cards with NUM: </th></tr>
+<table style="width:-moz-fit-content" border="1">
+    {% for card in user.cards %}
+    <tr><td>View card: <a href="{{ path('view_one_card', {id: card.id}) }}">{{ card.cardNumber }}
+    </a></td></tr>
+    {% endfor %}
+</table>
+
+    <a href="{{ path('index' )}}">
+        <button>Back to Home view</button>
+    </a><br/>
+
+    <a href="{{ path('self_edit_user', {id: user.id}) }}">
+        <button>Edit My Profile</button>
+    </a><br/>
+
+
+
+{% endblock %}
+

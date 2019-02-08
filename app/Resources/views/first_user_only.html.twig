@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+
+{% block main %}
+
+    <h4>Admin register</h4>
+
+    <form name="register" action="{{ path('register_super_admin') }}" method="post">
+        {#<input type="hidden" name="_csrf_token"#}
+               {#value="{{ csrf_token('authenticate') }}"/><br/>#}
+
+        {{ form_start(form, {'attr': {'novalidate':'validate'}}) }}
+
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
+        {{ form_row(form.submit) }}
+
+        {{ form_row(form._token) }}
+
+        {#{{ form_end(form) }}#}
+        {#{{ form_errors(form._csfr) }}#}
+        {{ form_end(form, {'render_rest': false}) }}
+
+        <br><a class="btn btn-primary btn-xs" href="{{ path('index') }}">back &raquo;</a>
+    </form>
+{% endblock %}

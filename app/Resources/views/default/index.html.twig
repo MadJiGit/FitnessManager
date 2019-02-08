@@ -1,147 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
+    {% for msg in app.session.flashbag.get('info') %}
+        <div class="flashback">
+            <p style="color: red">{{ msg }}</p>
+        </div>
+    {% endfor %}
 
     <header>
         {% if app.user %}
-            <div class="navbar navbar-default navbar-static-top" role="navigation">
-                <div class="container">
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-left">
-                            {% if app.user.isAdmin %}
-                                <li>
-                                    <a href="">
-                                        ADMIN
-                                    </a>
-                                </li>
-                                <li>
-                                    {#href="{{ path('client_delete', {'id':client.id}) }}"#}
-                                    <a href="{{ path('all_users', {'param':'null'}) }}">
-                                        All
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('all_users', {'param':'client' }) }}">
-                                        Client
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('all_users', {'param':'trainer' }) }}">
-                                        Trainer
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Receptionist
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Manager
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Account
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Admin
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if app.user.accountant %}
-                                <li>
-                                    <a href="">
-                                        ACCOUNTANT
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Account
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if app.user.manager %}
-                                <li>
-                                    <a href="">
-                                        MANAGER
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Client
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Trainer
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        Receptionist
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if app.user.receptionist %}
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left">
+
+                        {% if app.user.isSuperAdmin or app.user.isAdmin %}
                             <li>
-                                <a href="{{ path('receptionist_view_one', {'id': app.user.id}) }}">
+                                <a href="{{ path('register_user') }}">
+                                    Register User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_all_user') }}">
+                                    All Users
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_view_one', {id: app.user.id}) }}">
                                     My Profile
-                                </a>
-                            </li>
+                                </a></li>
                             <li>
-                                <a href="{{ path('all_users', {'param':'client' }) }}">
-                                    Clients
-                                </a>
-                            </li>
+                        {% else %}
                             <li>
-                                <a href="{{ path('all_users', {'param':'trainer' }) }}">
-                                    Trainers
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    My Bookings
-                                </a>
-                                {% endif %}
-                                {% if app.user.trainer %}
-                            <li>
-                                <a href="{{ path('trainer_view_one', {'id': app.user.id}) }}">
-                                    My Profile
-                                </a>
-                            </li>
+                                <a href="{{ path('view_one_user', {id: app.user.id}) }}">
+                                    View Profile
+                                </a></li>
                             <li>
                             <li>
-                                {#<a href="{{ path('trainer_all_clients_view', {'id': app.user.id}) }}">#}
-                                <a href="">
-                                    My Clients
-                                </a>
-                            </li>
+                                <a href="{{ path('add_new_card', {id: app.user.id}) }}">
+                                    Add card
+                                </a></li>
                             <li>
-                                <a href="">
-                                    My Bookings
-                                </a>
-                            </li>
-                            {% endif %}
-                            {% if app.user.client %}
-                                <li>
-                                    <a href="{{ path('client_view_one', {'id': app.user.id}) }}">
-                                        My Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        My Bookings
-                                    </a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div>
+                            <li>
+                                <a href="{{ path('view_all_cards', {id: app.user.id}) }}">
+                                    View All Cards
+                                </a></li>
+                        {% endif %}
+
+                    </ul>
                 </div>
             </div>
+        </div>
         {% endif %}
     </header>
-
 {% endblock %}

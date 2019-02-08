@@ -1,3 +1,5 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
 security:
     encoders:
         # Our user class and the algorithm we'll use to encode passwords
@@ -10,6 +12,8 @@ security:
         # To load users from somewhere else: http://symfony.com/doc/current/cookbook/security/custom_provider.html
         database_users:
             entity: { class: FitnessBundle:User, property: username }
+
+
 
     # http://symfony.com/doc/current/book/security.html#firewalls-authentication
     firewalls:
@@ -37,10 +41,11 @@ security:
                 # The route name the user can go to in order to logout
                 path: security_logout
                 # The name of the route to redirect to after logging out
-                target: fitness_index
+                target: index
 
 
     access_control:
-    # this is a catch-all for the admin area
-    # additional security lives in the controllers
-#        - { path: '^/(%locale%)/admin', roles: ROLE_ADMIN }
+#     this is a catch-all for the admin area
+#     additional security lives in the controllers
+        - { path: ^/admin, roles: [ROLE_SUPER_ADMIN, ROLE_ADMIN] }
+

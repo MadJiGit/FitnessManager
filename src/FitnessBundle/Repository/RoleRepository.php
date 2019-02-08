@@ -2,6 +2,9 @@
 
 namespace FitnessBundle\Repository;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
+
 /**
  * RoleRepository
  *
@@ -10,4 +13,32 @@ namespace FitnessBundle\Repository;
  */
 class RoleRepository extends \Doctrine\ORM\EntityRepository
 {
+
+	/** @var EntityManagerInterface $em */
+	private $em;
+
+	/**
+	 * CarRepository constructor.
+	 * @param EntityManagerInterface $em
+	 * @param ClassMetadata $class
+	 */
+	public function __construct(EntityManagerInterface $em, ClassMetadata $class)
+	{
+		parent::__construct($em, $class);
+
+		$this->em = $em;
+	}
+
+	public function removeOneRole(array $criteria): void
+	{
+		$result = $this->findOneBy($criteria);
+
+
+		dump($result);
+		exit;
+
+
+	}
+
+
 }

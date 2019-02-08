@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block main %}
+
+    <h4>Admin register</h4>
+
+    <form name="register" action="{{ path('register_user') }}" method="post">
+
+    {{ form_start(form, {'attr': {'novalidate':'validate'}}) }}
+
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password) }}
+    {{ form_errors(form) }}
+    {{ form_row(profileRoles) }}
+
+       {{ form_end(form, {'render_rest': false}) }}
+
+    {#<a href="{{ path('security_login') }}">#}
+        {#Login#}
+    {#</a><br/>#}
+    <br><a class="btn btn-primary btn-xs" href="{{ path('index') }}">back &raquo;</a>
+</form>
+{% endblock %}

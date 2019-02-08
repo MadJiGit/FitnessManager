@@ -3,261 +3,314 @@
 namespace FitnessBundle\Controller;
 
 use FitnessBundle\Entity\User;
+use FitnessBundle\Form\ProfileType;
 use FitnessBundle\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use FitnessBundle\Service\FormError\FormErrorServiceInterface;
+use FitnessBundle\Service\Profile\ProfileServiceInterface;
+use FitnessBundle\Service\Role\RoleServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Security;
+
 
 class UserController extends Controller
 {
+
+	/** @var FormErrorServiceInterface $formErrorService */
+	private $formErrorService;
+
+	/** @var ProfileServiceInterface $profileService */
+	private $profileService;
+
+	/** @var RoleServiceInterface $roleService */
+	private $roleService;
+
+	/** @var Security $security */
+	private $security;
+
 	/**
-	 * @Route ("/register", name="user_register")
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-	 * @throws \Exception
+	 * UserController constructor.
+	 * @param FormErrorServiceInterface $formErrorService
+	 * @param ProfileServiceInterface $profileService
+	 * @param RoleServiceInterface $roleService
+	 * @param Security $security
 	 */
-
-	public function registerAction(Request $request)
+	public function __construct(FormErrorServiceInterface $formErrorService, ProfileServiceInterface $profileService, RoleServiceInterface $roleService, Security $security)
 	{
-		$user = new User();
-		$form = $this->createForm(UserType::class, $user);
-		$form->handleRequest($request);
-		if ($form->isSubmitted()) {
-			$password = $this->get('security.password_encoder')
-				->encodePassword($user, $user->getPassword());
-			$user->setPassword($password);
-
-			$em = $this
-				->getDoctrine()
-				->getManager();
-			$em->persist($user);
-			$em->flush();
-
-			return $this->profile();
-
-		}
-
-		return $this->render('user/register.html.twig');
+		$this->formErrorService = $formErrorService;
+		$this->profileService = $profileService;
+		$this->roleService = $roleService;
+		$this->security = $security;
 	}
 
 	/**
-	 * @Route("/profile", name="user_profile")
-	 */
-	public function profile()
-	{
-		$userId = $this->getUser()->getId();
-		$user = $this
-			->getDoctrine()
-			->getRepository(User::class)
-			->find($userId);
-
-		return $this->render('default/index.html.twig', array('user' => $user));
-
-	}
-
-	/**
-	 * @Route("/user/edit/{id}", name="user_edit")
-	 * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+	 * @Route("/user/edit_test/{id}", methods={"GET", "POST"}, name="self_edit_user")
 	 * @param $id
 	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-	 * @throws \Exception
-	 */
-	public function editProfile($id, Request $request)
-	{
-		/** @var User $user */
-		$user = $this->getDoctrine()->getRepository(User::class)->find($id);
-
-		if ($user === null) {
-			return $this->redirectToRoute('user_profile');
-		}
-
-		$form = $this->createForm(UserType::class, $user);
-		$form->handleRequest($request);
-
-		return $this->render('user/edit.html.twig',
-			array('user' => $user,
-				'form' => $form->createView()
-			)
-		);
-
-	}
-
-	/**
-	 * @Route ("user/all/{param}", name="all_users")
-	 * @param $param
 	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function findAllUsers($param)
-	{
-		if ($param === 'null') {
-			$users = $this
-				->getDoctrine()
-				->getRepository(User::class)
-				->findAll();
-
-			return $this->render('user/all.html.twig', array('users' => $users));
-
-		} else if ($param === 'client') {
-			$users = $this
-				->getDoctrine()
-				->getRepository(User::class)
-				->findBy(array('role' => 'Client'));
-
-			return $this->render('user/all.html.twig', array('users' => $users));
-
-		} else if ($param === 'trainer') {
-			$users = $this
-				->getDoctrine()
-				->getRepository(User::class)
-				->findBy(array('role' => 'Trainer'));
-
-			return $this->render('user/all.html.twig', array('users' => $users));
-
-		} else {
-			$users = $this
-				->getDoctrine()
-				->getRepository(User::class)
-				->findAll();
-
-			$message = 'something is wrong';
-			$this->addFlash('info', $message);
-			return $this->render('user/all.html.twig', array('users' => $users));
-		}
-
-	}
-
-
-	/**
-	 * @Route ("user/one/{id}", name="user_view_one")
-	 * @param $id
-	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function findOneClient($id)
-	{
-		$user = $this
-			->getDoctrine()
-			->getRepository(User::class)
-			->find($id);
-
-		return $this->render('user/one.html.twig', array('user' => $user));
-	}
-
-
-	/**
-	 * @Route("/user/edit/{id}", name="user_edit")
-	 * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-	 * @param $id
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
 	 * @throws \Exception
 	 */
-	public function editUser($id, Request $request)
+	public function editUser($id, Request $request): \Symfony\Component\HttpFoundation\Response
 	{
-		/** @var User $user */
-		$client = $this
-			->getDoctrine()
-			->getRepository(User::class)
-			->find($id);
+		$isUser = $this->security->isGranted(['ROLE_USER']);
 
-		if ($client === null) {
-			return $this->redirectToRoute('user_view_one');
-		}
-
-		$pass = $client->getPassword();
-		$form = $this->createForm(UserType::class, $client);
-		$form->handleRequest($request);
 		/** @var User $user */
 		$user = $this->getUser();
+		$userId = (int)$user->getId();
 
-
-		if ($user->isAdmin() || $user->isReceptionist()) {
-			if ($form->isValid() && $form->isSubmitted()) {
-				$oldPass = $request->get('oldPassword');
-				$newPass = $request->get('newPassword');
-				$repeatNewPass = $request->get('repeatNewPassword');
-
-				$newPassHash = password_hash($newPass, PASSWORD_BCRYPT);
-
-				$passCheck = password_verify($oldPass, $pass);
-
-				if ($passCheck) {
-					if ($newPass === $repeatNewPass) {
-						if ($newPass === '') {
-							$client->setPassword($pass);
-						} else {
-							$client->setPassword($newPassHash);
-						}
-						$em = $this->getDoctrine()->getManager();
-						$em->persist($client);
-						$em->flush();
-						$message = ('Mr/s, ' . $user->getFullName() . 'update successful');
-
-					} else {
-						$message = ('Mr/s, ' . $user->getFullName() . 'password not match');
-					}
-
-				} else {
-					$message = ('Mr/s, ' . $user->getFullName() . 'Wrong password');
-				}
-
-				$this->addFlash('info', $message);
-				return $this->redirectToRoute('user_view_one',
-					array('id' => $client->getId(), 'user' => $user));
-			}
-		} else {
-			$message = ('Mr/s, ' . $user->getFullName() . '! You have no rights to edit this client');
-			$this->addFlash('info', $message);
-			return $this->redirectToRoute('user_view_one',
-				array('id' => $client->getId(), 'user' => $user));
+		if (false === $isUser || $userId !== (int)$id){
+			$this->addFlash('info', 'You have not rights to change!');
+			return $this->redirectToRoute('index');
 		}
 
-
-		return $this->render('user/edit.html.twig',
-			array(
-				'form' => $form->createView(),
-				'user' => $client)
-		);
-	}
-
-	/**
-	 * @Route("/user/delete/{id}", name="user_delete")
-	 * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-	 * @param $id
-	 * @param Request $request
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-	 * @throws \Exception
-	 */
-	public function deleteUser($id, Request $request)
-	{
-		$user = $this
-			->getDoctrine()
-			->getRepository(User::class)
-			->find($id);
-
-		if ($user === null) {
-			return $this->redirectToRoute('user_view_one');
-		}
-
-		$form = $this->createForm(UserType::class, $user);
+		$form = $this->createForm(ProfileType::class, $user, ['user' => $this->getUser()]);
 		$form->handleRequest($request);
 
-		$admin = $this->getUser();
+		$this->formErrorService->checkErrors($form);
 
+		if ($form->isSubmitted() && $form->isValid()) {
+			try {
+				if (true === $this->profileService->changePassword($form, $user)) {
+					$this->addFlash('success', 'The password was changed successful.');
+				}
+			} catch (\Exception $ex) {
+				$this->addFlash('danger', $ex->getMessage());
 
-		if ($admin->isAdmin()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($user);
-			$em->flush();
+				return $this->render('user/edit_test.html.twig', [
+					'user' => $user,
+					'form' => $form->createView(),
+				]);
+			}
 
-			$this->addFlash('info', 'delete successful');
+			$this->profileService->editProfile($user);
 
-			return $this->findAllUsers('null');
+			$this->addFlash('success', 'Profile was successful changed.');
+
+			return $this->redirectToRoute('index');
 		}
 
-		$this->addFlash('info', 'user is not deleted');
-
-		return $this->findOneClient($id);
+		return $this->render('user/edit_test.html.twig', [
+			'user' => $user,
+			'form' => $form->createView(),
+		]);
 	}
+
+
+	/**
+	 * @Route("/user/view_one_user/{id}", name="view_one_user")
+	 * @param $id
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function viewOneUser($id): \Symfony\Component\HttpFoundation\Response
+	{
+		$user = $this->profileService->find($id);
+
+		return $this->render('user/view_one_user.html.twig', [
+			'user' => $user,
+		]);
+
+	}
+
 }
+//	/**
+//	 * @Route ("/user/register", name="self_register_user")
+//	 * @param Request $request
+//	 * @param TokenStorageInterface $tokenStorage
+//	 * @param SessionInterface $session
+//	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+//	 * @throws \Exception
+//	 */
+//	public function registerAction(Request $request, TokenStorageInterface $tokenStorage, SessionInterface $session)
+//	{
+//		$user = new User();
+//
+//		$form = $this->createForm(UserType::class, $user);
+//
+////		dump($this->createForm(UserType::class, $user));
+////		exit;
+//
+//		$form->handleRequest($request);
+//
+//		$this->formErrorService->checkErrors($form);
+//
+//
+//
+//
+////
+////		/** @var User $currUser */
+////		$currUser = $this->getUser();
+////
+////		$isAdmin = $currUser->isAdmin();
+////
+//////		dump($isAdmin);
+//////		exit;
+////
+////		$em = $this->getDoctrine()->getManager();
+////		$isUser = $em->getRepository(User::class)->findBy(array(), array('id' => 'DESC'), 1);
+//
+////		if ( $isAdmin === true) {
+//
+//		if ($form->isSubmitted() && $form->isValid()) {
+//
+////				$passwordHash = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+////				$user->setPassword($passwordHash);
+//
+//
+////				if ($isUser) {
+////					$choseRole = $user->getChoseRole();
+////					$roleRepo = $this->getDoctrine()->getRepository(Role::class);
+////					$userRole = $roleRepo->findOneBy(['name' => $choseRole]);
+////				} else {
+////					$roleRepo = $this->getDoctrine()->getRepository(Role::class);
+////					$userRole = $roleRepo->findOneBy(['name' => 'ADMIN']);
+////
+////				}
+//
+//
+//						$em = $this->getDoctrine()->getManager();
+////			$em->persist($user);
+////			$em->flush();
+//
+////			var_dump($form);
+////			exit;
+//
+//
+//			$userRole = $this->roleService->findOneBy(['name' => 'ROLE_SUPER_ADMIN']);
+////			$userRole = 'ROLE_SUPER_ADMIN';
+//			$user->addRole($userRole);
+//
+////			dump($user);
+////			exit;
+//
+//			$this->profileService->newProfile($user);
+//
+//
+//			$token = new UsernamePasswordToken(
+//				$user,
+//				$user->getPassword(),
+//				'main',
+//				$user->getRoles()
+//			);
+//
+////			$em = $this->getDoctrine()->getManager();
+////			$em->persist($user);
+////			$em->flush();
+//
+//			$tokenStorage->setToken($token);
+//			$session->set('_security_main', serialize($token));
+//
+//
+//
+//			$this->addFlash('info', 'successful register new user');
+//
+//			return $this->redirectToRoute('index');
+//		}
+//
+//		return $this->render('user/self_register.html.twig', [
+//				'form' => $form->createView(),
+//			]);
+//
+//		}
+
+//		$this->addFlash('info', 'you are not admin, login like admin');
+//
+//		return $this->redirectToRoute('hair_index');
+//	}
+
+
+//	/**
+//	 * @Route ("/edit_test/{id}", name="edit_user")
+//	 * @param $id
+//	 * @param Request $request
+//	 * @param UserPasswordEncoderInterface $passwordEncoder
+//	 * @param AuthenticationUtils $authenticationUtils
+//	 * @return \Symfony\Component\HttpFoundation\Response
+//	 */
+//	public function editUser($id, Request $request, UserPasswordEncoderInterface $passwordEncoder, AuthenticationUtils $authenticationUtils): \Symfony\Component\HttpFoundation\Response
+//	{
+//
+//		/** @var User $currentUser */
+//		$currentUser = $this->getUser();
+//
+//		$form = $this->createForm(UserType::class, $currentUser);
+//		$form->handleRequest($request);
+//
+//		$error = $authenticationUtils->getLastAuthenticationError();
+//
+//
+//		if ($form->isSubmitted() && $form->isValid()) {
+//
+//			$em = $this->getDoctrine()->getManager();
+//			$em->flush();
+//
+//			$this->addFlash('info', 'edit successful');
+//
+//			return $this->redirectToRoute('hair_index');
+//		}
+//
+//		return $this->render('user/edit_test.html.twig',
+//			['form' => $form->createView(),
+//				'user' => $currentUser,
+//				'error' => $error]);
+//
+//
+//	}
+
+//	/**
+//	 * @Route ("/edit_test/{id}", name="edit_user")
+//	 * @param $id
+//	 * @param Request $request
+//	 * @param AuthenticationUtils $authenticationUtils
+//	 * @return \Symfony\Component\HttpFoundation\Response
+//	 */
+//	public function editUser($id, Request $request, AuthenticationUtils $authenticationUtils): \Symfony\Component\HttpFoundation\Response
+//	{
+//
+//		/** @var User $currentUser */
+//		$user = $this->getUser();
+//
+//		dump($user);
+//		exit;
+//
+//		$form = $this->createForm(UserType::class, $user);
+//		$form->handleRequest($request);
+//
+////		$form = $this->createFormBuilder($user)
+////			->add('username', TextType::class)
+////			->add('email', EmailType::class)
+////			->add('chose_role', ChoiceType::class, array(
+////				'choices' => array(
+////					'Admin' => 'ROLE_ADMIN',
+////					'User' => 'ROLE_USER',
+////					'Client' => 'ROLE_CLIENT'
+////				),
+////				'placeholder' => 'Select role',
+////				'required' => true
+////			))
+////			->add('submit', SubmitType::class);
+//
+//
+//		$error = $authenticationUtils->getLastAuthenticationError();
+//
+//
+//		if ($form->isSubmitted() && $form->isValid()) {
+//
+//			$em = $this->getDoctrine()->getManager();
+//			$em->flush();
+//
+//			$this->addFlash('info', 'edit successful');
+//
+//			return $this->redirectToRoute('hair_index');
+//		}
+//
+//		return $this->render('user/edit_test.html.twig',
+//			['form' => $form->createView(),
+//				'error' => $error]);
+//
+//
+//	}
+//}

@@ -1,93 +1,48 @@
 {% extends 'base.html.twig' %}
 
 
-{% block main %}
+
+{% block body %}
+
+    <h4>Edit</h4><hr><br/>
+
     {% for msg in app.session.flashbag.get('info') %}
         <div class="flashback">
             <p style="color: red">{{ msg }}</p>
         </div>
     {% endfor %}
-    <div class="container body-content span=8 offset=2">
-        <div class="well">
-            <form class="form-horizontal" action="{{ path('user_edit', {id: user.id}) }}" method="POST">
-                <fieldset>
-                    <legend>Edit Client</legend>
+    {#{% if error %}#}
+        {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+    {#{% endif %}#}
 
-                    <h2>Please Register</h2>
-                    <label>
-                        <input type="text" name="user[username]" placeholder="Username" value="{{ user.username }}"/>
-                    </label><br/>
-                    <label>
-                        <input type="text"  name="oldPassword" placeholder="Enter Password"/>
-                    </label><br/>
-                    <label>ONLY IF YOU WANT TO CHANGE THE PASSWORD</label><br/>
-                    <label>
-                        <input type="text" style="background-color: darkorange" name="newPassword" placeholder="Enter New Password"/>
-                    </label><br/>
-                    <label>
-                        <input type="text" style="background-color: darkorange" name="repeatNewPassword" placeholder="Repeat New Password"/>
-                    </label><br/>
-                    <label>
-                        <input type="text" name="user[firstName]" placeholder="First name"
-                               value="{{ user.firstName }}"/>
-                    </label><br/>
-                    <label>
-                        <input type="text" name="user[lastName]" placeholder="Last name" value="{{ user.lastName }}"/>
-                    </label><br/>
-                    <label>
-                        <input type="email" name="user[email]" placeholder="Email" value="{{ user.email }}"/>
-                    </label><br/>
-                    <label>
-                        <input type="text" name="user[phone]" placeholder="Phone" value="{{ user.phone }}"/>
-                    </label><br/>
-                    {#<label>#}
-                    {#<input type="text" name="user[phone]" placeholder="Phone" value="{{ user.gender }}"/>#}
-                    {#</label><br/>#}
-                    <label>
-                        Current Gender - " {{ user.gender }} " -
-                        {#</label><br/>#}
-                        {#<label>#}
-                        Select new  <select typeof="text" name="user[gender]" value="{{ user.gender}}">
-                            <option value=""></option>
-                            <option value="M">Male</option>
-                            <option value="F">Female</option>
-                        </select>
-                    </label><br/>
-                    <label>
-                        Current Sport - {{ user.sport }}
-                        <select typeof="text" name="user[sport]">
-                            <option value=""></option>
-                            <option value="fitness">Fitness</option>
-                            <option value="yoga">Yoga</option>
-                        </select>
-                    </label><br/>
-                    <label>
-                        Current Role - {{ user.role }}
-                        <select typeof="text" name="user[role]">
-                            <option value=""></option>
-                            <option value="Admin">Admin</option>
-                            <option value="Manager">Manager</option>
-                            <option value="Receptionist">Receptionist</option>
-                            <option value="Client">Client</option>
-                            <option value="Trainer">Trainer</option>
-                        </select>
-                    </label><br/>
+<form class="form-horizontal" name="authenticate" action="{{ path('self_edit_user', {id: user.id}) }}" method="POST">
+    <legend>Edit Client</legend>
 
-                    {{ form_row(form._token) }}
+    <label>
+        Username: <input type="text" name="user[username]" placeholder="Username" value="{{ user.username }}"/>
+    </label><br/>
+    <label>
+        Email: <input type="text" name="user[email]" placeholder="Email" value="{{ user.email }}"/>
+    </label><br/>
+    <label>
+        All Roles: <input type="text" disabled  {% for role in user.roles %} value="{{ role }}" {% endfor %}/>
+    </label><br/>
+    <label>
+        Password: <input type="password" name="password" placeholder="Password"/>
+    </label><br/>
 
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-4">
-                            <a class="btn btn-default" href="{{ path('user_view_one', {id: user.id} ) }}">Cancel</a>
-                            <button type="submit" class="btn btn-success">Edit</button>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    </div>
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"/><br/>
+    {{ form_row(form._token) }}
 
+    <button type="submit" name="user[submit]" class="btn btn-success">Edit</button><br/><br/>
+
+    <a href="{{ path('index') }}">
+        Back
+    </a><br/>
+
+
+</form>
 
 {% endblock %}
-
-
 
