@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User  implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable
 {
 	/**
 	 * @var int
@@ -113,7 +113,6 @@ class User  implements UserInterface, \Serializable
 	 * @var string
 	 */
 	private $role;
-
 
 
 	/**
@@ -338,6 +337,8 @@ class User  implements UserInterface, \Serializable
 	{
 		if (!$this->roles->contains($role)) {
 			$this->roles->add($role);
+
+			$this->role = $role;
 		}
 
 		return $this;
@@ -348,8 +349,24 @@ class User  implements UserInterface, \Serializable
 		$temp = $this->getRoles();
 
 		$result = explode('_', $temp[0]);
-		return strtolower(end($result));
 
+		switch (count($result)) {
+			case 1:
+			case 2:
+				$test1 = strtolower(end($result));
+				return ucfirst($test1);
+				break;
+			case 3:
+				$first = strtolower($result[1]);
+				$second = strtolower($result[2]);
+				return ucfirst($first) . ' ' . ucfirst($second);
+				break;
+			default:
+				return 'no role';
+				break;
+
+
+		}
 	}
 
 	/**
@@ -466,9 +483,6 @@ class User  implements UserInterface, \Serializable
 	}
 
 
-
-
-
 	/**
 	 * String representation of object
 	 * @link https://php.net/manual/en/serializable.serialize.php
@@ -505,7 +519,6 @@ class User  implements UserInterface, \Serializable
 			// $this->salt
 			) = unserialize($serialized, ['allowed_classes' => false]);
 	}
-
 
 
 	/**

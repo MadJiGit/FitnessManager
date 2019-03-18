@@ -64,8 +64,8 @@ class ProfileType extends AbstractType
 					'placeholder' => 'Email',
 					'class' => 'form-control-sm'
 				]
-			])
-			->add('submit', SubmitType::class);
+			]);
+//			->add('submit', SubmitType::class);
 
 		$builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($currentUser) {
 			/** @var User $user */
@@ -116,29 +116,33 @@ class ProfileType extends AbstractType
 
 
 			if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'])
-				&& $user->getId() !== $currentUser->getId()) {
+//				&& $user->getId() !== $currentUser->getId()
+			) {
 				$form
-					// it's work
-//					->add('roles', EntityType::class, [
-//					'class' => Role::class,
-//					'choice_label' => 'name',
-//					'placeholder' => 'Choose a new role'
-//					])
-					->add('role', ChoiceType::class, [
-							'choices' => [
-								'' => '',
-								'Admin' => 'ROLE_ADMIN',
-								'Office' => 'ROLE_OFFICE',
-								'User' => 'ROLE_USER',
-							]
-						]
-					)
+//					 it's work
+					->add('roles', EntityType::class, [
+					'class' => Role::class,
+					'choice_label' => 'name',
+					'placeholder' => 'Choose a new role'
+					])
+
+//					->add('role', ChoiceType::class, [
+//							'choices' => [
+//								'' => '',
+//								'Admin' => 'ROLE_ADMIN',
+//								'Office' => 'ROLE_OFFICE',
+//								'User' => 'ROLE_USER',
+//							]
+//						]
+//					)
 
 					->add('enabled', CheckboxType::class, [
 						'label' => 'Is user is active?',
 						'required' => false,
 					]);
 			}
+
+			$form->add('submit', SubmitType::class);
 		});
 	}
 

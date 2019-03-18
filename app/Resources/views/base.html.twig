@@ -21,7 +21,7 @@
                     <a href="{{ path('index') }}" class="navbar-brand">FITNESS MANAGER</a>
                     {% if app.user %}
                         <a class="navbar-brand" href="{{ path('index')}}">
-                            {{ app.user.getRoleName()|capitalize }}
+                            {{ app.user.getRoleName() }}
                         </a>
                         <a class="navbar-brand" href="{{ path('view_one_user', {id: app.user.id}) }}">
                             {{ app.user.username|capitalize }}

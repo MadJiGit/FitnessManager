@@ -40,5 +40,9 @@ class RoleRepository extends \Doctrine\ORM\EntityRepository
 
 	}
 
+	public function removeAllRoles(array $criteria)
+	{
+	}
+
 
 }

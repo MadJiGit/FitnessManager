@@ -5,6 +5,7 @@ namespace FitnessBundle\Controller;
 use FitnessBundle\Entity\Role;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\ProfileType;
+use FitnessBundle\Form\RoleType;
 use FitnessBundle\Form\UserType;
 use FitnessBundle\Service\FormError\FormErrorServiceInterface;
 use FitnessBundle\Service\Profile\ProfileServiceInterface;
@@ -67,7 +68,9 @@ class AdminController extends Controller
 		}
 
 		$user = new User();
+
 		$form = $this->createForm(UserType::class, $user);
+
 		$form->handleRequest($request);
 
 		$this->formErrorService->checkErrors($form);
@@ -75,8 +78,10 @@ class AdminController extends Controller
 		if ($form->isSubmitted() && $form->isValid()) {
 
 			$role = $form->get('role')->getData();
-			$userRole = $this->roleService->findOneBy(['name' => $role]);
-			$user->addRole($userRole);
+
+//			$userRole = $this->roleService->findOneBy(['name' => $role]);
+
+			$user->addRole($role);
 
 
 			$passwordHash = $this->get('security.password_encoder')
@@ -116,10 +121,16 @@ class AdminController extends Controller
 		}
 
 		/** @var User $user */
+
 		$user = $this->profileService->find($id);
+		$role = new Role();
+		$role->setUsers($user);
+		$userRoles = $user->getRoles();
 
 		$form = $this->createForm(ProfileType::class, $user, ['user' => $this->getUser()]);
+//		$formRole = $this->createForm(RoleType::class, $role, ['user' => $user]);
 		$form->handleRequest($request);
+//		$formRole->handleRequest($request);
 
 		$this->formErrorService->checkErrors($form);
 
@@ -140,6 +151,7 @@ class AdminController extends Controller
 
 					return $this->render('admin/edit.html.twig', [
 						'user' => $user,
+//						'roles' => $formRole->createView(),
 						'form' => $form->createView(),
 					]);
 				}
@@ -147,7 +159,7 @@ class AdminController extends Controller
 
 
 			/** @var Role $roleFromForm */
-			$roleFromForm = $form->get('role')->getData();
+			$roleFromForm = $form->get('roles')->getData();
 
 			if ($roleFromForm !== ''){
 
@@ -158,8 +170,14 @@ class AdminController extends Controller
 					$this->profileService->removeAllRoles($userId, $role->getId());
 				}
 
-				$userRole = $this->roleService->findOneBy(['name' => $roleFromForm]);
-				$user->addRole($userRole);
+//				$userRole = $this->roleService->findOneBy(['name' => $roleFromForm]);
+//				$user->addRole($userRole);
+
+
+
+				$user->addRole($roleFromForm);
+
+
 			}
 
 			$enabledFromForm = $form->get('enabled')->getData();
@@ -176,8 +194,13 @@ class AdminController extends Controller
 			return $this->redirectToRoute('admin_all_user');
 		}
 
+
+//		dump($user);
+//		exit;
+
 		return $this->render('admin/edit.html.twig', [
 			'user' => $user,
+//			'roles' => $formRole->createView(),
 			'form' => $form->createView(),
 		]);
 	}

@@ -29,9 +29,10 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.username }}</td>
                 {#<td>{{ user.roles|join(", ") }}</td>#}
-                {% for role in user.roles %}
-                    <td>{{ role }}</td>
+                {% for role in user.getRoleName() %}
+                    {#<td>{{ role }}</td>#}
                 {% endfor %}
+                    <td>{{ user.getRoleName() }}</td>
 
                 {% if user.enabled > 0 %}
                     <td>Yes</td>
@@ -57,7 +58,7 @@
         </div>
 
         <div>
-            <a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back &raquo;</a>
+            <a href="{{ path('index') }}" class="btn btn-primary btn-xs">Back</a>
         </div>
     </div>
     </body>
