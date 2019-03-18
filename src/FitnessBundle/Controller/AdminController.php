@@ -69,7 +69,7 @@ class AdminController extends Controller
 
 		$user = new User();
 
-		$form = $this->createForm(UserType::class, $user);
+		$form = $this->createForm(ProfileType::class, $user);
 
 		$form->handleRequest($request);
 
@@ -77,12 +77,8 @@ class AdminController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-			$role = $form->get('role')->getData();
-
-//			$userRole = $this->roleService->findOneBy(['name' => $role]);
-
+			$role = $form->get('roles')->getData();
 			$user->addRole($role);
-
 
 			$passwordHash = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPassword());
@@ -105,7 +101,7 @@ class AdminController extends Controller
 
 	/**
 	 * @Route("/admin/edit/{id}", methods={"GET", "POST"}, name="admin_edit_user")
-	 * @param $id;
+	 * @param $id ;
 	 * @param Request $request
 	 * @param TokenStorageInterface $tokenStorage
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -123,14 +119,8 @@ class AdminController extends Controller
 		/** @var User $user */
 
 		$user = $this->profileService->find($id);
-		$role = new Role();
-		$role->setUsers($user);
-		$userRoles = $user->getRoles();
-
 		$form = $this->createForm(ProfileType::class, $user, ['user' => $this->getUser()]);
-//		$formRole = $this->createForm(RoleType::class, $role, ['user' => $user]);
 		$form->handleRequest($request);
-//		$formRole->handleRequest($request);
 
 		$this->formErrorService->checkErrors($form);
 
@@ -140,7 +130,7 @@ class AdminController extends Controller
 			$oldPassword = $form->get('old_password')->getData();
 			$newPassword = $form->get('new_password')->getData();
 
-			if ($oldPassword !== null && $newPassword !== null){
+			if ($oldPassword !== null && $newPassword !== null) {
 
 				try {
 					if (true === $this->profileService->changePassword($form, $user)) {
@@ -151,34 +141,17 @@ class AdminController extends Controller
 
 					return $this->render('admin/edit.html.twig', [
 						'user' => $user,
-//						'roles' => $formRole->createView(),
 						'form' => $form->createView(),
 					]);
 				}
 			}
 
 
-			/** @var Role $roleFromForm */
 			$roleFromForm = $form->get('roles')->getData();
 
-			if ($roleFromForm !== ''){
 
-				$userId = $user->getId();
-				$roles = $user->getProfileRoles();
+			$user->addRole($roleFromForm);
 
-				foreach ($roles as $role){
-					$this->profileService->removeAllRoles($userId, $role->getId());
-				}
-
-//				$userRole = $this->roleService->findOneBy(['name' => $roleFromForm]);
-//				$user->addRole($userRole);
-
-
-
-				$user->addRole($roleFromForm);
-
-
-			}
 
 			$enabledFromForm = $form->get('enabled')->getData();
 			$user->setEnabled($enabledFromForm);
@@ -187,20 +160,14 @@ class AdminController extends Controller
 			$em->persist($user);
 			$em->flush();
 
-//			$this->profileService->editProfile($user);
-
 			$this->addFlash('success', 'Profile >> ' . $user->getUsername() . ' << was successful updated.');
 
 			return $this->redirectToRoute('admin_all_user');
 		}
 
 
-//		dump($user);
-//		exit;
-
 		return $this->render('admin/edit.html.twig', [
 			'user' => $user,
-//			'roles' => $formRole->createView(),
 			'form' => $form->createView(),
 		]);
 	}
@@ -307,148 +274,4 @@ class AdminController extends Controller
 	}
 
 
-
 }
-
-//	/**
-//	 * @Route("/{user}/edit", name="user_edit", methods={"GET", "POST"}, requirements={"user": "\d+"})
-//	 * @param Request $request
-//	 * @param User $user
-//	 * @return \Symfony\Component\HttpFoundation\Response
-//	 * @throws \Exception
-//	 */
-//	public function editAction(Request $request, User $user)
-//	{
-//		if ($user->getId() === $this->getUser()->getId()) {
-//			return $this->redirectToRoute('profile_edit');
-//		}
-//
-//		$form = $this->createForm(ProfileType::class, $user, ['user' => $this->getUser()]);
-//		$form->handleRequest($request);
-//
-//		$this->formErrorService->checkErrors($form);
-//
-//		if ($form->isSubmitted() && $form->isValid()) {
-//			try {
-//				if (true === $this->profileService->changePassword($form, $user)) {
-//					$this->addFlash('success', 'Паролата бе успешно променена.');
-//				}
-//			} catch (\Exception $ex) {
-//				$this->addFlash('danger', $ex->getMessage());
-//
-//				return $this->render('user/edit.html.twig', [
-//					'user' => $user,
-//					'form' => $form->createView(),
-//				]);
-//			}
-//
-//			$this->profileService->editProfile($user);
-//			$this->addFlash('success', 'Профилът бе успешно редактиран.');
-//
-//			return $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
-//		}
-//
-//		return $this->render('admin/edit.html.twig', [
-//			'user' => $user,
-//			'form' => $form->createView()
-//		]);
-//	}
-
-//		$this->addFlash('info', 'you are not admin, login like admin');
-//
-//		return $this->redirectToRoute('hair_index');
-//	}
-
-
-//	/**
-//	 * @Route ("/edit_test/{id}", name="edit_user")
-//	 * @param $id
-//	 * @param Request $request
-//	 * @param UserPasswordEncoderInterface $passwordEncoder
-//	 * @param AuthenticationUtils $authenticationUtils
-//	 * @return \Symfony\Component\HttpFoundation\Response
-//	 */
-//	public function editUser($id, Request $request, UserPasswordEncoderInterface $passwordEncoder, AuthenticationUtils $authenticationUtils): \Symfony\Component\HttpFoundation\Response
-//	{
-//
-//		/** @var User $currentUser */
-//		$currentUser = $this->getUser();
-//
-//		$form = $this->createForm(UserType::class, $currentUser);
-//		$form->handleRequest($request);
-//
-//		$error = $authenticationUtils->getLastAuthenticationError();
-//
-//
-//		if ($form->isSubmitted() && $form->isValid()) {
-//
-//			$em = $this->getDoctrine()->getManager();
-//			$em->flush();
-//
-//			$this->addFlash('info', 'edit successful');
-//
-//			return $this->redirectToRoute('hair_index');
-//		}
-//
-//		return $this->render('user/edit_test.html.twig',
-//			['form' => $form->createView(),
-//				'user' => $currentUser,
-//				'error' => $error]);
-//
-//
-//	}
-
-//	/**
-//	 * @Route ("/edit_test/{id}", name="edit_user")
-//	 * @param $id
-//	 * @param Request $request
-//	 * @param AuthenticationUtils $authenticationUtils
-//	 * @return \Symfony\Component\HttpFoundation\Response
-//	 */
-//	public function editUser($id, Request $request, AuthenticationUtils $authenticationUtils): \Symfony\Component\HttpFoundation\Response
-//	{
-//
-//		/** @var User $currentUser */
-//		$user = $this->getUser();
-//
-//		dump($user);
-//		exit;
-//
-//		$form = $this->createForm(UserType::class, $user);
-//		$form->handleRequest($request);
-//
-////		$form = $this->createFormBuilder($user)
-////			->add('username', TextType::class)
-////			->add('email', EmailType::class)
-////			->add('chose_role', ChoiceType::class, array(
-////				'choices' => array(
-////					'Admin' => 'ROLE_ADMIN',
-////					'User' => 'ROLE_USER',
-////					'Client' => 'ROLE_CLIENT'
-////				),
-////				'placeholder' => 'Select role',
-////				'required' => true
-////			))
-////			->add('submit', SubmitType::class);
-//
-//
-//		$error = $authenticationUtils->getLastAuthenticationError();
-//
-//
-//		if ($form->isSubmitted() && $form->isValid()) {
-//
-//			$em = $this->getDoctrine()->getManager();
-//			$em->flush();
-//
-//			$this->addFlash('info', 'edit successful');
-//
-//			return $this->redirectToRoute('hair_index');
-//		}
-//
-//		return $this->render('user/edit_test.html.twig',
-//			['form' => $form->createView(),
-//				'error' => $error]);
-//
-//
-//	}
-//}

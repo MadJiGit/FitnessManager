@@ -137,7 +137,21 @@ class User implements UserInterface, \Serializable
 
 	public function getRole()
 	{
-		return $this->role;
+		/** @var Role $role */
+		return $this->roles[0];
+
+
+//		foreach ($this->roles as $role) {
+
+//			dump($role);
+
+//			return $role;
+//
+//		}
+
+//		exit;
+
+
 	}
 
 	public function setRole($role)
@@ -263,14 +277,16 @@ class User implements UserInterface, \Serializable
 	public function getRoles()
 	{
 		$stringRoles = [];
+
+
 		/** @var Role $role */
 		foreach ($this->roles as $role) {
+
 			$stringRoles[] = $role->getRole();
 		}
 
 		return $stringRoles;
 
-//		return $this->roles;
 	}
 
 	public function getAllRoles()
@@ -286,10 +302,22 @@ class User implements UserInterface, \Serializable
 	 */
 	public function addRole(Role $role): User
 	{
+		$this->removeRole();
+
 		$this->roles[] = $role;
 
 		return $this;
 	}
+
+//	public function setNewRole(Role $role): User
+//	{
+//
+//		$this->removeRole();
+//
+//		$this->roles[] = $role;
+//
+//		return $this;
+//	}
 
 	/**
 	 * @param array $roles
@@ -297,52 +325,56 @@ class User implements UserInterface, \Serializable
 	 */
 	public function setRoles($roles): self
 	{
+		$this->removeRole();
+
 		$this->roles = $roles;
 
 		return $this;
 	}
 
 
-	public function removeRole(Role $role)
+	public function removeRole()
 	{
-		$this->roles->removeElement($role);
-	}
-
-	/**
-	 * @return Role[]|ArrayCollection
-	 */
-	public function getProfileRoles()
-	{
-		return $this->roles;
-	}
-
-	/**
-	 * @param Role[]|ArrayCollection $roles
-	 * @return User
-	 */
-	public function setProfileRoles($roles): User
-	{
-		foreach ($roles as $role) {
-			$this->addProfileRole($role);
-		}
+		$this->roles = array();
 
 		return $this;
 	}
 
-	/**
-	 * @param Role $role
-	 * @return User
-	 */
-	public function addProfileRole(Role $role): User
-	{
-		if (!$this->roles->contains($role)) {
-			$this->roles->add($role);
-
-			$this->role = $role;
-		}
-
-		return $this;
-	}
+//	/**
+//	 * @return Role[]|ArrayCollection
+//	 */
+//	public function getProfileRoles()
+//	{
+//		return $this->roles;
+//	}
+//
+//	/**
+//	 * @param Role[]|ArrayCollection $roles
+//	 * @return User
+//	 */
+//	public function setProfileRoles($roles): User
+//	{
+//		foreach ($roles as $role) {
+//			$this->addProfileRole($role);
+//		}
+//
+//		return $this;
+//	}
+//
+//	/**
+//	 * @param Role $role
+//	 * @return User
+//	 */
+//	public function addProfileRole(Role $role): User
+//	{
+//		if (!$this->roles->contains($role)) {
+//			$this->roles->add($role);
+//
+//			$this->role = $role;
+//		}
+//
+//		return $this;
+//	}
 
 	public function getRoleName()
 	{

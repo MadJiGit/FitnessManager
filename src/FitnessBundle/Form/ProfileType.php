@@ -123,7 +123,7 @@ class ProfileType extends AbstractType
 					->add('roles', EntityType::class, [
 					'class' => Role::class,
 					'choice_label' => 'name',
-					'placeholder' => 'Choose a new role'
+					'placeholder' => 'Select one role',
 					])
 
 //					->add('role', ChoiceType::class, [

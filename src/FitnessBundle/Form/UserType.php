@@ -53,22 +53,23 @@ class UserType extends AbstractType
 			)
 
 			// it's works. Get all roles from choices
-//			->add('role', ChoiceType::class, [
-//					'choices' => [
-//						'' => '',
-//						'Admin' => 'ROLE_ADMIN',
-//						'Office' => 'ROLE_OFFICE',
-//						'User' => 'ROLE_USER',
-//					]
-//				]
-//			)
+			->add('role', ChoiceType::class, [
+					'choices' => [
+						'' => '',
+						'Office' => 'ROLE_OFFICE',
+						'User' => 'ROLE_USER',
+				        'Client' => 'ROLE_CLIENT',
+						'Trainer' => 'ROLE_TRAINER',
+					]
+				]
+			)
 
 //			 it's works. Get all roles from DB and list on choice field
-			->add('role', EntityType::class, [
-					'class' => Role::class,
-					'choice_label' => 'name',
-					'placeholder' => 'Choose a new role'
-					])
+//			->add('role', EntityType::class, [
+//					'class' => Role::class,
+//					'choice_label' => 'name',
+//					'placeholder' => 'Choose a new role'
+//					])
 
 //			->add('roles', EntityType::class, [
 //				'class' => Role::class,
