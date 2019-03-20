@@ -20,7 +20,7 @@ services:
         resource: '../../src/FitnessBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
-        exclude: '../../src/FitnessBundle/{Entity,Repository,Tests}'
+        exclude: '../../src/FitnessBundle/{Entity,Tests}'
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
@@ -29,29 +29,33 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    FitnessBundle\Service\:
-        resource: '../../src/FitnessBundle/Service'
-        public: true
-
-    FitnessBundle\Service\Profile\ProfileService:
-        arguments:
-            - "@security.password_encoder"
-            - "@security.token_storage"
-            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:User')"
-
-    FitnessBundle\Service\Role\RoleService:
-        arguments:
-            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:Role')"
-
-    FitnessBundle\Service\Card\CardService:
-        arguments:
-            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:Card')"
-
-    FitnessBundle\Service\CardOrder\CardOrderService:
-        arguments:
-            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:CardOrder')"
+#    FitnessBundle\Service\:
+#        resource: '../../src/FitnessBundle/Service'
+#        public: true
+#
+#    FitnessBundle\Service\Profile\ProfileService:
+#        arguments:
+#            - "@security.password_encoder"
+#            - "@security.token_storage"
+#            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:User')"
+#
+#    FitnessBundle\Service\Role\RoleService:
+#        arguments:
+#            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:Role')"
+#
+#    FitnessBundle\Service\Card\CardService:
+#        arguments:
+#            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:Card')"
+#
+#    FitnessBundle\Service\CardOrder\CardOrderService:
+#        arguments:
+#            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:CardOrder')"
+#
+#    FitnessBundle\Service\Admin\AdminService:
+#        arguments:
+#            - "@=service('doctrine.orm.entity_manager').getRepository('FitnessBundle:Admin')"
 
 #     add more services, or override services that need manual wiring
-#     FitnessBundle\Service\ExampleService:
+#     FitnessBundle\Service\ExampleServi ce:
 #         arguments:
 #             $someArgument: 'some_value'

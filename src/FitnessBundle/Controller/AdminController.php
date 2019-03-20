@@ -7,6 +7,7 @@ use FitnessBundle\Entity\User;
 use FitnessBundle\Form\ProfileType;
 use FitnessBundle\Form\RoleType;
 use FitnessBundle\Form\UserType;
+use FitnessBundle\Service\Admin\AdminServiceInterface;
 use FitnessBundle\Service\FormError\FormErrorServiceInterface;
 use FitnessBundle\Service\Profile\ProfileServiceInterface;
 use FitnessBundle\Service\Role\RoleServiceInterface;
@@ -33,19 +34,24 @@ class AdminController extends Controller
 	/** @var Security $security */
 	private $security;
 
+	/** @var AdminServiceInterface $adminService */
+	private $adminService;
+
 	/**
 	 * UserController constructor.
 	 * @param FormErrorServiceInterface $formErrorService
 	 * @param ProfileServiceInterface $profileService
 	 * @param RoleServiceInterface $roleService
 	 * @param Security $security
+	 * @param AdminServiceInterface $adminService
 	 */
-	public function __construct(FormErrorServiceInterface $formErrorService, ProfileServiceInterface $profileService, RoleServiceInterface $roleService, Security $security)
+	public function __construct(FormErrorServiceInterface $formErrorService, ProfileServiceInterface $profileService, RoleServiceInterface $roleService, Security $security, AdminServiceInterface $adminService)
 	{
 		$this->formErrorService = $formErrorService;
 		$this->profileService = $profileService;
 		$this->roleService = $roleService;
 		$this->security = $security;
+		$this->adminService = $adminService;
 	}
 
 
@@ -84,17 +90,20 @@ class AdminController extends Controller
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($passwordHash);
 
-//			dump($role);
-//			dump($user);
-//			exit;
+			$isSave = $this->adminService->save($user);
 
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($user);
-			$em->flush();
+			if (!$isSave){
+				$this->addFlash('danger', 'User is not register');
+				return $this->render('/admin/register_user.html.twig', [
+					'form' => $form->createView(),
+				]);
+
+			}
 
 			$this->addFlash('info', 'successful register new user');
-
 			return $this->redirectToRoute('index');
+
+
 		}
 
 		return $this->render('/admin/register_user.html.twig', [
@@ -130,18 +139,10 @@ class AdminController extends Controller
 		$this->formErrorService->checkErrors($form);
 
 
-//		dump($user->getRoles());
-
-//		dump($testRoleUser);
-//		exit;
-
-
 		if ($form->isSubmitted() && $form->isValid()) {
-
 
 			$oldPassword = $form->get('old_password')->getData();
 			$newPassword = $form->get('new_password')->getData();
-
 
 			if ($oldPassword !== null && $newPassword !== null) {
 
@@ -159,29 +160,30 @@ class AdminController extends Controller
 				}
 			}
 
-
 			$roleFromForm = $form->get('roles')->getData();
-
 
 			if ($roleFromForm === null){
 
 				$roleFromForm = $testRoleUser;
-
 			}
 
 			$user->addRole($roleFromForm);
 
-
 			$enabledFromForm = $form->get('enabled')->getData();
 			$user->setEnabled($enabledFromForm);
 
+			$isSave = $this->adminService->save($user);
 
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($user);
-			$em->flush();
+			if (!$isSave){
+				$this->addFlash('danger', 'User is not edited');
+				return $this->render('admin/edit.html.twig', [
+					'user' => $user,
+					'form' => $form->createView(),
+				]);
 
-			$this->addFlash('success', 'Profile >> ' . $user->getUsername() . ' << was successful updated.');
+			}
 
+			$this->addFlash('info', 'Profile >> ' . $user->getUsername() . ' << was successful updated.');
 			return $this->redirectToRoute('admin_all_user');
 		}
 
@@ -201,6 +203,7 @@ class AdminController extends Controller
 
 	public function findAll(Request $request): \Symfony\Component\HttpFoundation\Response
 	{
+
 		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
 
 		if (false === $isSuperAdminHere) {
@@ -218,6 +221,8 @@ class AdminController extends Controller
 			$request->query->getInt('page', 1), 6
 
 		);
+
+
 
 		return $this->render('/admin/all.html.twig',
 			['users' => $users]
@@ -268,14 +273,15 @@ class AdminController extends Controller
 		return $this->render('/admin/view_delete_one',
 			['user' => $user]);
 
+
 	}
 
 	/**
-	 * @Route("/admin/all", methods={"POST"}, name="admin_delete_user")
-	 * @param User $user
+	 * @Route("/admin/delete/{id}", name="admin_delete_user")
+	 * @param int $id
 	 * @return RedirectResponse
 	 */
-	public function deleteUserAction(User $user): RedirectResponse
+	public function deleteUserAction(int $id): RedirectResponse
 	{
 
 		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
@@ -285,16 +291,24 @@ class AdminController extends Controller
 			return $this->redirectToRoute('index');
 		}
 
+		$user = $this->adminService->findOneById($id);
 
-//		dump($user);
-//		exit;
+		$username = $user->getUsername();
 
-		$em = $this->getDoctrine()->getManager();
-		$em->remove($user);
-		$em->flush();
-		$this->addFlash('success', "User with username {$user->getUsername()} deleted successfully!");
+		$isDeleted = $this->adminService->deleteUser($user);
+
+		if ($isDeleted){
+
+			$this->addFlash('success', "User with username {$username} deleted successfully!");
+		} else {
+			$this->addFlash('danger', "User with username {$username} IS NOT deleted!");
+
+		}
+
 		return $this->redirectToRoute('admin_all_user');
 	}
+
+
 
 
 }

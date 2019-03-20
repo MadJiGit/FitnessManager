@@ -2,7 +2,7 @@
 
 
 
-{% block body %}
+{% block main %}
 
     <h4>View one card</h4><hr><br/>
 

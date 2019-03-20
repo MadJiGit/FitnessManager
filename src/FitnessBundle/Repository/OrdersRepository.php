@@ -5,6 +5,7 @@ namespace FitnessBundle\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use FitnessBundle\Entity\CardOrder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
@@ -22,13 +23,11 @@ class OrdersRepository extends \Doctrine\ORM\EntityRepository
 	/**
 	 * CarRepository constructor.
 	 * @param EntityManagerInterface $em
-	 * @param ClassMetadata $class
 	 */
-	public function __construct(EntityManagerInterface $em, ClassMetadata $class)
+	public function __construct(EntityManagerInterface $em)
 	{
-		parent::__construct($em, $class);
-
 		$this->em = $em;
+		parent::__construct($em, new ClassMetadata(CardOrder::class));
 	}
 
 

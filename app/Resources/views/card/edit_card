@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block main %}
 
 
     <h4>Edit card</h4>

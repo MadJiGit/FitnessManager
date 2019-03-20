@@ -23,13 +23,11 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
 	/**
 	 * CarRepository constructor.
 	 * @param EntityManagerInterface $em
-	 * @param ClassMetadata $class
 	 */
-	public function __construct(EntityManagerInterface $em, ClassMetadata $class)
+	public function __construct(EntityManagerInterface $em)
 	{
-		parent::__construct($em, $class);
-
 		$this->em = $em;
+		parent::__construct($em, new ClassMetadata(Card::class));
 	}
 
 
