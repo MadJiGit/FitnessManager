@@ -84,6 +84,10 @@ class AdminController extends Controller
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($passwordHash);
 
+//			dump($role);
+//			dump($user);
+//			exit;
+
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($user);
 			$em->flush();
@@ -119,16 +123,25 @@ class AdminController extends Controller
 		/** @var User $user */
 
 		$user = $this->profileService->find($id);
+		$testRoleUser = $user->getRoleObject();
 		$form = $this->createForm(ProfileType::class, $user, ['user' => $this->getUser()]);
 		$form->handleRequest($request);
 
 		$this->formErrorService->checkErrors($form);
+
+
+//		dump($user->getRoles());
+
+//		dump($testRoleUser);
+//		exit;
+
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
 
 			$oldPassword = $form->get('old_password')->getData();
 			$newPassword = $form->get('new_password')->getData();
+
 
 			if ($oldPassword !== null && $newPassword !== null) {
 
@@ -150,11 +163,18 @@ class AdminController extends Controller
 			$roleFromForm = $form->get('roles')->getData();
 
 
+			if ($roleFromForm === null){
+
+				$roleFromForm = $testRoleUser;
+
+			}
+
 			$user->addRole($roleFromForm);
 
 
 			$enabledFromForm = $form->get('enabled')->getData();
 			$user->setEnabled($enabledFromForm);
+
 
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($user);
@@ -248,11 +268,10 @@ class AdminController extends Controller
 		return $this->render('/admin/view_delete_one',
 			['user' => $user]);
 
-
 	}
 
 	/**
-	 * @Route("/admin/delete/{id}", methods={"POST"}, name="admin_delete_user")
+	 * @Route("/admin/all", methods={"POST"}, name="admin_delete_user")
 	 * @param User $user
 	 * @return RedirectResponse
 	 */
@@ -265,6 +284,10 @@ class AdminController extends Controller
 			$this->addFlash('info', 'You have not ADMIN rights!');
 			return $this->redirectToRoute('index');
 		}
+
+
+//		dump($user);
+//		exit;
 
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($user);

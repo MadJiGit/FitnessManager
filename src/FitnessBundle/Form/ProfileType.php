@@ -47,8 +47,9 @@ class ProfileType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		/** @var User $currentUser */
-		$currentUser = $options['user'];
+		/** @var User $loggedInUser */
+		$loggedInUser = $options['user'];
+
 
 		$builder
 			->add('username', TextType::class, [
@@ -67,10 +68,11 @@ class ProfileType extends AbstractType
 			]);
 //			->add('submit', SubmitType::class);
 
-		$builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($currentUser) {
+		$builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($loggedInUser) {
 			/** @var User $user */
 			$user = $event->getData();
 			$form = $event->getForm();
+
 
 			if (!$user || null === $user->getId()) {
 				$form->add('password', RepeatedType::class, [
@@ -116,7 +118,7 @@ class ProfileType extends AbstractType
 
 
 			if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'])
-//				&& $user->getId() !== $currentUser->getId()
+//				&& $user->getId() !== $loggedInUser->getId()
 			) {
 				$form
 //					 it's work

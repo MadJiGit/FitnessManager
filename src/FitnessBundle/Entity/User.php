@@ -135,30 +135,6 @@ class User implements UserInterface, \Serializable
 	}
 
 
-	public function getRole()
-	{
-		/** @var Role $role */
-		return $this->roles[0];
-
-
-//		foreach ($this->roles as $role) {
-
-//			dump($role);
-
-//			return $role;
-//
-//		}
-
-//		exit;
-
-
-	}
-
-	public function setRole($role)
-	{
-		$this->role = $role;
-	}
-
 	/**
 	 * Get id
 	 *
@@ -260,6 +236,18 @@ class User implements UserInterface, \Serializable
 
 	}
 
+	public function getRole()
+	{
+		return $this->role;
+	}
+
+	public function setRole($role)
+	{
+		$this->role = $role;
+
+		return $this;
+	}
+
 	/**
 	 * Returns the roles granted to the user.
 	 *
@@ -278,15 +266,35 @@ class User implements UserInterface, \Serializable
 	{
 		$stringRoles = [];
 
+		if ($this->roles){
 
-		/** @var Role $role */
-		foreach ($this->roles as $role) {
+			/** @var Role $role */
+			foreach ($this->roles as $role) {
 
-			$stringRoles[] = $role->getRole();
+				$stringRoles[] = $role->getRole();
+			}
 		}
 
 		return $stringRoles;
 
+	}
+
+	public function getRoleObject()
+	{
+
+		$roleReturn = '';
+
+		if ($this->roles){
+
+			/** @var Role $role */
+			foreach ($this->roles as $role) {
+
+				$roleReturn = $role;
+
+			}
+		}
+
+		return $roleReturn;
 	}
 
 	public function getAllRoles()
@@ -304,20 +312,13 @@ class User implements UserInterface, \Serializable
 	{
 		$this->removeRole();
 
+		$this->setRole($role);
+
 		$this->roles[] = $role;
 
 		return $this;
 	}
 
-//	public function setNewRole(Role $role): User
-//	{
-//
-//		$this->removeRole();
-//
-//		$this->roles[] = $role;
-//
-//		return $this;
-//	}
 
 	/**
 	 * @param array $roles
@@ -379,6 +380,10 @@ class User implements UserInterface, \Serializable
 	public function getRoleName()
 	{
 		$temp = $this->getRoles();
+
+		if ($temp === ''){
+			return 'no role';
+		}
 
 		$result = explode('_', $temp[0]);
 
@@ -496,6 +501,7 @@ class User implements UserInterface, \Serializable
 	public function setEnabled(bool $enabled): void
 	{
 		$this->enabled = $enabled;
+
 	}
 
 	/**
