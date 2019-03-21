@@ -41,9 +41,10 @@ class AdminService implements AdminServiceInterface
 	 * @param int $id
 	 * @return User|object
 	 */
-	public function findOneById(int $id): User
+	public function findOneById(int $id): ?User
 	{
-		return $this->adminRepository->find($id);
+//		return $this->adminRepository->findById($id);
+		return $this->adminRepository->findById($id);
 	}
 
 
@@ -55,4 +56,6 @@ class AdminService implements AdminServiceInterface
 	{
 		return $this->adminRepository->saveUser($user);
 	}
+
+
 }

@@ -31,9 +31,16 @@ class RoleService implements RoleServiceInterface
 	 * @param array|null $orderBy
 	 * @return Role|object|null
 	 */
-	public function findOneBy(array $criteria, array $orderBy = null)
+	public function findOneBy(array $criteria, array $orderBy = null): ?Role
 	{
-		return $this->roleRepo->findOneBy($criteria, $orderBy);
+		try {
+
+			return $this->roleRepo->findOneBy($criteria, $orderBy);
+
+		} catch (\Exception $e){
+			return null;
+		}
+
 	}
 
 

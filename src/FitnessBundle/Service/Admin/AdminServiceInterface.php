@@ -15,8 +15,9 @@ interface AdminServiceInterface
 {
 	public function deleteUser(User $user) :bool;
 
-	public function findOneById(int $id): User;
+	public function findOneById(int $id): ?User;
 
 	public function save(User $user) : bool;
+
 
 }

@@ -62,4 +62,16 @@ class AdminRepository extends \Doctrine\ORM\EntityRepository
 		}
 	}
 
+	public function findById(int $id): ?User
+	{
+		try {
+			return $this->em->find(User::class, $id);
+
+		} catch (\Exception $e) {
+
+			return null;
+		}
+	}
+
+
 }

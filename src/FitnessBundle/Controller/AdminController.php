@@ -5,16 +5,13 @@ namespace FitnessBundle\Controller;
 use FitnessBundle\Entity\Role;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\ProfileType;
-use FitnessBundle\Form\RoleType;
-use FitnessBundle\Form\UserType;
 use FitnessBundle\Service\Admin\AdminServiceInterface;
 use FitnessBundle\Service\FormError\FormErrorServiceInterface;
-use FitnessBundle\Service\Profile\ProfileServiceInterface;
 use FitnessBundle\Service\Role\RoleServiceInterface;
+use FitnessBundle\Service\User\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
@@ -25,11 +22,8 @@ class AdminController extends Controller
 	/** @var FormErrorServiceInterface $formErrorService */
 	private $formErrorService;
 
-	/** @var ProfileServiceInterface $profileService */
+	/** @var UserServiceInterface $profileService */
 	private $profileService;
-
-	/** @var RoleServiceInterface $roleService */
-	private $roleService;
 
 	/** @var Security $security */
 	private $security;
@@ -37,19 +31,22 @@ class AdminController extends Controller
 	/** @var AdminServiceInterface $adminService */
 	private $adminService;
 
+	/** @var RoleServiceInterface $roleService */
+	private $roleService;
+
 	/**
 	 * UserController constructor.
 	 * @param FormErrorServiceInterface $formErrorService
-	 * @param ProfileServiceInterface $profileService
 	 * @param RoleServiceInterface $roleService
+	 * @param UserServiceInterface $profileService
 	 * @param Security $security
 	 * @param AdminServiceInterface $adminService
 	 */
-	public function __construct(FormErrorServiceInterface $formErrorService, ProfileServiceInterface $profileService, RoleServiceInterface $roleService, Security $security, AdminServiceInterface $adminService)
+	public function __construct(FormErrorServiceInterface $formErrorService, RoleServiceInterface $roleService, UserServiceInterface $profileService, Security $security, AdminServiceInterface $adminService)
 	{
 		$this->formErrorService = $formErrorService;
-		$this->profileService = $profileService;
 		$this->roleService = $roleService;
+		$this->profileService = $profileService;
 		$this->security = $security;
 		$this->adminService = $adminService;
 	}
@@ -58,20 +55,13 @@ class AdminController extends Controller
 	/**
 	 * @Route ("/admin/register_user", name="register_user")
 	 * @param Request $request
-	 * @param TokenStorageInterface $tokenStorage
-	 * @param SessionInterface $session
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
 	 * @throws \Exception
 	 */
-	public function registerAction(Request $request, TokenStorageInterface $tokenStorage, SessionInterface $session)
+	public function registerAction(Request $request)
 	{
 
-		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
-
-		if (false === $isSuperAdminHere) {
-			$this->addFlash('info', 'You have not ADMIN rights!');
-			return $this->redirectToRoute('index');
-		}
+		$isFullRights = $this->checkRights();
 
 		$user = new User();
 
@@ -81,18 +71,32 @@ class AdminController extends Controller
 
 		$this->formErrorService->checkErrors($form);
 
-		if ($form->isSubmitted() && $form->isValid()) {
 
-			$role = $form->get('roles')->getData();
-			$user->addRole($role);
+		if ($form->isSubmitted() && $form->isValid()) {
 
 			$passwordHash = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($passwordHash);
 
+			if( false === $isFullRights) {
+				$role = $this->roleService->findOneBy(['name' => 'ROLE_CLIENT']);
+				if (null === $role){
+					$this->addFlash('danger', 'Please select ROLE');
+					return $this->render('/admin/register_user.html.twig', [
+						'form' => $form->createView(),
+					]);
+				}
+
+				$user->addRole($role);
+
+			} else {
+				$role = $form->get('roles')->getData();
+				$user->addRole($role);
+			}
+
 			$isSave = $this->adminService->save($user);
 
-			if (!$isSave){
+			if (false === $isSave) {
 				$this->addFlash('danger', 'User is not register');
 				return $this->render('/admin/register_user.html.twig', [
 					'form' => $form->createView(),
@@ -116,22 +120,17 @@ class AdminController extends Controller
 	 * @Route("/admin/edit/{id}", methods={"GET", "POST"}, name="admin_edit_user")
 	 * @param $id ;
 	 * @param Request $request
-	 * @param TokenStorageInterface $tokenStorage
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 * @throws \Exception
 	 */
-	public function editUser($id, Request $request, TokenStorageInterface $tokenStorage): \Symfony\Component\HttpFoundation\Response
+	public function editUser($id, Request $request): \Symfony\Component\HttpFoundation\Response
 	{
-		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
 
-		if (false === $isSuperAdminHere) {
-			$this->addFlash('info', 'You have not ADMIN rights!');
-			return $this->redirectToRoute('index');
-		}
+		$this->checkRights();
 
 		/** @var User $user */
 
-		$user = $this->profileService->find($id);
+		$user = $this->adminService->findOneById($id);
 		$testRoleUser = $user->getRoleObject();
 		$form = $this->createForm(ProfileType::class, $user, ['user' => $this->getUser()]);
 		$form->handleRequest($request);
@@ -141,28 +140,22 @@ class AdminController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-			$oldPassword = $form->get('old_password')->getData();
-			$newPassword = $form->get('new_password')->getData();
-
-			if ($oldPassword !== null && $newPassword !== null) {
-
-				try {
-					if (true === $this->profileService->changePassword($form, $user)) {
-						$this->addFlash('success', 'The password was successful changed.');
-					}
-				} catch (\Exception $ex) {
-					$this->addFlash('danger', $ex->getMessage());
-
-					return $this->render('admin/edit.html.twig', [
-						'user' => $user,
-						'form' => $form->createView(),
-					]);
+			try {
+				if (true === $this->profileService->changePassword($form, $user)) {
+					$this->addFlash('success', 'The password was successful changed.');
 				}
+			} catch (\Exception $ex) {
+				$this->addFlash('danger', $ex->getMessage());
+
+				return $this->render('admin/edit.html.twig', [
+					'user' => $user,
+					'form' => $form->createView(),
+				]);
 			}
 
 			$roleFromForm = $form->get('roles')->getData();
 
-			if ($roleFromForm === null){
+			if ($roleFromForm === null) {
 
 				$roleFromForm = $testRoleUser;
 			}
@@ -174,7 +167,7 @@ class AdminController extends Controller
 
 			$isSave = $this->adminService->save($user);
 
-			if (!$isSave){
+			if (false === $isSave) {
 				$this->addFlash('danger', 'User is not edited');
 				return $this->render('admin/edit.html.twig', [
 					'user' => $user,
@@ -183,7 +176,7 @@ class AdminController extends Controller
 
 			}
 
-			$this->addFlash('info', 'Profile >> ' . $user->getUsername() . ' << was successful updated.');
+			$this->addFlash('success', 'Profile >> ' . $user->getUsername() . ' << was successful updated.');
 			return $this->redirectToRoute('admin_all_user');
 		}
 
@@ -204,24 +197,34 @@ class AdminController extends Controller
 	public function findAll(Request $request): \Symfony\Component\HttpFoundation\Response
 	{
 
-		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
-
-		if (false === $isSuperAdminHere) {
-			$this->addFlash('info', 'You have not ADMIN rights!');
-			return $this->redirectToRoute('index');
-		}
+		$isFullRights = $this->checkRights();
 
 		$paginator = $this->get('knp_paginator');
 		/** User[] $users */
-		$users = $paginator->paginate(
-			$this
-				->getDoctrine()
-				->getRepository(User::class)
-				->selectByIdAsc(),
-			$request->query->getInt('page', 1), 6
 
-		);
+		if( false === $isFullRights) {
 
+			/* user with ID to skip (DO NOT SHOW SUPER_ADMIN DATA)*/
+			$userIdToSkip = 1;
+			$users = $paginator->paginate(
+				$this
+					->getDoctrine()
+					->getRepository(User::class)
+					->selectByIdAscWhere($userIdToSkip),
+				$request->query->getInt('page', 1), 6
+			);
+
+		} else {
+
+			$users = $paginator->paginate(
+				$this
+					->getDoctrine()
+					->getRepository(User::class)
+					->selectByIdAscAll(),
+				$request->query->getInt('page', 1), 6
+			);
+
+		}
 
 
 		return $this->render('/admin/all.html.twig',
@@ -238,15 +241,15 @@ class AdminController extends Controller
 
 	public function findOne($id): \Symfony\Component\HttpFoundation\Response
 	{
-		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
-
-		if (false === $isSuperAdminHere) {
-			$this->addFlash('info', 'You have not ADMIN rights!');
-			return $this->redirectToRoute('index');
-		}
+		$this->checkRights();
 
 		/** User[] $users */
-		$user = $this->profileService->find($id);
+		$user = $this->adminService->findOneById($id);
+
+		if (null === $user) {
+			$this->addFlash('danger', 'No such user!');
+			return $this->redirectToRoute('index');
+		}
 
 		return $this->render('/admin/view_one',
 			['user' => $user]
@@ -263,16 +266,10 @@ class AdminController extends Controller
 	public function deleteUserActionPrepare(User $user): \Symfony\Component\HttpFoundation\Response
 	{
 
-		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
-
-		if (false === $isSuperAdminHere) {
-			$this->addFlash('info', 'You have not ADMIN rights!');
-			return $this->redirectToRoute('index');
-		}
+		$this->checkRights();
 
 		return $this->render('/admin/view_delete_one',
 			['user' => $user]);
-
 
 	}
 
@@ -284,20 +281,20 @@ class AdminController extends Controller
 	public function deleteUserAction(int $id): RedirectResponse
 	{
 
-		$isSuperAdminHere = $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
-
-		if (false === $isSuperAdminHere) {
-			$this->addFlash('info', 'You have not ADMIN rights!');
-			return $this->redirectToRoute('index');
-		}
+		$this->checkRights();
 
 		$user = $this->adminService->findOneById($id);
+
+		if (null === $user) {
+			$this->addFlash('danger', 'No such user!');
+			return $this->redirectToRoute('index');
+		}
 
 		$username = $user->getUsername();
 
 		$isDeleted = $this->adminService->deleteUser($user);
 
-		if ($isDeleted){
+		if ($isDeleted) {
 
 			$this->addFlash('success', "User with username {$username} deleted successfully!");
 		} else {
@@ -309,6 +306,21 @@ class AdminController extends Controller
 	}
 
 
+	private function checkRights()
+	{
+
+		if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'])) {
+			return true;
+		}
+
+		if ($this->security->isGranted(['ROLE_RECEPTIONIST'])) {
+			return false;
+		}
+
+		$this->addFlash('info', 'You have not rights!!');
+		return $this->redirectToRoute('index');
+
+	}
 
 
 }

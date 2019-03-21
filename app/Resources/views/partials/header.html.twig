@@ -1,0 +1,50 @@
+<header>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="{{ path('index') }}" class="navbar-brand">FITNESS MANAGER</a>
+                {% if app.user %}
+                    <a class="navbar-brand" href="{{ path('index') }}">
+                        {{ app.user.getRoleName() }}
+                    </a>
+                    <a class="navbar-brand" href="{{ path('view_one_user', {id: app.user.id}) }}">
+                        {{ app.user.username|capitalize }}
+                    </a>
+                {% endif %}
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    {% if app.user %}
+                        <li>
+                            <a href="{{ path('index') }}">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('security_logout') }}">
+                                Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('security_login') }}">
+                                LOGIN
+                            </a>
+                        </li>
+                        {#<li>#}
+                        {#<a href="{{ path('register_super_admin') }}">#}
+                        {#REGISTER#}
+                        {#</a>#}
+                        {#</li>#}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

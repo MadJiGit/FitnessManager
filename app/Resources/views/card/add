@@ -1,40 +1,25 @@
 {% extends 'base.html.twig' %}
 
-<h4>Add card</h4>
-
 {% block main %}
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-<div class="row">
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-6">
-                {#{{ form_row(form.validFrom) }}#}
-                {#{{ form_row(form.validTo) }}#}
-                {{ form_row(form.validFrom) }}
-                {{ form_row(form.validTo) }}
-
+    <h4>Add card</h4>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_row(form.validFrom) }}
+                    {{ form_row(form.validTo) }}
+                    {{ form_row(form._token) }}
+                    {{ form_end(form) }}
+                    {{form_widget(form)}}
+                    <br/><div class="class row">
+                        <div class="class col-sm-offset col-sm-10">
+                            <a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            {#{{ form_start(form_order, {'attr': {'novalidate': 'novalidate'}}) }}#}
-            {#<div class="col-md-6">#}
-            {{ form(form.orders) }}
-                {#{{ form_row(form.orders.startDate) }}#}
-                {#{{ form_row(form.orders.dueDate) }}#}
-                {#{{ form_row(form.orders.visitsOrder) }}#}
-            {#</div>#}
-            {#{{ form_end(form_order) }}#}
-        </div>
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"/><br/>
-        {{ form_row(form._token) }}
-
-        <button type="submit" class="btn btn-dark"><i class="fa fa-check"></i> Add </button>
-        <div>
-            <a href="{{ path("index") }}"><button>Back</button></a>
-        </div>
     </div>
-</div>
-{{ form_end(form) }}
 
 {% endblock %}

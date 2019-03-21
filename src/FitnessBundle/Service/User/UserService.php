@@ -6,7 +6,7 @@
  * Time: 18:01
  */
 
-namespace FitnessBundle\Service\Profile;
+namespace FitnessBundle\Service\User;
 
 
 use FitnessBundle\Entity\User;
@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ProfileService implements ProfileServiceInterface
+class UserService implements UserServiceInterface
 {
 
 	/** @var UserPasswordEncoderInterface $encoder */
@@ -29,7 +29,7 @@ class ProfileService implements ProfileServiceInterface
 	private $userRepo;
 
 	/**
-	 * ProfileService constructor.
+	 * UserService constructor.
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @param TokenStorageInterface $tokenStorage
 	 * @param UserRepository $userRepo
@@ -88,10 +88,10 @@ class ProfileService implements ProfileServiceInterface
 	{
 		$oldPassword = $form->get('old_password')->getData();
 		$newPassword = $form->get('new_password')->getData();
-		// Change user password
+
 		if (!empty($oldPassword) && !empty($newPassword)) {
 			if (!$this->encoder->isPasswordValid($user, $oldPassword)) {
-				throw new Exception('Wrong old password');
+				throw new Exception('Wrong password');
 			}
 			$user->setPassword($this->encoder->encodePassword($user, $newPassword));
 
@@ -101,17 +101,19 @@ class ProfileService implements ProfileServiceInterface
 		return false;
 	}
 
-	/**
-	 * @param mixed $id
-	 * @return object|null|User
-	 */
-	public function find($id)
+
+	public function findOneUserById($id): ?User
 	{
-		return $this->userRepo->find($id);
+		return $this->userRepo->findOneById($id);
 	}
 
-	public function removeAllRoles($userId, $roleId): void
+	public function selectPaginatorAll(): \Doctrine\ORM\QueryBuilder
 	{
-		$this->userRepo->deleteAllRoles($userId, $roleId);
+		return $this->userRepo->selectByIdAscAll();
+	}
+
+	public function selectPaginatorWhere($param): \Doctrine\ORM\QueryBuilder
+	{
+		return $this->userRepo->selectByIdAscWhere($param);
 	}
 }

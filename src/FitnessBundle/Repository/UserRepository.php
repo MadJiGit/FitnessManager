@@ -56,30 +56,48 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 	/**
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	public function selectByIdAsc(): \Doctrine\ORM\QueryBuilder
+	public function selectByIdAscAll(): \Doctrine\ORM\QueryBuilder
 	{
+
 		return $this->createQueryBuilder('user')
 			->select('user')
 			->orderBy('user.id', 'ASC');
-
-
-
 	}
 
-	public function deleteAllRoles($userId, $roleId): void
+
+
+	public function selectByIdAscWhere($param): \Doctrine\ORM\QueryBuilder
 	{
+//		return $this->createQueryBuilder('user')
+//			->select('user')
+//			->orderBy('user.id', 'ASC')
+//			->where('user.roles  = :role')
+//			->setParameter('role', 'ROLE_SUPER_ADMIN');
 
-		$role = $this->em->getRepository('FitnessBundle:Role')
-			->find($roleId);
+		return $this->createQueryBuilder('user')
+			->select('user')
+			->orderBy('user.id', 'ASC')
+			->where('user.id  > :id')
+			->setParameter('id', $param);
 
-		$user = $this->em->getRepository('FitnessBundle:User')
-			->find($userId);
+//		$param = 'ROLE_SUPER_ADMIN';
 
-		$user->removeRole($role);
+//		return $this->createQueryBuilder('user')
+//			->addSelect('role')
+//			->leftJoin('user.roles', 'role')
+//			->where('role.name !== :param')
+//			->setParameter('param', $param);
+	}
 
-		$this->em->persist($user);
-		$this->em->flush();
+	public function findOneById($id): ?User
+	{
+		try{
+			return $this->find($id);
 
+		} catch (\Exception $e){
+
+			return null;
+		}
 	}
 
 }

@@ -1,49 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h4>View all cards</h4><hr><br/>
-    {% if app.session.flashBag.has('info') %}
-        {% for msg in app.session.flashbag.get('info') %}
-            <div class="flashback">
-                <p style="color: blue">{{ msg }}</p>
-            </div>
-        {% endfor %}
-    {% elseif app.session.flashBag.has('success') %}
-        {% for msg in app.session.flashbag.get('success') %}
-            <div class="flashback">
-                <p style="color: green">{{ msg }}</p>
-            </div>
-        {% endfor %}
-    {% elseif app.session.flashBag.has('danger') %}
-        {% for msg in app.session.flashbag.get('danger') %}
-            <div class="flashback">
-                <p style="color: red">{{ msg }}</p>
-            </div>
-        {% endfor %}
-    {% endif %}
 
-<table style="width:50%" border="1">
+<body>
+<div class="container">
+    <h3><a href="{{ path('index', {'param':'null'}) }}">Home</a></h3><br/>
+    <a href="{{ path("add_new_card", {id: userId}) }}" class="btn btn-primary btn-xs" role="button">Add card</a>
+    {#<a href="{{ path("add_new_order") }}" class="btn btn-primary btn-xs" role="button">Add order</a>#}
+    <table class="table table-condensed">
+        <thead>
     <tr>
-        <th>Card Number</th>
+        <th>Card Number {{ knp_pagination_sortable(cards, 'Sort', 'card.userId') }}</th>
         <th colspan="4">Options</th>
     </tr>
+        </thead>
     {% for card in cards %}
+        <tbody>
     <tr>
     <td>{{ card.cardNumber }} </td>
+        <td><a href="{{path('view_one_card', {id: card.id} )}}" class="btn btn-success btn-xs">View card</a></td>
+        <td><a href="{{path('edit_card' , {id: card.id})}}" class="btn btn-success btn-xs">Edit card</a></td>
 
-    <td><a href="{{ path('add_new_order', {id: card.id}) }}">Add order
+        <td><a href="{{ path('add_new_order', {id: card.id}) }}" class="btn btn-success btn-xs">Add order
         </a></td>
-    <td><a href="{{ path('view_all_orders', {id: card.id}) }}">View orders
+        <td><a href="{{ path('view_all_orders', {id: card.id}) }}" class="btn btn-success btn-xs">View orders
     </a></td>
-        <td><a href="{{path('view_one_card', {id: card.id} )}}">View card</a></td>
-        <td><a href="{{path('edit_card' , {id: card.id})}}">Edit card</a></td>
 
     </tr>
+        </tbody>
     {% endfor %}
-</table>
+{#</table>#}
 
-    <a href="{{ path('index' )}}">
-        <button>Back to My Profile</button>
-    </a><br/>
+    {#<a href="{{ path('index' )}}">#}
+        {#<button>Back to My Profile</button>#}
+    {#</a><br/>#}
+    </table>
+    {#<div class="pagination">#}
+        {#{{ knp_pagination_render(cards) }}#}
+    {#</div>#}
+
+    <div>
+        <a href="{{ path('index') }}" class="btn btn-primary btn-xs">Back</a>
+    </div>
+</div>
+</body>
 {% endblock %}
 

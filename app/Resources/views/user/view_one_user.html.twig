@@ -1,36 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
 
-    <h4>View user</h4><hr><br/>
+{% block main %}
+    {#{% if error %}#}
+    {#<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+    {#{% endif %}#}
 
-    Username: {{ user.username }} <br/>
-    Email: {{ user.email }}<br/>
-    Created at: {{ user.createdAt }}<br/>
-    Changed at: {{ user.updatedAt }}<br/>
-    Enabled:
-    {% if user.enabled > 0 %}
-        <td>Yes</td>
-    {% else %}
-        <td>No</td>
-    {% endif %}<br/>
-    <tr><th> Cards with NUM: </th></tr>
-<table style="width:-moz-fit-content" border="1">
-    {% for card in user.cards %}
-    <tr><td>View card: <a href="{{ path('view_one_card', {id: card.id}) }}">{{ card.cardNumber }}
-    </a></td></tr>
-    {% endfor %}
-</table>
+    <div class="container">
+        <h3>Information for my profile: {{ user }}</h3><br>
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Last updated At</th>
+                <th>Roles</th>
+                <th>Is Active</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ user.username }} </td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.createdAt }}</td>
+                <td>{{ user.updatedAt }}</td>
+                {% for role in user.roles %}
+                    <td>{{ role }}</td>
+                {% endfor %}
 
-    <a href="{{ path('index' )}}">
-        <button>Back to Home view</button>
-    </a><br/>
+                {% if user.enabled > 0 %}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
 
-    <a href="{{ path('self_edit_user', {id: user.id}) }}">
-        <button>Edit My Profile</button>
-    </a><br/>
+            </tbody>
+        </table>
 
-
-
+        <div>
+            <a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back to home</a>
+            <a href="{{ path("self_edit_user", {id:user.id}) }}" class="btn btn-primary btn-xs">Edit info</a>
+        </div>
+    </div>
 {% endblock %}
+
+
 

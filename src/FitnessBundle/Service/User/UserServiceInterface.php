@@ -6,7 +6,7 @@
  * Time: 17:54
  */
 
-namespace FitnessBundle\Service\Profile;
+namespace FitnessBundle\Service\User;
 
 
 use FitnessBundle\Entity\User;
@@ -14,10 +14,10 @@ use Exception;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Interface ProfileServiceInterface
+ * Interface UserServiceInterface
  * @package FitnessBundle\Service\Profile
  */
-interface ProfileServiceInterface
+interface UserServiceInterface
 {
 
 	/**
@@ -44,10 +44,11 @@ interface ProfileServiceInterface
 
 	/**
 	 * @param $id
-	 * @return object|null|User
+	 * @return User|null
 	 */
-	public function find($id);
+	public function findOneUserById($id): ?User;
 
+	public function selectPaginatorAll(): \Doctrine\ORM\QueryBuilder;
 
-	public function removeAllRoles($userId, $roleId): void;
+	public function selectPaginatorWhere($param): \Doctrine\ORM\QueryBuilder;
 }

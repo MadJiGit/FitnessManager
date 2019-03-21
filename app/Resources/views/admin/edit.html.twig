@@ -2,8 +2,8 @@
 
 {% block title %}Admin Edit My Profile{% endblock %}
 
-
 {% block main %}
+
     <h3>Edit User Profile</h3>
     <hr>
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
@@ -13,29 +13,8 @@
             <div class="col-md-6">
                 {{ form_row(form) }}
 
-                {#{{ form_row(roles) }}#}
-                {#{{ form_end(roles) }}#}
                 {{ form_end(form) }}
-                {#{{ form_row(form.username) }}#}
-                {#{{ form_row(form.email) }}#}
-                {#{{ form_row(form.old_password) }}#}
-                {#{{ form_row(form.new_password) }}#}
-                {#{% for role in user.roles %}#}
-                    {#{{ role }}#}
-                {#{% endfor %}#}
-                {#{{ form_row(form.role) }}#}
-                {#{{ form_row(form.enabled) }}#}
 
-
-                {#<a {{ form_row(form.submit) }} class="btn btn-primary btn-xs">Submit &raquo;</a>#}
-
-                {#{{ form_rest(form) }}#}
-
-                {#{{ form_row(form.submit) }}#}
-
-                {#<button type="submit" class="btn btn-dark"><i class="fa fa-check"></i> Update</button>#}
-                {#<a href="{{ path("admin_all_user") }}">#}
-                    {#<button>Back</button>#}
                 </a>
             </div>
         </div>

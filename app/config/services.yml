@@ -33,7 +33,7 @@ services:
 #        resource: '../../src/FitnessBundle/Service'
 #        public: true
 #
-#    FitnessBundle\Service\Profile\ProfileService:
+#    FitnessBundle\Service\Profile\UserService:
 #        arguments:
 #            - "@security.password_encoder"
 #            - "@security.token_storage"

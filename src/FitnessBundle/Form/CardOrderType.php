@@ -15,17 +15,17 @@ use Symfony\Component\Security\Core\Security;
 
 class CardOrderType extends AbstractType
 {
-	/** @var Security $security */
-	private $security;
-
-	/**
-	 * ProfileType constructor.
-	 * @param Security $security
-	 */
-	public function __construct(Security $security)
-	{
-		$this->security = $security;
-	}
+//	/** @var Security $security */
+//	private $security;
+//
+//	/**
+//	 * ProfileType constructor.
+//	 * @param Security $security
+//	 */
+//	public function __construct(Security $security)
+//	{
+//		$this->security = $security;
+//	}
 
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
@@ -36,13 +36,13 @@ class CardOrderType extends AbstractType
 				'html5' => false))
 			->add('visitsOrder', ChoiceType::class, array(
 				'choices' => [
-				'' => '',
-				'8' => 8,
-				'12' => 12,
-				'16' => 16,
-				'unlimited' => 'unlimited'
-				]))
-		->add('submit', SubmitType::class);
+					'' => '',
+					'8' => 8,
+					'12' => 12,
+					'16' => 16,
+					'unlimited' => '1000'
+				]));
+//			->add('submit', SubmitType::class);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

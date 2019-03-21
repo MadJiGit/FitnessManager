@@ -78,4 +78,13 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
 
 
 	}
+
+	public function findById($id): \Doctrine\ORM\QueryBuilder
+	{
+		return $this->createQueryBuilder('card')
+			->select('card')
+			->orderBy('card.userId', 'ASC')
+			->where('card.userId = :id')
+			->setParameter('id', $id);
+	}
 }

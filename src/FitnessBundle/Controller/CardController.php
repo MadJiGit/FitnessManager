@@ -5,6 +5,7 @@ namespace FitnessBundle\Controller;
 use FitnessBundle\Entity\Card;
 use FitnessBundle\Entity\CardOrder;
 use FitnessBundle\Entity\User;
+use FitnessBundle\Form\CardOrderType;
 use FitnessBundle\Form\CardType;
 use FitnessBundle\Service\Card\CardService;
 use FitnessBundle\Service\Card\CardServiceInterface;
@@ -47,32 +48,32 @@ class CardController extends Controller
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 * @throws \Exception
 	 */
+
 	public function addCard($id, Request $request): \Symfony\Component\HttpFoundation\Response
 	{
+		$this->checkPermission($id);
 
-		/** @var User $currentUser */
-		$currentUser = $this->security->getUser();
-		$currentUserId = $currentUser->getId();
-
-		if ($this->checkPermission($id)) {
-			$this->addFlash('info', 'Sorry, you have no permission!');
-			return $this->redirectToRoute('index');
-		}
+		/** @var User $loggedInUser */
+		$loggedInUser = $this->security->getUser();
+		$loggedInUserId = $loggedInUser->getId();
 
 		/** @var Card $card */
 		$card = new Card();
+		/** @var CardOrder $cardOrder */
 		$cardOrder = new CardOrder();
+
 		$card->getOrders()->add($cardOrder);
 		$form = $this->createForm(CardType::class, $card);
 		$form->handleRequest($request);
 
 
 		if ($form->isSubmitted() && $form->isValid()) {
+
 			$newCardId = $this->cardService->getNewId();
 			$visitLeft = $cardOrder->getVisitsOrder();
 
-			$card->setUser($currentUser);
-			$card->setUserId($currentUserId);
+			$card->setUser($loggedInUser);
+			$card->setUserId($loggedInUserId);
 			$card->setCardNumber($newCardId);
 			$card->setUpdatedAt(new \DateTime('now'));
 
@@ -87,10 +88,11 @@ class CardController extends Controller
 			$this->addFlash('info', 'successful add new card');
 
 			return $this->viewOneCard($card->getId());
-
 		}
 
+
 		return $this->render('card/add', [
+			'card' => $card,
 			'form' => $form->createView(),
 		]);
 	}
@@ -98,23 +100,42 @@ class CardController extends Controller
 
 	/**
 	 * @Route ("/card/view_all_cards/{id}", name="view_all_cards")
-	 * @param $id
+	 * @param int $id
+	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function viewAllCards($id): \Symfony\Component\HttpFoundation\Response
+	public function viewAllCards(int $id, Request $request): \Symfony\Component\HttpFoundation\Response
 	{
-		/** @var Card $card */
-		$cards = $this->cardService->findAllCardsByUserId($id);
+		$this->checkPermission($id);
+		$isAdminRights = $this->isAdminHere();
 
-		if($this->checkPermission($id)){
-			$this->addFlash('info', 'Sorry, you have no permission!');
-			return $this->redirectToRoute('index');
-		}
+		$paginator = $this->get('knp_paginator');
+
+//		if (false === $this->isAdminHere()){
+			/** @var Card $card */
+			$cards = $paginator->paginate (
+				$this->cardService->
+				findAllCardsByUserId($id),
+			$request->query->getInt('page', 1), 6 );
+
+
+//			$cards = $paginator->paginate(
+//				$this->getDoctrine()
+//					->getRepository(Card::class)
+//					->selectByIdAsc($id),
+//				$request->query->getInt('page', 1), 6
+//			);
+//		}
+
+
+
 
 		return $this->render('card/view_all_cards', [
 			'cards' => $cards,
 			'userId' => $id,
 		]);
+
+
 	}
 
 
@@ -125,15 +146,10 @@ class CardController extends Controller
 	 */
 	public function viewOneCard($id): \Symfony\Component\HttpFoundation\Response
 	{
+		$this->checkPermission($id);
+
 		/** @var Card $card */
 		$card = $this->cardService->findOneCardById($id);
-		$userId = $card->getUserId();
-
-		if($this->checkPermission($userId)){
-			$this->addFlash('info', 'Sorry, you have no permission!');
-			return $this->redirectToRoute('index');
-		}
-
 
 		return $this->render('card/view_one_card', [
 			'card' => $card,
@@ -149,22 +165,17 @@ class CardController extends Controller
 	 */
 	public function editCard($id, Request $request): ?\Symfony\Component\HttpFoundation\Response
 	{
+		$this->checkPermission($id);
 
 		/** @var Card $card */
 		$card = $this->cardService->findOneCardById($id);
-		$userId = $card->getUserId();
-
-		if($this->checkPermission($userId)){
-			$this->addFlash('info', 'Sorry, you have no permission!');
-			return $this->redirectToRoute('index');
-		}
 
 		$form = $this->createForm(CardType::class, $card);
 		$form->handleRequest($request);
 
 		$this->formErrorService->checkErrors($form);
 
-		if ($form->isSubmitted() && $form->isValid()){
+		if ($form->isSubmitted() && $form->isValid()) {
 
 			$card->setUpdatedAt(new \DateTime('now'));
 
@@ -176,7 +187,7 @@ class CardController extends Controller
 
 //			$this->cardOrderService->editProfile($order);
 
-			return $this->viewAllCards($userId);
+			return $this->viewAllCards($id);
 
 		}
 		return $this->render('card/edit_card', [
@@ -191,10 +202,32 @@ class CardController extends Controller
 	 */
 	private function checkPermission($id)
 	{
-		/** @var User $currentUser */
-		$currentUser = $this->security->getUser();
-		$currentUserId = $currentUser->getId();
+		/** @var User $loggedInUser */
+		$loggedInUser = $this->security->getUser();
+		$loggedInUserId = $loggedInUser->getId();
 
-		return ((int)$currentUserId !== (int)$id || $currentUser->isAdmin() || $currentUser->isOffice());
+		if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_RECEPTIONIST'])) {
+			return true;
+		}
+
+		if ((int)$id === $loggedInUserId) {
+			return true;
+		}
+
+		$this->addFlash('info', 'You have not permission!!');
+		return $this->redirectToRoute('index');
+
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function isAdminHere(): bool
+	{
+		if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_RECEPTIONIST'])) {
+			return true;
+		}
+
+		return false;
 	}
 }

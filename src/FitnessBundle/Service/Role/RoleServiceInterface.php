@@ -18,7 +18,7 @@ interface RoleServiceInterface
 	 * @param array|null $orderBy
 	 * @return Role|object|null
 	 */
-	public function findOneBy(array $criteria, array $orderBy = null);
+	public function findOneBy(array $criteria, array $orderBy = null): ?Role;
 
 
 	public function removeOne(array $criteria);

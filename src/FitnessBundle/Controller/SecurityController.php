@@ -24,6 +24,7 @@ class SecurityController extends Controller
 	{
 
 		if ($security->isGranted('IS_AUTHENTICATED_FULLY')) {
+//			$this->addFlash('success', 'Successful login!');
 			return $this->redirectToRoute('index');
 		}
 
@@ -32,7 +33,7 @@ class SecurityController extends Controller
 		$lastUsername = $authenticationUtils->getLastUsername();
 
 		if ($error) {
-			$this->addFlash('danger', 'Invalid email or password!');
+			$this->addFlash('danger', 'Invalid username or password!');
 		}
 
 		return $this->render('security/login.html.twig', [

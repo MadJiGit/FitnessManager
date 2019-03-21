@@ -1,18 +1,9 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block main %}
-    {% for msg in app.session.flashbag.get('info') %}
-        <div class="flashback">
-            <p style="color: red">{{ msg }}</p>
-        </div>
-    {% endfor %}
 
     <div class="container">
-        {#<h3><a href="{{ path('admin_all_user', {'param':'null'}) }}">All Users</a></h3><br/>#}
         <h3>Information for {{ user }}</h3><br>
-        {#<a href="{{ path("register_user") }}" class="btn btn-primary btn-xs" role="button">Add User</a>#}
 
         <table class="table table-condensed">
             <thead>
@@ -40,10 +31,7 @@
                 {% else %}
                     <td>No</td>
                 {% endif %}
-
-
-                {#<td><a href="{{ path("admin_all_user") }}">Back</a></td>#}
-
+            </tr>
             </tbody>
         </table>
 

@@ -308,7 +308,7 @@ class User implements UserInterface, \Serializable
 	 *
 	 * @return User
 	 */
-	public function addRole(Role $role): User
+	public function addRole(Role $role): ?User
 	{
 		$this->removeRole();
 
@@ -377,6 +377,7 @@ class User implements UserInterface, \Serializable
 //		return $this;
 //	}
 
+
 	public function getRoleName()
 	{
 		$temp = $this->getRoles();
@@ -405,6 +406,8 @@ class User implements UserInterface, \Serializable
 
 		}
 	}
+
+
 
 	/**
 	 * @return bool

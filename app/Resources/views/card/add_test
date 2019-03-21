@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h4>Add card</h4>
+    {{ form_start(formCard, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(formCard._token) }}
+    {{ form_end(formCard) }}
+
+    <hr>
+    <h4>Add start and due date</h4>
+    {{ form_start(formCardOrder) }}
+    {{ form_row(formCardOrder.startDate) }}
+    {{ form_row(formCardOrder.dueDate) }}
+    {{ form_row(formCardOrder.visitsOrder) }}
+    {{ form_row(formCardOrder._token) }}
+
+    <br/>
+
+    {#{{ form_row(formCardOrder.submit) }}#}
+    {{ form_end(formCardOrder) }}
+
+    <br/>
+    <hr>
+    <div class="class row">
+        <div class="class col-sm-offset col-sm-10">
+            {#<button name='add' type='submit' value='create' class='btn btn-primary btn-xs'>Save</button>#}
+            <a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back</a>
+        </div>
+    </div>
+
+    {#<div class="row">#}
+    {#<div class="col-md-6">#}
+    {#<div class="row">#}
+    {#<div class="col-md-12">#}
+    {#{{ form_row(form.validFrom) }}#}
+    {#{{ form_row(form.validTo) }}#}
+    {#{{ form_row(form.cardOrder.startDate) }}#}
+    {#{{ form_row(form._token) }}#}
+    {#{{ form_end(form) }}#}
+    {#{{form_widget(form)}}#}
+    {#<br/><div class="class row">#}
+    {#<div class="class col-sm-offset col-sm-10">#}
+    {#<button name='add' type='submit' value='create' class='btn btn-primary btn-xs'>Save</button>#}
+    {#<a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back</a>#}
+    {#<button name='cancel' type='submit' value='cancel' class='btn btn-cancel' formnovalidate='formnovalidate'>Cancel</button>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#<div class="row">#}
+    {#<div class="col-md-6">#}
+    {#{{ form(form.orders) }}#}
+    {#</div>#}
+    {#</div>#}
+    {#<input type="hidden" name="_csrf_token"#}
+    {#value="{{ csrf_token('authenticate') }}"/><br/>#}
+    {#<div>#}
+    {#<a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back</a>#}
+    {#<a href="{{ path("admin_all_user") }}" class="btn btn-primary btn-xs">Back to all users</a>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+
+    {#{{ card.cardNumber }}#}
+
+{% endblock %}

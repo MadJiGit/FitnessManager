@@ -15,7 +15,6 @@ use FitnessBundle\Entity\Card;
  * Interface CardServiceInterface
  * @package FitnessBundle\Service\Card
  */
-
 interface CardServiceInterface
 {
 	/**
@@ -24,9 +23,11 @@ interface CardServiceInterface
 	 */
 	public function findOneCardById($id);
 
-	public function findAllCardsByUserId($id);
+	public function selectByIdAsc($id);
 
 	public function addCard(Card $card);
 
 	public function getNewId();
+
+	public function findAllCardsByUserId($id);
 }

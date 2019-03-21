@@ -118,7 +118,7 @@ class ProfileType extends AbstractType
 
 
 			if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'])
-//				&& $user->getId() !== $loggedInUser->getId()
+				&& $user->getId() !== $loggedInUser->getId()
 			) {
 				$form
 //					 it's work
@@ -143,6 +143,17 @@ class ProfileType extends AbstractType
 						'required' => false,
 					]);
 			}
+
+			if ($this->security->isGranted(['ROLE_RECEPTIONIST'])
+				&& $user->getId() !== $loggedInUser->getId()
+			) {
+				$form
+					->add('enabled', CheckboxType::class, [
+						'label' => 'Is user is active?',
+						'required' => false,
+					]);
+			}
+
 
 			$form->add('submit', SubmitType::class);
 		});

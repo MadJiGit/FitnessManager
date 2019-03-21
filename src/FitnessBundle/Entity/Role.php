@@ -94,12 +94,12 @@ class Role
 	}
 
 	/**
-	 * @param ArrayCollection|User[] $users
+	 * @param User $user
 	 * @return Role
 	 */
-	public function setUsers($users): Role
+	public function setUsers(User $user): Role
 	{
-		$this->users = $users;
+		$this->users[] = $user;
 
 		return $this;
 	}

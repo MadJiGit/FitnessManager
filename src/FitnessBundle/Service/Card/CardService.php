@@ -60,8 +60,14 @@ class CardService implements CardServiceInterface
 		return ($this->cardRepository->findLastId() + 1);
 	}
 
+	public function selectByIdAsc($id)
+	{
+		return $this->cardRepository->findById($id);
+	}
+
 	public function findAllCardsByUserId($id)
 	{
+//		return $this->cardRepository->find(['userId' => $id]);
 		return $this->cardRepository->findBy(['userId' => $id]);
 	}
 }

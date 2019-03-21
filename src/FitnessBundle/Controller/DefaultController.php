@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use FitnessBundle\Service\FormError\FormErrorServiceInterface;
-use FitnessBundle\Service\Profile\ProfileServiceInterface;
+use FitnessBundle\Service\User\UserServiceInterface;
 use FitnessBundle\Service\Role\RoleServiceInterface;
+
+//$counter = false;
 
 class DefaultController extends Controller
 {
@@ -21,7 +23,7 @@ class DefaultController extends Controller
 	/** @var FormErrorServiceInterface $formErrorService */
 	private $formErrorService;
 
-	/** @var ProfileServiceInterface $profileService */
+	/** @var UserServiceInterface $profileService */
 	private $profileService;
 
 	/** @var RoleServiceInterface $roleService */
@@ -30,10 +32,10 @@ class DefaultController extends Controller
 	/**
 	 * UserController constructor.
 	 * @param FormErrorServiceInterface $formErrorService
-	 * @param ProfileServiceInterface $profileService
+	 * @param UserServiceInterface $profileService
 	 * @param RoleServiceInterface $roleService
 	 */
-	public function __construct(FormErrorServiceInterface $formErrorService, ProfileServiceInterface $profileService, RoleServiceInterface $roleService)
+	public function __construct(FormErrorServiceInterface $formErrorService, UserServiceInterface $profileService, RoleServiceInterface $roleService)
 	{
 		$this->formErrorService = $formErrorService;
 		$this->profileService = $profileService;
@@ -53,11 +55,9 @@ class DefaultController extends Controller
 
 		$user = $this->getUser();
 
-//		dump($isSuperAdminRegister);
-//		dump($user);
-//		exit;
 
 		if ($user) {
+//			$this->addFlash('success', 'Successful login!');
 			return $this->render('default/index.html.twig', [
 				'user' => $user,
 			]);
@@ -68,6 +68,7 @@ class DefaultController extends Controller
 
 		}
 
+		$this->addFlash('success', 'Successful logout!');
 		return $this->redirectToRoute('security_login');
 
 	}
