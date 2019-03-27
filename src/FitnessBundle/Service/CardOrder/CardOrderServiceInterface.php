@@ -18,4 +18,8 @@ interface CardOrderServiceInterface
 
 	public function editProfile($order);
 
+	public function findAllOrdersByCardId($cardId);
+
+	public function findAllOrders();
+
 }

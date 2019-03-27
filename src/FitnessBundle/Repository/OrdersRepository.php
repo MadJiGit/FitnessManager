@@ -62,10 +62,21 @@ class OrdersRepository extends \Doctrine\ORM\EntityRepository
 
 	public function findOneById($id)
 	{
-//		dump($this->find($id));
-//		exit;
 
 		return $this->find($id);
+	}
+
+	public function getAllOrders(): \Doctrine\ORM\QueryBuilder
+	{
+		return $this->createQueryBuilder('orders')
+			->select('orders')
+			->orderBy('orders.id', 'ASC');
+//		return $this->createQueryBuilder('orders')
+//			->select('orders')
+//			->orderBy('orders.id', 'ASC')
+//			->where('orders.cardId = :id')
+//			->setParameter('id', $id);
+
 	}
 
 }

@@ -117,12 +117,12 @@ class ProfileType extends AbstractType
 			}
 
 
-			if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'])
-				&& $user->getId() !== $loggedInUser->getId()
+			if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_RECEPTIONIST'])
+//				&& $user->getId() !== $loggedInUser->getId()
 			) {
 				$form
 //					 it's work
-					->add('roles', EntityType::class, [
+					->add('role', EntityType::class, [
 					'class' => Role::class,
 					'choice_label' => 'name',
 					'placeholder' => 'Select one role',

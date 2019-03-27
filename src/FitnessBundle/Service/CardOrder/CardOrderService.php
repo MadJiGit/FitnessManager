@@ -45,4 +45,19 @@ class CardOrderService implements CardOrderServiceInterface
 	{
 		// TODO: Implement editProfile() method.
 	}
+
+	public function findAllOrdersByCardId($cardId)
+	{
+		return $this->orderRepository->findBy(['cardId' => $cardId]);
+//
+//		dump($this->orderRepository->findBy(['cardId' => $cardId]));
+//		exit;
+
+
+	}
+
+	public function findAllOrders()
+	{
+		return $this->orderRepository->getAllOrders();
+	}
 }

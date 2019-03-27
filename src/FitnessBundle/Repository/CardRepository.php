@@ -75,8 +75,6 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
 			return 0;
 		}
 
-
-
 	}
 
 	public function findById($id): \Doctrine\ORM\QueryBuilder
@@ -87,4 +85,19 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
 			->where('card.userId = :id')
 			->setParameter('id', $id);
 	}
+
+	public function getAllCards(): \Doctrine\ORM\QueryBuilder
+	{
+		return $this->createQueryBuilder('card')
+			->select('card')
+			->orderBy('card.id', 'ASC');
+	}
 }
+
+//			$cards = $paginator->paginate(
+//				$this->getDoctrine()
+//					->getRepository(Card::class)
+//					->selectByIdAsc($id),
+//				$request->query->getInt('page', 1), 6
+//			);
+//		}

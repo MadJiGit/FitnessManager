@@ -3,20 +3,37 @@
 {% block main %}
 
 
-    <h4>Edit card</h4>
-    <hr><br/>
+    <h3>Edit card</h3>
+    <hr>
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-    {{ form_row(form.validFrom) }}<br/>
-    {{ form_row(form.validTo) }}<br/>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-6">
 
-    {{ form_end(form , {'render_rest': false}) }}
+                {{ form_row(form.validFrom) }}<br/>
+                {{ form_row(form.validTo) }}<br/>
 
-    <a href="{{ path("view_one_card", {id: id}) }}">
-        <button>Back</button>
-    </a><br/>
+                {{ form_row(form._token) }}
+                {{ form_row(form.submit) }}
 
+                {{ form_end(form , {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+
+    {#<a href="{{ path("view_one_card", {id: id}) }}">#}
+    {#<button>Back to that card</button>#}
+    {#</a><br/>#}
+    {#<a href="{{ path("view_all_cards", {id: id}) }}">#}
+    {#<button>Back to all cards</button>#}
+    {#</a><br/>#}
+    <hr><br/>
+    <div>
+        <a href="{{ path("view_one_card", {cardId: id}) }}" class="btn btn-primary btn-xs">Back to that card view</a>
+        <a href="{{ path("view_all_cards", {id: app.user.id}) }}" class="btn btn-primary btn-xs">Back to all cards</a>
+    </div>
 
 
 {% endblock %}

@@ -1,0 +1,21 @@
+
+{% block main %}
+
+    {% if app.user.isSuperAdmin or app.user.isAdmin or app.user.isReceptionist %}
+
+
+        {#{% include 'partials/navbar_admin.html.twig' %}#}
+
+    {% else %}
+
+        {#{% include 'partials/navbar_client.html.twig' %}#}
+
+    {% endif %}
+
+    {% if app.user.isReceptionist %}
+
+        {% include 'partials/body_receptionist.html.twig' %}
+
+    {% endif %}
+
+{% endblock %}

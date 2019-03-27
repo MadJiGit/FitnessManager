@@ -52,30 +52,32 @@ class CardOrderController extends Controller
 
 
 	/**
-	 * @Route ("/order/add/{id}", name="add_new_order")
-	 * @param $id
+	 * @Route ("/order/add/{cardId}", name="add_new_order")
+	 * @param $cardId
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function addOrder($id, Request $request): \Symfony\Component\HttpFoundation\Response
+	public function addOrder($cardId, Request $request): \Symfony\Component\HttpFoundation\Response
 	{
 		/** @var Card $card */
-		$card = $this->cardService->findOneCardById($id);
+		$card = $this->cardService->findOneCardById($cardId);
 		$cardIsValid = $card->isValid();
 
 		$ownersUserId = $card->getUserId();
 
-		if($this->checkPermission($ownersUserId)){
+		$this->checkPermission($ownersUserId);
+
+		if (false === $this->checkPermission($ownersUserId)) {
 			$this->addFlash('info', 'Sorry, you have no permission!');
 			return $this->redirectToRoute('index');
 		}
 
-		if ($cardIsValid){
+		if ($cardIsValid) {
 			$order = new CardOrder();
 			$form = $this->createForm(CardOrderType::class, $order);
 			$form->handleRequest($request);
 
-			if ($form->isSubmitted() && $form->isValid()){
+			if ($form->isSubmitted() && $form->isValid()) {
 
 				$visitLeft = $order->getVisitsOrder();
 				$order->setCard($card);
@@ -85,12 +87,12 @@ class CardOrderController extends Controller
 				$em->flush();
 
 				$this->addFlash('info', 'successful add new order');
-				return $this->viewAllOrders($id);
+				return $this->viewAllOrders($cardId);
 
 			}
 			return $this->render('order/add', [
 				'form_order' => $form->createView(),
-				'id' => $id,
+				'card' => $card,
 			]);
 		}
 
@@ -108,48 +110,85 @@ class CardOrderController extends Controller
 	{
 		/** @var CardOrder $order */
 		$order = $this->cardOrderService->findOneOrderById($id);
-		$user = $order->getCard()->getUser();
-		$username = $user->getUsername();
+		$cardOwner = $order->getCard()->getUser();
+		$usernameCardOwner = $cardOwner->getUsername();
+		$ownersUserId = $cardOwner->getId();
 
-		$ownersUserId = $user->getId();
-
-		if($this->checkPermission($ownersUserId)){
+		if (false === $this->checkPermission($ownersUserId)) {
 			$this->addFlash('info', 'Sorry, you have no permission!');
 			return $this->redirectToRoute('index');
 		}
 
 		return $this->render('order/view_one_order', [
 			'order' => $order,
-			'username' => $username,
+			'username' => $usernameCardOwner,
 		]);
 	}
 
+
 	/**
-	 * @Route ("/order/view_all_orders/{id}", name="view_all_orders")
-	 * @param $id
+	 * @Route ("/order/view_all_orders/{cardId}", name="view_all_orders")
+	 * @param $cardId
+	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function viewAllOrders($id): \Symfony\Component\HttpFoundation\Response
+	public function viewAllOrdersByCardId($cardId, Request $request): \Symfony\Component\HttpFoundation\Response
 	{
+
 		/** @var Card $card */
-		$card = $this->cardService->findOneCardById($id);
-
-		/** @var CardOrder[] $orders */
-		$orders = $card->getAllOrders();
+		$card = $this->cardService->findOneCardById($cardId);
 		$user = $card->getUser();
-
 		$ownersUserId = $user->getId();
 
-		if($this->checkPermission($ownersUserId)){
+		if (false === $this->checkPermission($ownersUserId)) {
 			$this->addFlash('info', 'Sorry, you have no permission!');
 			return $this->redirectToRoute('index');
 		}
 
 
+		$paginator = $this->get('knp_paginator');
+
+		/** @var CardOrder $orders */
+		$orders = $paginator->paginate(
+			$this->cardOrderService->
+			findAllOrdersByCardId($cardId),
+			$request->query->getInt('page', 1), 6);
+
 
 		return $this->render('order/view_all_orders', [
+			'card' => $card,
 			'orders' => $orders,
 			'user' => $user,
+		]);
+	}
+
+	/**
+	 * @Route ("/order/view_total_orders/", name="view_total_orders")
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function viewTotalOrders(Request $request): \Symfony\Component\HttpFoundation\Response
+	{
+
+
+		if (false === $this->isAdminHere()){
+
+			$this->addFlash('info', 'Sorry, you have no permission!');
+			return $this->redirectToRoute('view_all_cards');
+		}
+
+		$paginator = $this->get('knp_paginator');
+
+			/** @var CardOrder $orders */
+
+			$orders = $paginator->paginate(
+				$this->cardOrderService->
+				findAllOrders(),
+				$request->query->getInt('page', 1), 6);
+
+
+		return $this->render('order/view_total_orders', [
+			'orders' => $orders,
 		]);
 	}
 
@@ -171,14 +210,14 @@ class CardOrderController extends Controller
 
 		$ownersUserId = $order->getCard()->getUserId();
 
-		if($this->checkPermission($ownersUserId)){
+		if (false === $this->checkPermission($ownersUserId)) {
 			$this->addFlash('info', 'Sorry, you have no permission!');
 			return $this->redirectToRoute('index');
 		}
 
 		$this->formErrorService->checkErrors($form);
 
-		if ($form->isSubmitted() && $form->isValid()){
+		if ($form->isSubmitted() && $form->isValid()) {
 
 			$newVisitsOrder = $form->get('visitsOrder')->getData();
 			$order->setVisitsLeft($newVisitsOrder);
@@ -191,7 +230,7 @@ class CardOrderController extends Controller
 
 //			$this->cardOrderService->editProfile($order);
 
-			return $this->viewAllOrders($cardId);
+			return $this->viewAllOrdersByCardId($cardId, $request);
 
 		}
 		return $this->render('order/edit_order', [
@@ -201,18 +240,32 @@ class CardOrderController extends Controller
 	}
 
 	/**
-	 * @param $id
+	 * @param $orderOwnerUserId
 	 * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse
 	 */
-	private function checkPermission($id)
+	private function checkPermission($orderOwnerUserId)
 	{
-		/** @var User $currentUser */
-		$currentUser = $this->security->getUser();
-		$currentUserId = $currentUser->getId();
+		/** @var User $loggedInUser */
+		$loggedInUser = $this->security->getUser();
+		$loggedInUserId = $loggedInUser->getId();
 
-		return ((int)$currentUserId !== (int)$id ||
-			$currentUser->isAdmin() ||
-			$currentUser->isOffice()) ||
-			$currentUser->isSuperAdmin();
+		return ((int)$loggedInUserId === (int)$orderOwnerUserId ||
+			$loggedInUser->isAdmin() ||
+			$loggedInUser->isReceptionist() ||
+			$loggedInUser->isSuperAdmin());
+
+
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function isAdminHere(): bool
+	{
+		if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_RECEPTIONIST'])) {
+			return true;
+		}
+
+		return false;
 	}
 }

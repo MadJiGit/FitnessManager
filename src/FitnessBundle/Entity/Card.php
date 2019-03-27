@@ -191,13 +191,13 @@ class Card
 	/**
 	 * Set updatedAt.
 	 *
-	 * @param \DateTime $updatedAt
-	 *
 	 * @return Card
+	 * @throws \Exception
 	 */
-	public function setUpdatedAt($updatedAt): Card
+	public function setUpdatedAt(): Card
 	{
-		$this->updatedAt = $updatedAt;
+		$this->updatedAt = new \DateTime('now');
+//		$this->updatedAt = $updatedAt;
 
 		return $this;
 	}

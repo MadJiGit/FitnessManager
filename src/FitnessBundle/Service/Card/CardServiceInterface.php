@@ -30,4 +30,7 @@ interface CardServiceInterface
 	public function getNewId();
 
 	public function findAllCardsByUserId($id);
+
+	public function findAllCards();
+
 }

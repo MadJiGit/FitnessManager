@@ -42,7 +42,8 @@ class CardOrderType extends AbstractType
 					'16' => 16,
 					'unlimited' => '1000'
 				]));
-//			->add('submit', SubmitType::class);
+		$builder
+			->add('submit', SubmitType::class);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

@@ -2,21 +2,33 @@
 
 {% block body %}
 
-    <h4>Edit order</h4>
+    <h3>Edit order</h3>
     <hr><br/>
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-    {{ form_row(form.startDate) }}<br/>
-    {{ form_row(form.dueDate) }}<br/>
-    {{ form_row(form.visitsOrder) }}<br/>
-
-    {{ form_end(form) }}
-    <a href="{{ path("view_one_order", {id: id}) }}">
-        <button>Back</button>
-    </a><br/>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-6">
+                {{ form_row(form.startDate) }}<br/>
+                {{ form_row(form.dueDate) }}<br/>
+                {{ form_row(form.visitsOrder) }}<br/>
 
 
+                {#{{ form_end(form , {'render_rest': false}) }}#}
+
+                {{ form_end(form) }}
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr><br>
+    <div>
+        <a href="{{ path("view_one_order", {id: id}) }}" class="btn btn-primary btn-xs">
+            Back
+        </a>
+    </div>
+    <br/>
 
 {% endblock %}
 

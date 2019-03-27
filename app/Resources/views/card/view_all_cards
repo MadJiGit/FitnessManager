@@ -11,6 +11,7 @@
         <thead>
     <tr>
         <th>Card Number {{ knp_pagination_sortable(cards, 'Sort', 'card.userId') }}</th>
+        <th>Card owner {{ knp_pagination_sortable(cards, 'Sort', 'card.userId') }}</th>
         <th colspan="4">Options</th>
     </tr>
         </thead>
@@ -18,13 +19,18 @@
         <tbody>
     <tr>
     <td>{{ card.cardNumber }} </td>
-        <td><a href="{{path('view_one_card', {id: card.id} )}}" class="btn btn-success btn-xs">View card</a></td>
-        <td><a href="{{path('edit_card' , {id: card.id})}}" class="btn btn-success btn-xs">Edit card</a></td>
+    <td>{{ card.user.username }} </td>
+        <td><a href="{{path('view_one_card', {cardId: card.id} )}}" class="btn btn-success btn-xs">View card</a></td>
+        <td><a href="{{path('edit_card' , {cardId: card.id})}}" class="btn btn-success btn-xs">Edit card</a></td>
 
-        <td><a href="{{ path('add_new_order', {id: card.id}) }}" class="btn btn-success btn-xs">Add order
+        <td><a href="{{ path('add_new_order', {cardId: card.id}) }}" class="btn btn-success btn-xs">Add order
         </a></td>
-        <td><a href="{{ path('view_all_orders', {id: card.id}) }}" class="btn btn-success btn-xs">View orders
+        <td><a href="{{ path('view_all_orders', {cardId: card.id}) }}" class="btn btn-success btn-xs">View orders
     </a></td>
+
+        {% else %}
+
+            <td> User have not any cards yet </td>
 
     </tr>
         </tbody>
@@ -35,9 +41,9 @@
         {#<button>Back to My Profile</button>#}
     {#</a><br/>#}
     </table>
-    {#<div class="pagination">#}
-        {#{{ knp_pagination_render(cards) }}#}
-    {#</div>#}
+    <div class="pagination">
+        {{ knp_pagination_render(cards) }}
+    </div>
 
     <div>
         <a href="{{ path('index') }}" class="btn btn-primary btn-xs">Back</a>

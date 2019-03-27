@@ -90,7 +90,7 @@ class AdminController extends Controller
 				$user->addRole($role);
 
 			} else {
-				$role = $form->get('roles')->getData();
+				$role = $form->get('role')->getData();
 				$user->addRole($role);
 			}
 
@@ -153,7 +153,8 @@ class AdminController extends Controller
 				]);
 			}
 
-			$roleFromForm = $form->get('roles')->getData();
+			$roleFromForm = $form->get('role')->getData();
+
 
 			if ($roleFromForm === null) {
 

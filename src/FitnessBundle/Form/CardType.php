@@ -22,10 +22,10 @@ class CardType extends AbstractType
 			->add('validTo', DateType::class, array(
 				'html5' => false));
 
-		$builder
-			->add('orders', CollectionType::class, [
-				'entry_type' => CardOrderType::class,
-				'entry_options' => ['label' => true]]);
+//		$builder
+//			->add('orders', CollectionType::class, [
+//				'entry_type' => CardOrderType::class,
+//				'entry_options' => ['label' => true]]);
 
 		$builder
 				->add('submit', SubmitType::class);

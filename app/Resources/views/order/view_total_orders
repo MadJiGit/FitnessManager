@@ -3,14 +3,16 @@
 
 {% block main %}
     <body>
-    <h3>{{ user.username }}</h3>
-    <h3>View all orders of card number {{ card.cardNumber }}</h3>
+    <h3> All orders </h3>
+    {#<h3>View all orders of card number {{  }}</h3>#}
     {#<h3><a href="{{ path('index', {'param':'null'}) }}">Home</a></h3><br/>#}
-    <a href="{{ path("add_new_order", {cardId: card.id}) }}" class="btn btn-primary btn-xs" role="button">Add order</a>
+    {#<a href="{{ path("add_new_order", {cardId: card.id}) }}" class="btn btn-primary btn-xs" role="button">Add order</a>#}
 
     <table class="table table-condensed">
         <thead>
         <tr>
+            <th>Card owner {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
+            <th>Card number {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
             <th>Order valid from {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
             <th>Order valid to {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
             <th>Visits ordered {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
@@ -21,6 +23,8 @@
         {% for order in orders %}
         <tbody>
             <tr>
+                <td>{{ order.card.user.username }}</td>
+                <td>{{ order.card.cardNumber }}</td>
                 <td>{{ order.startDate|date("d/m/Y") }}</td>
                 <td>{{ order.dueDate|date("d/m/Y") }}</td>
                 <td>{{ order.visitsOrder }}</td>
@@ -42,11 +46,13 @@
 
     <br/>
     <div>
-    <a href="{{ path('view_all_cards', {id: user.getId}) }}" class="btn btn-primary btn-xs">View All Cards</a>
-    {#</div>#}
-    {#<div>#}
+    <a href="{{ path('view_all_cards', {id: app.user.getId}) }}" class="btn btn-primary btn-xs">View All Cards</a>
+    </div>
+    <div>
         <a href="{{ path('index') }}" class="btn btn-primary btn-xs">Back</a>
     </div>
     </body>
 {% endblock %}
+
+
 

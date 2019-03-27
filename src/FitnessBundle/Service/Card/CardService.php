@@ -54,9 +54,6 @@ class CardService implements CardServiceInterface
 	{
 		/* for new ID get last one and add 1 */
 
-//		dump($this->cardRepository->findLastId());
-//		exit;
-
 		return ($this->cardRepository->findLastId() + 1);
 	}
 
@@ -69,5 +66,10 @@ class CardService implements CardServiceInterface
 	{
 //		return $this->cardRepository->find(['userId' => $id]);
 		return $this->cardRepository->findBy(['userId' => $id]);
+	}
+
+	public function findAllCards()
+	{
+		return $this->cardRepository->getAllCards();
 	}
 }

@@ -1,0 +1,24 @@
+<li>
+    <a href="{{ path('register_user') }}">
+        Register User
+    </a></li>
+<li>
+    <a href="{{ path('admin_all_user') }}">
+        All Users
+    </a></li>
+<li>
+    <a href="{{ path('admin_view_one', {id: app.user.id}) }}">
+        My Profile
+    </a></li>
+<li>
+    <a href="{{ path('add_new_card', {id: app.user.id}) }}">
+        Add card
+    </a></li>
+<li>
+    <a href="{{ path('view_all_cards', {id: app.user.id}) }}">
+        View All Cards
+    </a></li>
+<li>
+    <a href="{{ path('view_total_orders') }}">
+        View Total Orders
+    </a></li>

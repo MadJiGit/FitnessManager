@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h4>Add card</h4>
+    <h4>Add card to {{ user.username }}</h4>
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="row">
         <div class="col-md-6">

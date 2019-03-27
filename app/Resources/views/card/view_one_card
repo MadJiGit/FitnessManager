@@ -28,9 +28,9 @@
             </tbody>
         </table>
         <div>
-            <a href="{{ path('add_new_order', {id: card.id}) }}" class="btn btn-primary btn-xs">Add New Order</a>
-            <a href="{{ path('view_all_orders', {id: card.id}) }}" class="btn btn-primary btn-xs">View All Orders</a>
-            <a href="{{ path('edit_card', {id: card.id}) }}" class="btn btn-primary btn-xs">Edit Card</a>
+            <a href="{{ path('add_new_order', {cardId: card.id}) }}" class="btn btn-primary btn-xs">Add Order</a>
+            <a href="{{ path('view_all_orders', {cardId: card.id}) }}" class="btn btn-primary btn-xs">View All Orders</a>
+            <a href="{{ path('edit_card', {cardId: card.id}) }}" class="btn btn-primary btn-xs">Edit Card</a>
             <a href="{{ path("view_all_cards", {id: card.user.id}) }}" class="btn btn-primary btn-xs">Back</a>
         </div>
         <hr>

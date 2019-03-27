@@ -59,10 +59,10 @@ class CardController extends Controller
 
 		/** @var Card $card */
 		$card = new Card();
-		/** @var CardOrder $cardOrder */
-		$cardOrder = new CardOrder();
+//		/** @var CardOrder $cardOrder */
+//		$cardOrder = new CardOrder();
 
-		$card->getOrders()->add($cardOrder);
+//		$card->getOrders()->add($cardOrder);
 		$form = $this->createForm(CardType::class, $card);
 		$form->handleRequest($request);
 
@@ -70,28 +70,31 @@ class CardController extends Controller
 		if ($form->isSubmitted() && $form->isValid()) {
 
 			$newCardId = $this->cardService->getNewId();
-			$visitLeft = $cardOrder->getVisitsOrder();
+//			$visitLeft = $cardOrder->getVisitsOrder();
 
 			$card->setUser($loggedInUser);
 			$card->setUserId($loggedInUserId);
 			$card->setCardNumber($newCardId);
 			$card->setUpdatedAt(new \DateTime('now'));
 
-			$cardOrder->setVisitsLeft($visitLeft);
-			$cardOrder->setCard($card);
+//			$cardOrder->setVisitsLeft($visitLeft);
+//			$cardOrder->setCard($card);
 
 			$em = $this->getDoctrine()->getManager();
-			$em->persist($cardOrder);
+//			$em->persist($cardOrder);
 			$em->persist($card);
 			$em->flush();
 
 			$this->addFlash('info', 'successful add new card');
 
-			return $this->viewOneCard($card->getId());
+//			return $this->viewOneCard($card->getId());
+
+			return $this->redirectToRoute('view_one_card', ['cardId' => $card->getId()]);
 		}
 
 
 		return $this->render('card/add', [
+			'user' => $loggedInUser,
 			'card' => $card,
 			'form' => $form->createView(),
 		]);
@@ -99,7 +102,7 @@ class CardController extends Controller
 
 
 	/**
-	 * @Route ("/card/view_all_cards/{id}", name="view_all_cards")
+	 * @Route ("/card/view_all_cards/{id}", methods={"GET", "POST"}, name="view_all_cards")
 	 * @param int $id
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -111,24 +114,20 @@ class CardController extends Controller
 
 		$paginator = $this->get('knp_paginator');
 
-//		if (false === $this->isAdminHere()){
+		if (false === $isAdminRights) {
 			/** @var Card $card */
-			$cards = $paginator->paginate (
+			$cards = $paginator->paginate(
 				$this->cardService->
 				findAllCardsByUserId($id),
-			$request->query->getInt('page', 1), 6 );
+				$request->query->getInt('page', 1), 6);
 
+		} else {
+			$cards = $paginator->paginate(
+				$this->cardService->
+				findAllCards(),
+				$request->query->getInt('page', 1), 6);
 
-//			$cards = $paginator->paginate(
-//				$this->getDoctrine()
-//					->getRepository(Card::class)
-//					->selectByIdAsc($id),
-//				$request->query->getInt('page', 1), 6
-//			);
-//		}
-
-
-
+		}
 
 		return $this->render('card/view_all_cards', [
 			'cards' => $cards,
@@ -140,35 +139,36 @@ class CardController extends Controller
 
 
 	/**
-	 * @Route ("/card/view_one/{id}", name="view_one_card")
-	 * @param $id
+	 * @Route ("/card/view_one/{cardId}", methods={"GET", "POST"}, name="view_one_card")
+	 * @param $cardId
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function viewOneCard($id): \Symfony\Component\HttpFoundation\Response
+	public function viewOneCard($cardId): \Symfony\Component\HttpFoundation\Response
 	{
-		$this->checkPermission($id);
+		$this->checkPermission($cardId);
 
 		/** @var Card $card */
-		$card = $this->cardService->findOneCardById($id);
+		$card = $this->cardService->findOneCardById($cardId);
 
 		return $this->render('card/view_one_card', [
 			'card' => $card,
 		]);
 	}
 
+
 	/**
-	 * @Route ("/card/edit_card/{id}", name="edit_card")
-	 * @param $id
+	 * @Route ("/card/edit_card/{cardId}", methods={"GET", "POST"}, name="edit_card")
+	 * @param $cardId
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 * @throws \Exception
 	 */
-	public function editCard($id, Request $request): ?\Symfony\Component\HttpFoundation\Response
+	public function editCard($cardId, Request $request): ?\Symfony\Component\HttpFoundation\Response
 	{
-		$this->checkPermission($id);
+		$this->checkPermission($cardId);
 
 		/** @var Card $card */
-		$card = $this->cardService->findOneCardById($id);
+		$card = $this->cardService->findOneCardById($cardId);
 
 		$form = $this->createForm(CardType::class, $card);
 		$form->handleRequest($request);
@@ -177,22 +177,25 @@ class CardController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-			$card->setUpdatedAt(new \DateTime('now'));
+			$card->setUpdatedAt();
+			$card->setValidFrom($form->get('validFrom')->getData());
+			$card->setValidTo($form->get('validTo')->getData());
 
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($card);
+
 			$em->flush();
 
 			$this->addFlash('info', 'successful edit card');
 
-//			$this->cardOrderService->editProfile($order);
-
-			return $this->viewAllCards($id);
+			return $this->viewOneCard($cardId);
 
 		}
+
+
 		return $this->render('card/edit_card', [
 			'form' => $form->createView(),
-			'id' => $id,
+			'id' => $cardId,
 		]);
 	}
 
@@ -206,15 +209,17 @@ class CardController extends Controller
 		$loggedInUser = $this->security->getUser();
 		$loggedInUserId = $loggedInUser->getId();
 
+
 		if ($this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_RECEPTIONIST'])) {
 			return true;
+
 		}
 
-		if ((int)$id === $loggedInUserId) {
+		if ((int)$id === (int)$loggedInUserId) {
 			return true;
 		}
 
-		$this->addFlash('info', 'You have not permission!!');
+		$this->addFlash('info', 'You have not permission!!(checkPermission)');
 		return $this->redirectToRoute('index');
 
 	}

@@ -412,7 +412,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @return bool
 	 */
-	public function isSuperAdmin(): bool
+	public function isSuperAdmin(): ?bool
 	{
 		return in_array('ROLE_SUPER_ADMIN', $this->getRoles(), true);
 	}
@@ -420,7 +420,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @return bool
 	 */
-	public function isAdmin(): bool
+	public function isAdmin(): ?bool
 	{
 		return $this->isSuperAdmin() || in_array('ROLE_ADMIN', $this->getRoles(), true);
 	}
@@ -428,7 +428,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @return bool
 	 */
-	public function isReceptionist(): bool
+	public function isReceptionist(): ?bool
 	{
 		return in_array('ROLE_RECEPTIONIST', $this->getRoles(), true);
 	}
@@ -436,7 +436,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @return bool
 	 */
-	public function isClient(): bool
+	public function isClient(): ?bool
 	{
 		return in_array('ROLE_CLIENT', $this->getRoles(), true);
 	}
