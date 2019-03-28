@@ -4,17 +4,17 @@
     {% if app.user.isSuperAdmin or app.user.isAdmin or app.user.isReceptionist %}
 
 
-        {#{% include 'partials/navbar_admin.html.twig' %}#}
+        {#{% include 'admin/body.html.twig' %}#}
 
     {% else %}
 
-        {#{% include 'partials/navbar_client.html.twig' %}#}
+        {#{% include 'client/body.html.twig' %}#}
 
     {% endif %}
 
     {% if app.user.isReceptionist %}
 
-        {% include 'partials/body_receptionist.html.twig' %}
+        {% include 'receptionist/body.html.twig' %}
 
     {% endif %}
 

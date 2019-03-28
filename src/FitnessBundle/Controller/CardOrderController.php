@@ -6,7 +6,6 @@ use FitnessBundle\Entity\Card;
 use FitnessBundle\Entity\CardOrder;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\CardOrderType;
-use FitnessBundle\Repository\CardRepository;
 use FitnessBundle\Service\Card\CardServiceInterface;
 use FitnessBundle\Service\CardOrder\CardOrderServiceInterface;
 use FitnessBundle\Service\FormError\FormErrorService;
@@ -14,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @property  formErrorService
@@ -65,7 +63,7 @@ class CardOrderController extends Controller
 
 		$ownersUserId = $card->getUserId();
 
-		$this->checkPermission($ownersUserId);
+//		$this->checkPermission($ownersUserId);
 
 		if (false === $this->checkPermission($ownersUserId)) {
 			$this->addFlash('info', 'Sorry, you have no permission!');
