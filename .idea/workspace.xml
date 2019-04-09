@@ -1,60 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f83a051e-78e9-4d1d-8a75-78dd2601879c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/client/body" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/partials/body" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/partials/navbar_receptionist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/receptionist/card_search" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/ReceptionistController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Repository/ReceptionistRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Receptionist/ReceptionistService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Receptionist/ReceptionistServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/all.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/all" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/edit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/register_user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/register_user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/view_one" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/view_one" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/card/view_all_cards" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/card/view_all_cards" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/card/view_one_card" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/card/view_one_card" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/default/index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/first_user_only.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/first_user_only" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/body.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/errors.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/errors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/footer.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/footer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/header" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/messages.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/messages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/navbar.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/navbar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/navbar_admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/navbar_admin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/navbar_client.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/navbar_client" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/navbar_receptionist.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/receptionist/body.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/receptionist/body" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/security/login" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/edit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/edit_test.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/edit_test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/self_register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/self_register" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/user/view_one_user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/user/view_one_user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/CardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/CardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/CardOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/CardOrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/ClientController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Entity/Card.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Entity/Card.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Form/ClientForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Form/ScheduleForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Repository/CardRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Repository/CardRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Repository/ClientRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Repository/ClientRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Repository/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/CardOrder/CardOrderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/CardOrder/CardOrderService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/CardOrder/CardOrderServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/CardOrder/CardOrderServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Client/ClientService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Client/ClientService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Client/ClientServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Client/ClientServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/js/jquery-3.3.1.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/js/jquery-3.3.1.min.js" afterDir="false" />
-    </list>
+    <list default="true" id="f83a051e-78e9-4d1d-8a75-78dd2601879c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,12 +100,19 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Controller/CardOrderController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="263">
               <caret line="247" column="13" selection-start-line="247" selection-start-column="13" selection-end-line="247" selection-end-column="13" />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Controller/DefaultController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1385" />
           </provider>
         </entry>
       </file>
@@ -353,7 +307,7 @@
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="777" />
@@ -664,7 +618,7 @@
       <workItem from="1553262974293" duration="4528000" />
       <workItem from="1553523669632" duration="19000" />
       <workItem from="1553523709333" duration="31082000" />
-      <workItem from="1553951810135" duration="22386000" />
+      <workItem from="1553951810135" duration="22391000" />
     </task>
     <task id="LOCAL-00001" summary="test commit">
       <created>1543313224219</created>
@@ -902,7 +856,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="350106000" />
+    <option name="totallyTimeSpent" value="350111000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -914,7 +868,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="777" extended-state="1" />
+    <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23667206" />
@@ -985,9 +939,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="receptionist added" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Repository/AdminRepository.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/services.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1281,6 +1232,11 @@
         <state relative-caret-position="263">
           <caret line="247" column="13" selection-start-line="247" selection-start-column="13" selection-end-line="247" selection-end-column="13" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Controller/DefaultController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1385" />
       </provider>
     </entry>
   </component>
