@@ -36,7 +36,8 @@
         </table>
 
         <div>
-            <a href="{{ path("admin_all_user") }}" class="btn btn-primary btn-xs">Back to All users</a>
+            <a href="{{ path('add_new_card_to_user', {id:user.id}) }}" class="btn btn-danger btn-xs">Add card to user</a>
+            <a href="{{ path("admin_all_user") }}" class="btn btn-success btn-xs">Back to All users</a>
             <a href="{{ path("admin_edit_user", {id:user.id}) }}" class="btn btn-primary btn-xs">Edit user</a>
         </div>
     </div>

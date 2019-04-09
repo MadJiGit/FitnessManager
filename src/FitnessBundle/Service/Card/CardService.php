@@ -38,17 +38,12 @@ class CardService implements CardServiceInterface
 	 * @param $id
 	 * @return object|null
 	 */
-	public function findOneCardById($id)
+	public function findOneCardById(int $id)
 	{
 		return $this->cardRepository->findOneById($id);
 
 	}
 
-
-	public function addCard(Card $card)
-	{
-		$this->cardRepository->addNewCard($card);
-	}
 
 	public function getNewId()
 	{
@@ -57,19 +52,32 @@ class CardService implements CardServiceInterface
 		return ($this->cardRepository->findLastId() + 1);
 	}
 
-	public function selectByIdAsc($id)
+	public function selectByIdAsc(int $id)
 	{
 		return $this->cardRepository->findById($id);
 	}
 
-	public function findAllCardsByUserId($id)
+	public function findAllCardsByUserId(int $id)
 	{
 //		return $this->cardRepository->find(['userId' => $id]);
-		return $this->cardRepository->findBy(['userId' => $id]);
+//		return $this->cardRepository->findBy(['userId' => $id]);
+		return $this->cardRepository->findById($id);
 	}
 
 	public function findAllCards()
 	{
 		return $this->cardRepository->getAllCards();
+	}
+
+	public function saveCard(Card $card)
+	{
+		$this->cardRepository->addNewCard($card);
+	}
+
+	public function findLastOrder(int $cardId)
+	{
+		/** @var Card $searchedCard */
+		$searchedCard = $this->findOneCardById($cardId);
+		return $searchedCard->getLastOrder();
 	}
 }

@@ -58,6 +58,13 @@ class CardOrderService implements CardOrderServiceInterface
 
 	public function findAllOrders()
 	{
+//		dump($this->orderRepository->getAllOrders());
+//		exit;
 		return $this->orderRepository->getAllOrders();
+	}
+
+	public function findLastOrder(int $cardId)
+	{
+
 	}
 }

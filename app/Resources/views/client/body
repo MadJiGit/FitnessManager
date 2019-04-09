@@ -1,0 +1,30 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block main %}#}
+    {#<h4>Schedule view</h4>#}
+    {#{{ form_start(form_order, {'attr': {'novalidate': 'novalidate'}}) }}#}
+    {#<div class="row">#}
+        {#<div class="col-md-6">#}
+            {#<div class="row">#}
+                {#<div class="col-md-12">#}
+                    {#{{ form_row(form_order.startDate) }}#}
+                    {#{{ form_row(form_order.dueDate) }}#}
+                    {#{{ form_row(form_order._token) }}#}
+                    {#{{ form_end(form_order) }}#}
+                    {#{{form_widget(form_order)}}#}
+                    {#{{ form(form_order)  }}#}
+                    {#<br/><div class="class row">#}
+                        {#<div class="class col-sm-offset col-sm-10">#}
+                            {#<a href="{{ path("view_one_card", {cardId: card.id}) }}" class="btn btn-primary btn-xs">Back</a>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#{{ form_start(schedule) }}#}
+                    {#{{ form_end(schedule) }}#}
+
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+{#{% endblock %}#}

@@ -69,21 +69,23 @@ class CardController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-			$newCardId = $this->cardService->getNewId();
+			$newCardNumber = $this->cardService->getNewId();
 //			$visitLeft = $cardOrder->getVisitsOrder();
 
 			$card->setUser($loggedInUser);
 			$card->setUserId($loggedInUserId);
-			$card->setCardNumber($newCardId);
+			$card->setCardNumber($newCardNumber);
 			$card->setUpdatedAt(new \DateTime('now'));
 
 //			$cardOrder->setVisitsLeft($visitLeft);
 //			$cardOrder->setCard($card);
 
-			$em = $this->getDoctrine()->getManager();
-//			$em->persist($cardOrder);
-			$em->persist($card);
-			$em->flush();
+			$this->cardService->saveCard($card);
+
+//			$em = $this->getDoctrine()->getManager();
+////			$em->persist($cardOrder);
+//			$em->persist($card);
+//			$em->flush();
 
 			$this->addFlash('info', 'successful add new card');
 
@@ -123,8 +125,12 @@ class CardController extends Controller
 
 		} else {
 			$cards = $paginator->paginate(
-				$this->cardService->
-				findAllCards(),
+//				$this->cardService->
+//				findAllCards(),
+//				$request->query->getInt('page', 1), 6);
+				$this->getDoctrine()
+				->getRepository(Card::class)
+				->getAllCards(),
 				$request->query->getInt('page', 1), 6);
 
 		}

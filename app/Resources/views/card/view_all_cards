@@ -10,8 +10,8 @@
     <table class="table table-condensed">
         <thead>
     <tr>
-        <th>Card Number {{ knp_pagination_sortable(cards, 'Sort', 'card.userId') }}</th>
-        <th>Card owner {{ knp_pagination_sortable(cards, 'Sort', 'card.userId') }}</th>
+        <th>Card Number {{ knp_pagination_sortable(cards, 'Sort', 'card.cardNumber') }}</th>
+        <th>Card owner {{ knp_pagination_sortable(cards, 'Sort', 'card.user.username') }}</th>
         <th colspan="4">Options</th>
     </tr>
         </thead>

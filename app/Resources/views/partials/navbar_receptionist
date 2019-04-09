@@ -1,6 +1,6 @@
 <li>
-    <a href="{{ path('view_total_orders') }}">
-        View Total Orders
+    <a href="">
+        Create sport class
     </a></li>
 {#<li>#}
     {#<a href="{{ path('') }}">#}

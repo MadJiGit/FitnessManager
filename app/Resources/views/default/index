@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    {% include 'partials/navbar' %}
+
+    {% include 'partials/body' %}
+
+{% endblock %}

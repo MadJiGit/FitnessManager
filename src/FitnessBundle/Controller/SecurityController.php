@@ -36,7 +36,7 @@ class SecurityController extends Controller
 			$this->addFlash('danger', 'Invalid username or password!');
 		}
 
-		return $this->render('security/login.html.twig', [
+		return $this->render('security/login', [
 			'last_username' => $lastUsername,
 			'error' => $error,
 		]);

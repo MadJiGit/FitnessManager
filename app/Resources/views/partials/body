@@ -4,17 +4,21 @@
     {% if app.user.isSuperAdmin or app.user.isAdmin or app.user.isReceptionist %}
 
 
-        {#{% include 'admin/body.html.twig' %}#}
+        {#{% include 'admin/body' %}#}
 
     {% else %}
 
-        {#{% include 'client/body.html.twig' %}#}
+        {#{% include 'client/body' %}#}
 
     {% endif %}
 
     {% if app.user.isReceptionist %}
 
-        {% include 'receptionist/body.html.twig' %}
+        {% include 'receptionist/body' %}
+
+    {% elseif app.user.isClient %}
+
+        {% include 'client/body' %}
 
     {% endif %}
 

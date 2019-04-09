@@ -58,7 +58,7 @@ class DefaultController extends Controller
 
 		if ($user) {
 //			$this->addFlash('success', 'Successful login!');
-			return $this->render('default/index.html.twig', [
+			return $this->render('default/index', [
 				'user' => $user,
 			]);
 		}
@@ -115,7 +115,7 @@ class DefaultController extends Controller
 			return $this->redirectToRoute('index');
 		}
 
-		return $this->render('first_user_only.html.twig', [
+		return $this->render('first_user_only', [
 			'form' => $form->createView(),
 		]);
 

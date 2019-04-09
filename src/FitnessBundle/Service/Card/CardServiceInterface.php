@@ -21,16 +21,18 @@ interface CardServiceInterface
 	 * @param $id
 	 * @return object|null|Card
 	 */
-	public function findOneCardById($id);
+	public function findOneCardById(int $id);
 
-	public function selectByIdAsc($id);
-
-	public function addCard(Card $card);
+	public function selectByIdAsc(int $id);
 
 	public function getNewId();
 
-	public function findAllCardsByUserId($id);
+	public function findAllCardsByUserId(int $id);
 
 	public function findAllCards();
+
+	public function saveCard(Card $card);
+
+	public function findLastOrder(int $cardId);
 
 }

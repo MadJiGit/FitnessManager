@@ -8,18 +8,18 @@
                         {% if app.user.isSuperAdmin or app.user.isAdmin or app.user.isReceptionist %}
 
 
-                            {% include 'partials/navbar_admin.html.twig' %}
+                            {% include 'partials/navbar_admin' %}
 
                         {% else %}
 
-                            {% include 'partials/navbar_client.html.twig' %}
+                            {% include 'partials/navbar_client' %}
 
                         {% endif %}
 
                         {% if app.user.isReceptionist %}
 
-                            {% include 'partials/navbar_receptionist.html.twig' %}
-                            {#{% include 'partials/body.html.twig' %}#}
+                            {% include 'partials/navbar_receptionist' %}
+                            {#{% include 'partials/body' %}#}
 
                         {% endif %}
                     </ul>

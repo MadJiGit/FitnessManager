@@ -238,6 +238,27 @@ class CardOrderController extends Controller
 	}
 
 	/**
+	 * @Route ("/receptionist/body/{$cardId}", name="visit")
+	 * @param $cardId
+	 * @throws \Exception
+	 */
+	public function clientIsVisit($cardId): void
+	{
+		dump($cardId);
+		exit;
+
+		/** @var CardOrder $lastOrder */
+		$lastOrder = $this->cardService->findLastOrder($cardId);
+
+		$currentDate = new \DateTime('now');
+
+		dump($lastOrder);
+		dump($currentDate);
+		exit;
+	}
+
+
+	/**
 	 * @param $orderOwnerUserId
 	 * @return bool|\Symfony\Component\HttpFoundation\RedirectResponse
 	 */

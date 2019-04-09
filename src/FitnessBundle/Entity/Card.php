@@ -302,6 +302,16 @@ class Card
 		$this->orders = $orders;
 	}
 
+
+	public function getLastOrder(): CardOrder
+	{
+		$allOrders = $this->getAllOrders();
+		$lastOrder = array_slice($allOrders, -1);
+
+		dump($lastOrder);
+		exit;
+	}
+
 }
 
 

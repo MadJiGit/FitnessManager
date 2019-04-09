@@ -37,7 +37,14 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
 	 */
 	public function findOneById($id)
 	{
-		return $this->find($id);
+
+		try{
+
+			return $this->find($id);
+		}catch (\Exception $e){
+
+			return null;
+		}
 	}
 
 	public function addNewCard(Card $card): void
@@ -90,7 +97,7 @@ class CardRepository extends \Doctrine\ORM\EntityRepository
 	{
 		return $this->createQueryBuilder('card')
 			->select('card')
-			->orderBy('card.id', 'ASC');
+			->orderBy('card.cardNumber', 'ASC');
 	}
 }
 

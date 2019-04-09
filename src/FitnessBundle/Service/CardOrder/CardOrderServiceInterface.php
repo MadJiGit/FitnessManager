@@ -22,4 +22,6 @@ interface CardOrderServiceInterface
 
 	public function findAllOrders();
 
+	public function findLastOrder(int $cardId);
+
 }

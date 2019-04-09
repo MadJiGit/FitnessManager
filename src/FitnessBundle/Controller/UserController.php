@@ -76,7 +76,7 @@ class UserController extends Controller
 			} catch (\Exception $ex) {
 				$this->addFlash('danger', $ex->getMessage());
 
-				return $this->render('user/edit_test.html.twig', [
+				return $this->render('user/edit_test', [
 					'user' => $user,
 					'form' => $form->createView(),
 				]);
@@ -89,7 +89,7 @@ class UserController extends Controller
 			return $this->redirectToRoute('index');
 		}
 
-		return $this->render('user/edit_test.html.twig', [
+		return $this->render('user/edit_test', [
 			'user' => $user,
 			'form' => $form->createView(),
 		]);
@@ -105,7 +105,7 @@ class UserController extends Controller
 	{
 		$user = $this->profileService->findOneUserById($id);
 
-		return $this->render('user/view_one_user.html.twig', [
+		return $this->render('user/view_one_user', [
 			'user' => $user,
 		]);
 

@@ -1,0 +1,66 @@
+<div class="container body-content span=8 offset=2">
+    <div class="well">
+        <form class="form-horizontal" enctype="multipart/form-data" action="{{ path('search_card') }}" method="POST">
+            <fieldset>
+                <legend>Search Card by one criteria</legend>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="card_number">Enter card number</label>
+                    <div class="col-sm-4 ">
+                        <input type="text" class="form-control" id="search_card_number" placeholder="Card Number"
+                               name="cardNumber">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="card_something" style="color: #921e12">Or</label>
+                    {#<div class="col-sm-4 ">#}
+                    {#<input type="text" class="form-control" id="search_card_number" placeholder="Card Number"#}
+                    {#name="cardNumber">#}
+                    {#</div>#}
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="card_username">Enter username</label>
+                    <div class="col-sm-4 ">
+                        <input type="text" class="form-control" id="search_card_username" placeholder="Username"
+                               name="cardUsername">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="card_something" style="color: #921e12">Or</label>
+                    {#<div class="col-sm-4 ">#}
+                    {#<input type="text" class="form-control" id="search_card_number" placeholder="Card Number"#}
+                    {#name="cardNumber">#}
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="card_email">Enter E-mail</label>
+                    <div class="col-sm-4 ">
+                        <input type="text" class="form-control" id="search_card_e-mail" placeholder="e-mail"
+                               name="cardEmail">
+                    </div>
+                </div>
+
+
+                {#<div class="form-group">#}
+                {#<label class="col-sm-4 control-label" for="article_image">Image</label>#}
+                {#<div class="col-sm-4 ">#}
+                {#<input type="file" accept=".jpg, .png" class="form-control" id="article_image" placeholder="Image"#}
+                {#name="article[image]">#}
+                {#</div>#}
+                {#</div>#}
+
+                {#{{ form_row(search._token) }}#}
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        {#<a class="btn btn-default" href="{{ path('blog_index') }}">Cancel</a>#}
+                        <button type="submit" class="btn btn-primary btn-xs">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

@@ -82,7 +82,7 @@ class AdminController extends Controller
 				$role = $this->roleService->findOneBy(['name' => 'ROLE_CLIENT']);
 				if (null === $role){
 					$this->addFlash('danger', 'Please select ROLE');
-					return $this->render('/admin/register_user.html.twig', [
+					return $this->render('admin/register_user', [
 						'form' => $form->createView(),
 					]);
 				}
@@ -98,7 +98,7 @@ class AdminController extends Controller
 
 			if (false === $isSave) {
 				$this->addFlash('danger', 'User is not register');
-				return $this->render('/admin/register_user.html.twig', [
+				return $this->render('admin/register_user', [
 					'form' => $form->createView(),
 				]);
 
@@ -110,7 +110,7 @@ class AdminController extends Controller
 
 		}
 
-		return $this->render('/admin/register_user.html.twig', [
+		return $this->render('admin/register_user', [
 			'form' => $form->createView(),
 		]);
 
@@ -147,7 +147,7 @@ class AdminController extends Controller
 			} catch (\Exception $ex) {
 				$this->addFlash('danger', $ex->getMessage());
 
-				return $this->render('admin/edit.html.twig', [
+				return $this->render('admin/edit', [
 					'user' => $user,
 					'form' => $form->createView(),
 				]);
@@ -170,7 +170,7 @@ class AdminController extends Controller
 
 			if (false === $isSave) {
 				$this->addFlash('danger', 'User is not edited');
-				return $this->render('admin/edit.html.twig', [
+				return $this->render('admin/edit', [
 					'user' => $user,
 					'form' => $form->createView(),
 				]);
@@ -182,7 +182,7 @@ class AdminController extends Controller
 		}
 
 
-		return $this->render('admin/edit.html.twig', [
+		return $this->render('admin/edit', [
 			'user' => $user,
 			'form' => $form->createView(),
 		]);
@@ -228,7 +228,7 @@ class AdminController extends Controller
 		}
 
 
-		return $this->render('/admin/all.html.twig',
+		return $this->render('admin/all',
 			['users' => $users]
 		);
 

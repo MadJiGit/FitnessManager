@@ -10,3 +10,8 @@
     <a href="{{ path('view_all_cards', {id: app.user.id}) }}">
         View All Cards
     </a></li>
+<li>
+    {#<a href="{{ path('view_schedule') }}">#}
+        View Schedule
+    {#</a>#}
+</li>

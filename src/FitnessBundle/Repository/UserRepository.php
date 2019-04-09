@@ -100,4 +100,49 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 		}
 	}
 
+
+	public function findByCriteriaUsername($username)
+	{
+
+		/** User $user */
+		$user = $this-> findBy(['username' => $username]);
+
+
+		try{
+
+			return $user[0]->getId();
+		} catch (\Exception $e){
+
+			return null;
+		}
+
+
+	}
+
+	public function findByCriteriaEmail($email)
+	{
+
+		$user = $this->findBy(['email' => $email]);
+
+		if($user){
+
+			return $user[0]->getId();
+		}
+
+		return null;
+	}
+
+	public function findByCriteriaCardNumber($searchedNumber)
+	{
+		$user = $this->findBy(['cardnumber' => $searchedNumber]);
+
+		if($user){
+
+			return $user[0]->getId();
+		}
+
+		return null;
+	}
+
+
 }
