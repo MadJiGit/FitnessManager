@@ -303,13 +303,30 @@ class Card
 	}
 
 
-	public function getLastOrder(): CardOrder
+	public function isVisitPossibleReturnOrder()
 	{
-		$allOrders = $this->getAllOrders();
-		$lastOrder = array_slice($allOrders, -1);
+		$allActiveOrders = [];
 
-		dump($lastOrder);
-		exit;
+		foreach ($this->orders as $order){
+			try {
+				if (false === $order->isOutOfOrder()) {
+					$allActiveOrders[] = $order;
+				}
+			} catch (\Exception $e) {
+			}
+		}
+
+
+		if (0 !== count($allActiveOrders)){
+			/** @var CardOrder $checkedOrder */
+			$checkedOrder = $allActiveOrders[0];
+
+			return $checkedOrder;
+
+		}
+
+		return null;
+
 	}
 
 }

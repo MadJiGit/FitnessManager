@@ -19,5 +19,7 @@ interface AdminServiceInterface
 
 	public function save(User $user) : bool;
 
+	public function findAllUsersByRole($role): ?array;
+
 
 }

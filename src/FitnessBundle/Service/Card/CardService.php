@@ -74,10 +74,11 @@ class CardService implements CardServiceInterface
 		$this->cardRepository->addNewCard($card);
 	}
 
-	public function findLastOrder(int $cardId)
+	public function isVisitPossible(int $cardId)
 	{
 		/** @var Card $searchedCard */
 		$searchedCard = $this->findOneCardById($cardId);
-		return $searchedCard->getLastOrder();
+
+		return $searchedCard->isVisitPossibleReturnOrder();
 	}
 }

@@ -145,7 +145,7 @@ class ProfileType extends AbstractType
 			}
 
 			if ($this->security->isGranted(['ROLE_RECEPTIONIST'])
-				&& $user->getId() !== $loggedInUser->getId()
+//				&& $user->getId() !== $loggedInUser->getId()
 			) {
 				$form
 					->add('enabled', CheckboxType::class, [

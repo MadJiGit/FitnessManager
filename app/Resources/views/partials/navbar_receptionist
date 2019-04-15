@@ -1,8 +1,13 @@
+
+
 <li>
-    <a href="">
+    <a href="{{ path("view_all_activities") }}">
+        All sport classes
+    </a>
+</li>
+
+<li>
+    <a href="{{ path("add_activity") }}">
         Create sport class
-    </a></li>
-{#<li>#}
-    {#<a href="{{ path('') }}">#}
-        {#Check card#}
-    {#</a></li>#}
+    </a>
+</li>

@@ -23,8 +23,8 @@ class RoleType extends AbstractType
 
 		$temp = $options['attr'];
 
-		dump($temp);
-		exit;
+//		dump($temp);
+//		exit;
 
 		$result = explode('_', $temp[0]);
 		$role = '';

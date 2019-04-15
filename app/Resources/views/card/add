@@ -13,9 +13,15 @@
                     {{ form_end(form) }}
                     {{form_widget(form)}}
                     <br/><div class="class row">
+                        {% if app.user.isReceptionist %}
                         <div class="class col-sm-offset col-sm-10">
-                            <a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back</a>
+                            <a href="{{ path("admin_view_one", {id:user.id}) }}" class="btn btn-primary btn-xs">Back</a>
                         </div>
+                        {% else %}
+                        <div class="class col-sm-offset col-sm-10">
+                            <a href="{{ path("view_one_user", {id:user.id}) }}" class="btn btn-primary btn-xs">Back</a>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

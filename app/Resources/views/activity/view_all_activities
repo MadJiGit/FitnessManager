@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <body>
+    <div class="container">
+        <h3><a href="{{ path('index', {'param':'null'}) }}">Home</a></h3><br/>
+        <a href="{{ path("add_activity") }}" class="btn btn-primary btn-xs" role="button">Add activity</a>
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Activity num </th>
+                <th>Activity name </th>
+                <th>Activity capacity</th>
+                <th>Clients in</th>
+                <th colspan="4">Options</th>
+            </tr>
+            </thead>
+            {% for activity in activities %}
+                <tbody>
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ activity.id }} </td>
+                <td>{{ activity.name|upper }} </td>
+                <td>{{ activity.capacity }} </td>
+                <td>{{ activity.currentCapacity }} </td>
+                <td><a href="{{path('view_one_activity', {id: activity.id} )}}" class="btn btn-success btn-xs">View activity</a></td>
+                <td><a href="{{path('edit_activity' , {id: activity.id})}}" class="btn btn-danger btn-xs">Edit activity</a></td>
+
+                <td><a href="{{ path('add_trainer', {id: activity.id}) }}" class="btn btn-success btn-xs">Add trainer
+                    </a></td>
+                <td><a href="{{ path('view_all_activities') }}" class="btn btn-success btn-xs">View all activities
+                    </a></td>
+
+            {% else %}
+
+                <td> Have not any activities yet </td>
+
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+        {#<div class="pagination">#}
+            {#{{ knp_pagination_render(cards) }}#}
+        {#</div>#}
+
+        <div>
+            <a href="{{ path('index') }}" class="btn btn-primary btn-xs">Back</a>
+        </div>
+    </div>
+    </body>
+{% endblock %}
+

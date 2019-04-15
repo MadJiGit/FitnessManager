@@ -233,11 +233,19 @@ class CardOrder
 
 	/**
 	 * @return bool|null
+	 * @throws \Exception
 	 */
     public function isOutOfOrder(): ?bool
     {
-    	if ($this->getVisitsLeft() <= 0 ){
+
+	    $currentDate = new \DateTime('now');
+//	    dump($currentDate);
+//	    dump($this->getDueDate());
+
+    	if ($this->getVisitsLeft() <= 0 && $this->getDueDate() > $currentDate){
     		return true;
 	    }
+
+    	return false;
     }
 }

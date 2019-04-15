@@ -58,4 +58,8 @@ class AdminService implements AdminServiceInterface
 	}
 
 
+	public function findAllUsersByRole($role): ?array
+	{
+		return $this->adminRepository->findByRole($role);
+	}
 }

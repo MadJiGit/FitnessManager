@@ -2,7 +2,6 @@
 
 namespace FitnessBundle\Controller;
 
-use FitnessBundle\Entity\Role;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\ProfileType;
 use FitnessBundle\Service\Admin\AdminServiceInterface;
@@ -13,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 
 

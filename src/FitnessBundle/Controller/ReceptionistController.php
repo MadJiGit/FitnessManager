@@ -5,7 +5,6 @@ namespace FitnessBundle\Controller;
 use FitnessBundle\Entity\Card;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\CardType;
-use FitnessBundle\Form\ClientForm;
 use FitnessBundle\Service\Card\CardServiceInterface;
 use FitnessBundle\Service\Receptionist\ReceptionistServiceInterface;
 use FitnessBundle\Service\FormError\FormErrorService;
@@ -46,7 +45,7 @@ class ReceptionistController extends Controller
 	}
 
 	/**
-	 * @Route ("/card/add/{id}", methods={"GET", "POST"}, name="add_new_card_to_user")
+	 * @Route ("/receptionist/add_card/{id}", methods={"GET", "POST"}, name="add_new_card_to_user")
 	 * @param $id
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -59,10 +58,15 @@ class ReceptionistController extends Controller
 		$loggedInUser = $this->security->getUser();
 		$loggedInUserId = $loggedInUser->getId();
 
-		$this->checkPermission($loggedInUserId);
+//		$this->checkPermission($loggedInUserId);
 
 		/** @var User $searchedUser */
 		$searchedUser = $this->receptionistService->findUserById($id);
+
+
+//		dump($loggedInUserId);
+//		dump($id);
+//		exit;
 
 		/** @var Card $card */
 		$card = new Card();

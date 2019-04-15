@@ -33,6 +33,6 @@ interface CardServiceInterface
 
 	public function saveCard(Card $card);
 
-	public function findLastOrder(int $cardId);
+	public function isVisitPossible(int $cardId);
 
 }

@@ -1,58 +1,8 @@
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block main %}#}
-    {#<h4>Add card to {{ user.username }}</h4>#}
-    {#{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}#}
-    {#<div class="row">#}
-        {#<div class="col-md-6">#}
-            {#<div class="row">#}
-                {#<div class="col-md-12">#}
-                    {#{{ form_row(form.validFrom) }}#}
-                    {#{{ form_row(form.validTo) }}#}
-                    {#{{ form_row(form._token) }}#}
-                    {#{{ form_end(form) }}#}
-                    {#{{form_widget(form)}}#}
-
-
-                    {#<form class="form-horizontal" name="authenticate" action="" method="POST">#}
-                        {#<legend>TEST</legend>#}
-{##}
-                        {#<label>#}
-                            {#Search card by number: <input type="text" name="card[cardNumber]" placeholder="card number" value=""/>#}
-                        {#</label><br/>#}
-
-                        {#<input type="hidden" name="_csrf_token"#}
-                               {#value="{{ csrf_token('authenticate') }}"/><br/>#}
-                        {#{{ form_row(form._token) }}#}
-
-                        {#<button type="submit" name="user[submit]" class="btn btn-success btn-xs">Search</button><br/><br/>#}
-
-                        {#<a href="{{ path('index') }}">#}
-                            {#Back#}
-                        {#</a><br/>#}
-
-
-                    {#</form>#}
-{##}
-                    {#<h2>BODY RECEPTIONIST</h2>#}
-{##}
-                    {#<br/><div class="class row">#}
-                        {#<div class="class col-sm-offset col-sm-10">#}
-                            {#<a href="{{ path("index") }}" class="btn btn-primary btn-xs">Back</a>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-
-{#{% endblock %}#}
-
 <div class="container body-content span=8 offset=2">
     <div class="well">
         <form class="form-horizontal" enctype="multipart/form-data" action="{{ path('search_card') }}" method="POST">
             <fieldset>
-                <legend>Search Card by one criteria</legend>
+                <legend>Search Card by one criteria (it'll be used for check clients card)</legend>
 
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="card_number">Enter card number</label>

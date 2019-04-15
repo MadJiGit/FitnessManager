@@ -1015,257 +1015,396 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="259" parent="11" name="card_orders">
+    <table id="259" parent="11" name="activities">
       <Collation>utf8_unicode_ci</Collation>
     </table>
-    <table id="260" parent="11" name="cards">
+    <table id="260" parent="11" name="card_orders">
       <Collation>utf8_unicode_ci</Collation>
     </table>
-    <table id="261" parent="11" name="roles">
+    <table id="261" parent="11" name="cards">
       <Collation>utf8_unicode_ci</Collation>
     </table>
-    <table id="262" parent="11" name="roles_users">
+    <table id="262" parent="11" name="clients_users">
       <Collation>utf8_unicode_ci</Collation>
     </table>
-    <table id="263" parent="11" name="users">
+    <table id="263" parent="11" name="roles">
       <Collation>utf8_unicode_ci</Collation>
     </table>
-    <column id="264" parent="259" name="id">
+    <table id="264" parent="11" name="roles_users">
+      <Collation>utf8_unicode_ci</Collation>
+    </table>
+    <table id="265" parent="11" name="trainers_users">
+      <Collation>utf8_unicode_ci</Collation>
+    </table>
+    <table id="266" parent="11" name="users">
+      <Collation>utf8_unicode_ci</Collation>
+    </table>
+    <column id="267" parent="259" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="265" parent="259" name="card_id">
+    <column id="268" parent="259" name="name">
       <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="266" parent="259" name="start_date">
+    <column id="269" parent="259" name="created_at">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="267" parent="259" name="due_date">
+    <column id="270" parent="259" name="updated_at">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="268" parent="259" name="visits_order">
+    <column id="271" parent="259" name="valid_from">
+      <Position>5</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="272" parent="259" name="valid_to">
+      <Position>6</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="273" parent="259" name="capacity">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="274" parent="259" name="current_capacity">
+      <Position>8</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="275" parent="259" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="276" parent="260" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="277" parent="260" name="card_id">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="278" parent="260" name="start_date">
+      <Position>3</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="279" parent="260" name="due_date">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="280" parent="260" name="visits_order">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="269" parent="259" name="visits_left">
+    <column id="281" parent="260" name="visits_left">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="270" parent="259" name="IDX_9710AE9A4ACC9A20">
+    <index id="282" parent="260" name="IDX_9710AE9A4ACC9A20">
       <ColNames>card_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="271" parent="259" name="PRIMARY">
+    <key id="283" parent="260" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="272" parent="259" name="FK_9710AE9A4ACC9A20">
+    <foreign-key id="284" parent="260" name="FK_9710AE9A4ACC9A20">
       <ColNames>card_id</ColNames>
       <RefSchemaName>fitness_manager_app</RefSchemaName>
       <RefTableName>cards</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="273" parent="260" name="id">
+    <column id="285" parent="261" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="274" parent="260" name="user_id">
+    <column id="286" parent="261" name="user_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="260" name="card_number">
+    <column id="287" parent="261" name="card_number">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="260" name="created_at">
+    <column id="288" parent="261" name="created_at">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="260" name="updated_at">
+    <column id="289" parent="261" name="updated_at">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="260" name="valid_from">
+    <column id="290" parent="261" name="valid_from">
       <Position>6</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="260" name="valid_to">
+    <column id="291" parent="261" name="valid_to">
       <Position>7</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="280" parent="260" name="IDX_4C258FDA76ED395">
+    <index id="292" parent="261" name="IDX_4C258FDA76ED395">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="281" parent="260" name="PRIMARY">
+    <key id="293" parent="261" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="282" parent="260" name="FK_4C258FDA76ED395">
+    <foreign-key id="294" parent="261" name="FK_4C258FDA76ED395">
       <ColNames>user_id</ColNames>
       <RefSchemaName>fitness_manager_app</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="283" parent="261" name="id">
+    <column id="295" parent="262" name="user_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="296" parent="262" name="client_id">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="297" parent="262" name="IDX_C300512EA76ED395">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="298" parent="262" name="IDX_C300512E19EB6921">
+      <ColNames>client_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="299" parent="262" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+client_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="300" parent="262" name="FK_C300512EA76ED395">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>fitness_manager_app</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="301" parent="262" name="FK_C300512E19EB6921">
+      <ColNames>client_id</ColNames>
+      <RefSchemaName>fitness_manager_app</RefSchemaName>
+      <RefTableName>activities</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="302" parent="263" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="261" name="name">
+    <column id="303" parent="263" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="285" parent="261" name="UNIQ_B63E2EC75E237E06">
+    <index id="304" parent="263" name="UNIQ_B63E2EC75E237E06">
       <ColNames>name</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="286" parent="261" name="PRIMARY">
+    <key id="305" parent="263" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="287" parent="261" name="UNIQ_B63E2EC75E237E06">
+    <key id="306" parent="263" name="UNIQ_B63E2EC75E237E06">
       <ColNames>name</ColNames>
       <UnderlyingIndexName>UNIQ_B63E2EC75E237E06</UnderlyingIndexName>
     </key>
-    <column id="288" parent="262" name="user_id">
+    <column id="307" parent="264" name="user_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="262" name="role_id">
+    <column id="308" parent="264" name="role_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="290" parent="262" name="IDX_3D80FB2CA76ED395">
+    <index id="309" parent="264" name="IDX_3D80FB2CA76ED395">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="291" parent="262" name="IDX_3D80FB2CD60322AC">
+    <index id="310" parent="264" name="IDX_3D80FB2CD60322AC">
       <ColNames>role_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="292" parent="262" name="PRIMARY">
+    <key id="311" parent="264" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id
 role_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="293" parent="262" name="FK_3D80FB2CA76ED395">
+    <foreign-key id="312" parent="264" name="FK_3D80FB2CA76ED395">
       <ColNames>user_id</ColNames>
       <RefSchemaName>fitness_manager_app</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="294" parent="262" name="FK_3D80FB2CD60322AC">
+    <foreign-key id="313" parent="264" name="FK_3D80FB2CD60322AC">
       <ColNames>role_id</ColNames>
       <RefSchemaName>fitness_manager_app</RefSchemaName>
       <RefTableName>roles</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="295" parent="263" name="id">
+    <column id="314" parent="265" name="user_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="315" parent="265" name="trainer_id">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="316" parent="265" name="IDX_A5E84029A76ED395">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="317" parent="265" name="IDX_A5E84029FB08EDF6">
+      <ColNames>trainer_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="318" parent="265" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+trainer_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="319" parent="265" name="FK_A5E84029A76ED395">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>fitness_manager_app</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="320" parent="265" name="FK_A5E84029FB08EDF6">
+      <ColNames>trainer_id</ColNames>
+      <RefSchemaName>fitness_manager_app</RefSchemaName>
+      <RefTableName>activities</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="321" parent="266" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="263" name="username">
+    <column id="322" parent="266" name="username">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="263" name="password">
+    <column id="323" parent="266" name="password">
       <Position>3</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="263" name="email">
+    <column id="324" parent="266" name="email">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="263" name="created_at">
+    <column id="325" parent="266" name="created_at">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="263" name="updated_at">
+    <column id="326" parent="266" name="updated_at">
       <Position>6</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="263" name="enabled">
+    <column id="327" parent="266" name="enabled">
       <Position>7</Position>
       <DataType>tinyint(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="302" parent="263" name="UNIQ_1483A5E9F85E0677">
+    <index id="328" parent="266" name="UNIQ_1483A5E9F85E0677">
       <ColNames>username</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="303" parent="263" name="UNIQ_1483A5E9E7927C74">
+    <index id="329" parent="266" name="UNIQ_1483A5E9E7927C74">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="304" parent="263" name="PRIMARY">
+    <key id="330" parent="266" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="305" parent="263" name="UNIQ_1483A5E9F85E0677">
+    <key id="331" parent="266" name="UNIQ_1483A5E9F85E0677">
       <ColNames>username</ColNames>
       <UnderlyingIndexName>UNIQ_1483A5E9F85E0677</UnderlyingIndexName>
     </key>
-    <key id="306" parent="263" name="UNIQ_1483A5E9E7927C74">
+    <key id="332" parent="266" name="UNIQ_1483A5E9E7927C74">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>UNIQ_1483A5E9E7927C74</UnderlyingIndexName>
     </key>

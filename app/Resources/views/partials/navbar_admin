@@ -6,10 +6,10 @@
     <a href="{{ path('admin_all_user') }}">
         All Users
     </a></li>
-<li>
-    <a href="{{ path('admin_view_one', {id: app.user.id}) }}">
-        My Profile
-    </a></li>
+{#<li>#}
+    {#<a href="{{ path('admin_view_one', {id: app.user.id}) }}">#}
+        {#My Profile#}
+    {#</a></li>#}
 <li>
     <a href="{{ path('add_new_card', {id: app.user.id}) }}">
         Add card

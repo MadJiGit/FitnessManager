@@ -14,7 +14,7 @@
                 <th>Order valid to</th>
                 <th>Visits ordered</th>
                 <th>Visits left</th>
-                <th colspan="1"> Edit</th>
+                <th colspan="1"> Options </th>
             </tr>
             </thead>
             <tbody>
@@ -25,11 +25,15 @@
                 <td>{{ order.visitsLeft }}</td>
                 {#<td><a href="{{ path('edit_order', {id: order.getId}) }}">Edit order</a></td>#}
                 <td><a href="{{ path('edit_order', {id: order.id}) }}" class="btn btn-success btn-xs">Edit order</a></td>
+
             </tr>
             </tbody>
         </table>
 
-        <div><a href="{{ path('view_all_orders', {cardId: order.cardId}) }}" class="btn btn-primary btn-xs">View All Orders
+        {% if app.user.isReceptionist %}
+            <div><a href="{{ path('visit', {cardId: order.cardId}) }}" class="btn btn-danger btn-xs">Check Visit</a>
+        {% endif %}
+        <a href="{{ path('view_all_orders', {cardId: order.cardId}) }}" class="btn btn-success btn-xs">View All Orders
             </a><br/></div>
     </div>
 

@@ -51,4 +51,5 @@ interface UserServiceInterface
 	public function selectPaginatorAll(): \Doctrine\ORM\QueryBuilder;
 
 	public function selectPaginatorWhere($param): \Doctrine\ORM\QueryBuilder;
+
 }

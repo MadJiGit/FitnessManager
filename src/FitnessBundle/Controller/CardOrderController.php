@@ -85,7 +85,7 @@ class CardOrderController extends Controller
 				$em->flush();
 
 				$this->addFlash('info', 'successful add new order');
-				return $this->viewAllOrders($cardId);
+				return $this->viewAllOrdersByCardId($request, $cardId);
 
 			}
 			return $this->render('order/add', [
@@ -169,7 +169,7 @@ class CardOrderController extends Controller
 	{
 
 
-		if (false === $this->isAdminHere()){
+		if (false === $this->isAdminHere()) {
 
 			$this->addFlash('info', 'Sorry, you have no permission!');
 			return $this->redirectToRoute('view_all_cards');
@@ -177,12 +177,12 @@ class CardOrderController extends Controller
 
 		$paginator = $this->get('knp_paginator');
 
-			/** @var CardOrder $orders */
+		/** @var CardOrder $orders */
 
-			$orders = $paginator->paginate(
-				$this->cardOrderService->
-				findAllOrders(),
-				$request->query->getInt('page', 1), 6);
+		$orders = $paginator->paginate(
+			$this->cardOrderService->
+			findAllOrders(),
+			$request->query->getInt('page', 1), 6);
 
 
 		return $this->render('order/view_total_orders', [
@@ -238,23 +238,39 @@ class CardOrderController extends Controller
 	}
 
 	/**
-	 * @Route ("/receptionist/body/{$cardId}", name="visit")
+	 * @Route ("/receptionist/visit/{cardId}", name="visit")
 	 * @param $cardId
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 * @throws \Exception
 	 */
-	public function clientIsVisit($cardId): void
+	public function clientIsVisit($cardId): \Symfony\Component\HttpFoundation\Response
 	{
-		dump($cardId);
-		exit;
 
-		/** @var CardOrder $lastOrder */
-		$lastOrder = $this->cardService->findLastOrder($cardId);
+		/** @var CardOrder $order */
+		$order = $this->cardService->isVisitPossible($cardId);
 
-		$currentDate = new \DateTime('now');
+		/** @var Card $card */
+		$card = $this->cardService->findOneCardById($cardId);
 
-		dump($lastOrder);
-		dump($currentDate);
-		exit;
+		if (null === $order) {
+
+			$this->addFlash('danger', 'the visit is not possible!');
+			return $this->render('card/view_one_card', [
+				'card' => $card,
+			]);
+		}
+
+		$order->oneVisit();
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($order);
+		$em->flush();
+
+		$this->addFlash('success', 'the visit is checked!');
+		return $this->render('order/view_one_order', [
+			'order' => $order,
+		]);
+
+
 	}
 
 

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div class="container">
+        <h4>View one card</h4>
+        <hr>
+        <br/>
+
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>Card Number</th>
+                <th>User</th>
+                <th>Created at</th>
+                <th>Valid from</th>
+                <th>Valid to</th>
+                <th>Last order from</th>
+                <th>Last order to</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ card.cardNumber }} </td>
+                <td>{{ card.user }} </td>
+                <td>{{ card.createdAt|date("d/m/Y") }} </td>
+                <td>{{ card.validFrom|date("d/m/Y") }} </td>
+                <td>{{ card.validTo|date("d/m/Y") }} </td>
+                <td>{{ card.validTo|date("d/m/Y") }} </td>
+            </tr>
+            </tbody>
+        </table>
+        {#<div>#}
+            {#<a href="{{ path('add_new_order', {cardId: card.id}) }}" class="btn btn-success btn-xs">Add Order</a>#}
+            {#<a href="{{ path('view_all_orders', {cardId: card.id}) }}" class="btn btn-primary btn-xs">View All Orders</a>#}
+            {#<a href="{{ path('edit_card', {cardId: card.id}) }}" class="btn btn-primary btn-xs">Edit Card</a>#}
+            {#{% if app.user.isReceptionist %}#}
+                {#<a href="{{ path('visit', {cardId: card.id}) }}" class="btn btn-danger btn-xs">Visit</a>#}
+            {#{% endif %}#}
+            {#<a href="{{ path('view_all_cards', {id: card.user.id}) }}" class="btn btn-primary btn-xs">Back</a>#}
+        {#</div>#}
+        {#<hr>#}
+        {#<div>#}
+            {#<a href="{{ path('view_all_cards', {id: card.userId}) }}" class="btn btn-primary btn-xs">View all cards</a>#}
+        {#</div>#}
+    </div>
+
+{% endblock %}
+

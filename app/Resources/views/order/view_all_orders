@@ -11,6 +11,7 @@
     <table class="table table-condensed">
         <thead>
         <tr>
+            <th>#</th>
             <th>Order valid from {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
             <th>Order valid to {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
             <th>Visits ordered {{ knp_pagination_sortable(orders, 'Sort', 'order.id') }}</th>
@@ -21,6 +22,7 @@
         {% for order in orders %}
         <tbody>
             <tr>
+            <td>{{ loop.index }}</td>
                 <td>{{ order.startDate|date("d/m/Y") }}</td>
                 <td>{{ order.dueDate|date("d/m/Y") }}</td>
                 <td>{{ order.visitsOrder }}</td>

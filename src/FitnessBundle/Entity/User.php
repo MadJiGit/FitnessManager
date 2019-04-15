@@ -96,6 +96,28 @@ class User implements UserInterface, \Serializable
 	private $roles;
 
 	/**
+	 * @var ArrayCollection|Activity[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Activity", inversedBy="trainers")
+	 * @ORM\JoinTable(name="trainers_users",
+	 *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+	 *     inverseJoinColumns={@ORM\JoinColumn(name="trainer_id", referencedColumnName="id")}
+	 * )
+	 */
+	private $trainersActivities;
+
+	/**
+	 * @var ArrayCollection|Activity[]
+	 *
+	 * @ORM\ManyToMany(targetEntity="FitnessBundle\Entity\Activity", inversedBy="clients")
+	 * @ORM\JoinTable(name="clients_users",
+	 *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+	 *     inverseJoinColumns={@ORM\JoinColumn(name="client_id", referencedColumnName="id")}
+	 * )
+	 */
+	private $clientsActivities;
+
+	/**
 	 * @var bool
 	 *
 	 * @ORM\Column(name="enabled", type="boolean", nullable=true)
@@ -115,6 +137,7 @@ class User implements UserInterface, \Serializable
 	private $role;
 
 
+
 	/**
 	 * User constructor.
 	 * @throws \Exception
@@ -122,6 +145,8 @@ class User implements UserInterface, \Serializable
 	public function __construct()
 	{
 		$this->roles = new ArrayCollection();
+		$this->trainersActivities = new ArrayCollection();
+		$this->clientsActivities = new ArrayCollection();
 		$this->createdAt = new \DateTime();
 		$this->updatedAt = new \DateTime();
 		$this->setEnabled(true);
@@ -236,6 +261,46 @@ class User implements UserInterface, \Serializable
 
 	}
 
+	/**
+	 * @return ArrayCollection|Activity[]
+	 */
+	public function getTrainersActivities()
+	{
+		return $this->trainersActivities;
+	}
+
+	/**
+	 * @param Activity $trainersActivities
+	 * @return User
+	 */
+	public function setTrainersActivities(Activity $trainersActivities): self
+	{
+		$this->trainersActivities[] = $trainersActivities;
+
+		return $this;
+	}
+
+	/**
+	 * @return ArrayCollection|Activity[]
+	 */
+	public function getClientsActivities()
+	{
+		return $this->clientsActivities;
+	}
+
+	/**
+	 * @param Activity $clientsActivities
+	 * @return User
+	 */
+	public function setClientsActivities(Activity $clientsActivities): self
+	{
+		$this->clientsActivities[] = $clientsActivities;
+
+		return $this;
+	}
+
+
+
 	public function getRole()
 	{
 		return $this->role;
@@ -247,6 +312,7 @@ class User implements UserInterface, \Serializable
 
 		return $this;
 	}
+
 
 	/**
 	 * Returns the roles granted to the user.
@@ -406,7 +472,6 @@ class User implements UserInterface, \Serializable
 
 		}
 	}
-
 
 
 	/**
