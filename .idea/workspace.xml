@@ -1,42 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f83a051e-78e9-4d1d-8a75-78dd2601879c" name="Default Changelist" comment="receptionist added">
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/activity/add" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/activity/add_trainer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/activity/view_all_activities" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/activity/view_one_activity" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/receptionist/add_card" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Resources/views/receptionist/visit" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/ActivityController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d2cf7e98-127e-4a1f-a8e7-f92dacdcfb11.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/admin/register_user" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/admin/register_user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/card/add" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/card/add" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/card/view_all_cards" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/card/view_all_cards" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/order/view_all_orders" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/order/view_all_orders" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/order/view_one_order" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/order/view_one_order" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/navbar_admin" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/navbar_admin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/partials/navbar_receptionist" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/partials/navbar_receptionist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/receptionist/body" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/receptionist/body" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/CardOrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/CardOrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/ReceptionistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/ReceptionistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Entity/Card.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Entity/Card.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Entity/CardOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Entity/CardOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Form/ProfileType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Form/ProfileType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Form/RoleType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Form/RoleType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Form/ScheduleForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Form/ActivityType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Repository/AdminRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Repository/AdminRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Card/CardServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/User/UserServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/User/UserServiceInterface.php" afterDir="false" />
-    </list>
+    <list default="true" id="f83a051e-78e9-4d1d-8a75-78dd2601879c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,20 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Form/RoleType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="79" column="4" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Repository/ActivityRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
+            <state relative-caret-position="242">
+              <caret line="72" column="24" lean-forward="true" selection-start-line="72" selection-start-column="24" selection-end-line="72" selection-end-column="24" />
               <folding>
                 <element signature="e#44#84#0#PHP" expanded="true" />
               </folding>
@@ -161,7 +117,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityServiceInterface.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
@@ -169,15 +125,6 @@
               <folding>
                 <element signature="e#132#180#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Entity/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="636" column="4" selection-start-line="636" selection-start-column="4" selection-end-line="650" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -344,11 +291,11 @@
         <option value="$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityServiceInterface.php" />
         <option value="$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityService.php" />
         <option value="$PROJECT_DIR$/src/FitnessBundle/Entity/Activity.php" />
-        <option value="$PROJECT_DIR$/src/FitnessBundle/Repository/ActivityRepository.php" />
         <option value="$PROJECT_DIR$/src/FitnessBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/FitnessBundle/Controller/CardOrderController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/activity/view_one_activity" />
         <option value="$PROJECT_DIR$/src/FitnessBundle/Controller/ActivityController.php" />
+        <option value="$PROJECT_DIR$/src/FitnessBundle/Repository/ActivityRepository.php" />
       </list>
     </option>
   </component>
@@ -403,9 +350,9 @@
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
-    <option name="width" value="1280" />
+    <option name="width" value="783" />
     <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -588,7 +535,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.ChangelistConflict" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -666,7 +614,7 @@
       <workItem from="1553262974293" duration="4528000" />
       <workItem from="1553523669632" duration="19000" />
       <workItem from="1553523709333" duration="31082000" />
-      <workItem from="1553951810135" duration="75708000" />
+      <workItem from="1553951810135" duration="76482000" />
     </task>
     <task id="LOCAL-00001" summary="test commit">
       <created>1543313224219</created>
@@ -899,7 +847,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554799326404</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="receptionist panel added">
+      <created>1555334941907</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1555334941907</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -911,7 +866,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="403428000" />
+    <option name="totallyTimeSpent" value="404202000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -923,7 +878,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="777" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="777" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23667206" />
@@ -943,7 +898,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4983845" weight="0.34744525" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5016155" side_tool="true" weight="0.34744525" />
       <window_info anchor="bottom" id="Database Console" order="12" weight="0.329927" />
-      <window_info active="true" anchor="bottom" id="Messages" order="13" visible="true" weight="0.329927" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.329927" />
       <window_info anchor="bottom" id="PHP-CGI Server" order="14" />
       <window_info anchor="bottom" id="SQL Generator" order="15" weight="0.329927" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -992,7 +947,8 @@
     <MESSAGE value="delete some files" />
     <MESSAGE value="general update" />
     <MESSAGE value="receptionist added" />
-    <option name="LAST_COMMIT_MESSAGE" value="receptionist added" />
+    <MESSAGE value="receptionist panel added" />
+    <option name="LAST_COMMIT_MESSAGE" value="receptionist panel added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1006,16 +962,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/card/add">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" lean-forward="true" selection-end-line="31" />
-          <folding>
-            <element signature="e#12#26#0#Twig" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/partials/navbar_client">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1275,16 +1221,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityServiceInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="18" column="60" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
-          <folding>
-            <element signature="e#132#180#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityService.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="434">
@@ -1354,23 +1290,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Repository/ActivityRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
-          <folding>
-            <element signature="e#44#84#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="636" column="4" selection-start-line="636" selection-start-column="4" selection-end-line="650" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Controller/CardOrderController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-48">
@@ -1405,6 +1324,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Form/RoleType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="623">
+          <caret line="79" column="4" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Controller/ActivityController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
@@ -1415,10 +1341,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Form/RoleType.php">
+    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Repository/ActivityRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="79" column="4" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="4" />
+        <state relative-caret-position="242">
+          <caret line="72" column="24" lean-forward="true" selection-start-line="72" selection-start-column="24" selection-end-line="72" selection-end-column="24" />
+          <folding>
+            <element signature="e#44#84#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="111" column="37" selection-start-line="111" selection-start-column="37" selection-end-line="111" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/var/cache/dev/twig/81/8123ed3158ad6f7fcd920e983713aafa1629905ea0b6be96be860042dad91af3.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="296" column="11" selection-start-line="296" selection-start-column="11" selection-end-line="296" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FitnessBundle/Service/Activity/ActivityServiceInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="18" column="60" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
+          <folding>
+            <element signature="e#132#180#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
