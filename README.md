@@ -44,7 +44,7 @@ First of all its Symfony project, so you can do every requirement to run a Symfo
         - php bin/console server:run
         
 Second enter 'ROLE_SUPER_ADMIN', 'ROLE_RECEPTIONIST', 'ROLE_CLIENT', 'ROLE_TRAINER' in table 'role'
-    OR run fail db.sql
+    OR run file -> db.sql
 
 ### How it works
 
