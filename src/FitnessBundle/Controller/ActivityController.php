@@ -218,7 +218,7 @@ class ActivityController extends Controller
 
 			$trainer = $this->userService->findOneUserById($searchedId);
 
-			if (null === $trainer || false === $trainer){
+			if (null === $trainer || false === $trainer) {
 				$this->addFlash('danger', 'There are not trainer with THAT Id!');
 				return $this->render('activity/add_trainer');
 			}
@@ -228,7 +228,7 @@ class ActivityController extends Controller
 			$this->adminService->save($trainer);
 
 
-			if (null === $result || false === $result){
+			if (null === $result || false === $result) {
 				$this->addFlash('info', 'Enter ID!');
 				return $this->render('activity/add_trainer');
 			}
@@ -252,10 +252,11 @@ class ActivityController extends Controller
 
 	/**
 	 * @Route ("/activity/edit/{id}", name="edit_activity")
+	 * @param Request $request
 	 * @param $id
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function editActivity($id): \Symfony\Component\HttpFoundation\RedirectResponse
+	public function editActivity(Request $request, $id): \Symfony\Component\HttpFoundation\Response
 	{
 		if (false === $this->isAdminHere()) {
 
@@ -263,9 +264,52 @@ class ActivityController extends Controller
 			return $this->redirectToRoute('index');
 		}
 
-		//TODO
 
-		return null;
+		$activity = $this->activityService->findOneActivityById($id);
+//		$trainers = $activity->getTrainers();
+		$form = $this->createForm(ActivityType::class, $activity);
+		$form->handleRequest($request);
+
+		$this->formErrorService->checkErrors($form);
+
+
+		if ($form->isSubmitted() ) {
+
+//			$newTrainer = $form->get('trainers')->getData();
+
+//			dump($trainers);
+//			dump($newTrainer);
+//			exit;
+
+
+//			$activity->setTrainers($trainers);
+
+
+			$isSave = $this->activityService->saveActivity($activity);
+
+
+
+
+			if (false === $isSave) {
+				$this->addFlash('danger', 'Activity is not edited');
+				return $this->render('activity/edit_activity', [
+					'activity' => $activity,
+					'form' => $form->createView(),
+				]);
+			}
+
+			$this->addFlash('success', 'Activity is edited successfully');
+			return $this->redirectToRoute('view_one_activity', [
+				'id' => $id,
+			]);
+
+
+		}
+
+		return $this->render('activity/edit_activity', [
+			'activity' => $activity,
+			'form' => $form->createView(),
+		]);
 	}
 
 
@@ -385,16 +429,51 @@ class ActivityController extends Controller
 
 			$client = $this->userService->findOneUserById($searchedId);
 
-			if (null === $client || false === $client){
-				$this->addFlash('danger', 'There are not client with THAT Id!');
+//			$this->checkClient($client);
+			if (null === $client || false === $client) {
+				$this->addFlash('danger', 'There are not client with THAT ID!');
 				return $this->render('activity/add_client');
+			}
+
+			$clientsCard = $client->getCards();
+
+
+			if (0 === count($clientsCard)){
+				$this->addFlash('danger', 'This client have not active card!');
+				return $this->redirectToRoute('add_new_card', [
+					'id' => $client->getId()
+				]);
+			}
+
+
+			$result = false;
+
+			foreach ($clientsCard as $card){
+				if($card->isValid()){
+					if (null !== $card->isVisitPossibleReturnOrder()){
+						$result = true;
+						break;
+					}
+
+					$this->addFlash('danger', 'This client have not active card order!');
+					return $this->redirectToRoute('add_new_order', [
+						'cardId' => $card->getId(),
+					]);
+				}
+			}
+
+			if (false === $result){
+				$this->addFlash('danger', 'This client have not active card!');
+				return $this->redirectToRoute('add_new_card', [
+					'id' => $client->getId()
+				]);
 			}
 
 			$result = $activity->setClients($client);
 			$this->activityService->saveActivity($activity);
 			$this->adminService->save($client);
 
-			if (null === $result || false === $result){
+			if (null === $result || false === $result) {
 				$this->addFlash('info', 'Enter ID!');
 				return $this->render('activity/add_client');
 			}
@@ -434,7 +513,7 @@ class ActivityController extends Controller
 	}
 
 	/**
-	 * @Route ("/activity/remove_user/{userId}/{activityId}", methods={"GET"},  name="remove_trainer")
+	 * @Route ("/activity/remove_trainer/{userId}/{activityId}", methods={"GET"},  name="remove_trainer")
 	 * @param $userId
 	 * @param $activityId
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -459,7 +538,7 @@ class ActivityController extends Controller
 		$this->adminService->save($trainerToRemove);
 
 
-		if (false === $result1 || false === $result2){
+		if (false === $result1 || false === $result2) {
 			$this->addFlash('danger', 'Sorry, there are not that trainer!');
 
 		} else {
@@ -475,7 +554,7 @@ class ActivityController extends Controller
 	}
 
 	/**
-	 * @Route ("/activity/remove_user/{userId}/{activityId}", methods={"GET"},  name="remove_client")
+	 * @Route ("/activity/remove_client/{userId}/{activityId}", methods={"GET"},  name="remove_client")
 	 * @param $userId
 	 * @param $activityId
 	 * @return \Symfony\Component\HttpFoundation\Response
@@ -500,7 +579,7 @@ class ActivityController extends Controller
 		$this->adminService->save($clientToRemove);
 
 
-		if (false === $result1 || false === $result2){
+		if (false === $result1 || false === $result2) {
 			$this->addFlash('danger', 'Sorry, there are not that client!');
 
 		} else {
@@ -525,5 +604,49 @@ class ActivityController extends Controller
 		}
 
 		return false;
+	}
+
+	private function checkClient(User $client)
+	{
+		if (null === $client || false === $client) {
+			$this->addFlash('danger', 'There are not client with THAT ID!');
+			return $this->render('activity/add_client');
+		}
+
+		$clientsCard = $client->getCards();
+
+
+		if (0 === count($clientsCard)){
+			$this->addFlash('danger', 'This client have not active card!');
+			return $this->redirectToRoute('add_new_card', [
+				'id' => $client->getId()
+			]);
+		}
+
+
+		$result = false;
+
+		foreach ($clientsCard as $card){
+			if($card->isValid()){
+				if (null !== $card->isVisitPossibleReturnOrder()){
+					$result = true;
+					break;
+				}
+
+				$this->addFlash('danger', 'This client have not active card order!');
+				return $this->redirectToRoute('add_new_order', [
+					'cardId' => $card->getId(),
+				]);
+			}
+		}
+
+		if (false === $result){
+			$this->addFlash('danger', 'This client have not active card!');
+			return $this->redirectToRoute('add_new_card', [
+				'id' => $client->getId()
+			]);
+		}
+
+		return true;
 	}
 }

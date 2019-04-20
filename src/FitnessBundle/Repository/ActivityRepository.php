@@ -37,6 +37,7 @@ class ActivityRepository extends \Doctrine\ORM\EntityRepository
 			$this->em->flush();
 
 			return true;
+
 		} catch (\Exception $e) {
 
 			return false;
@@ -69,7 +70,7 @@ class ActivityRepository extends \Doctrine\ORM\EntityRepository
 
 
 
-			return $result;
+//			return $result;
 
 		} catch (\Exception $e) {
 

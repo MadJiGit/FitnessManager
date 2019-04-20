@@ -6,6 +6,8 @@ use FitnessBundle\Entity\Activity;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Repository\AdminRepository;
 use FitnessBundle\Repository\UserRepository;
+use FitnessBundle\Service\Activity\ActivityService;
+use FitnessBundle\Service\Activity\ActivityServiceInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,13 +26,24 @@ class ActivityType extends AbstractType
 	/** @var Security $security */
 	private $security;
 
+
+	/** @var UserRepository $userRepo */
+	private $userRepo;
+
+	/** @var ActivityServiceInterface $activity */
+	private $activity;
+
+
 	/**
 	 * ProfileType constructor.
 	 * @param Security $security
+	 * @param UserRepository $userRepo
 	 */
-	public function __construct(Security $security)
+	public function __construct(Security $security, UserRepository $userRepo, ActivityServiceInterface $activity)
 	{
+		$this->userRepo = $userRepo;
 		$this->security = $security;
+		$this->activity = $activity;
 	}
 
 	public function buildForm(FormBuilderInterface $builder, array $options)
@@ -75,6 +88,7 @@ class ActivityType extends AbstractType
 					},
 			'label' => 'Chose trainer',
 			'placeholder' => '',
+//			'preferred_choices' => 'trainer',
 //			'expanded' => true,
 //			'multiple' => true,
 					]);

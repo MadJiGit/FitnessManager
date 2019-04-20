@@ -329,6 +329,12 @@ class Card
 
 	}
 
+	public function removeOrder($order)
+	{
+		return $this->orders->removeElement($order);
+
+	}
+
 }
 
 

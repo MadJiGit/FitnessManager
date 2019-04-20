@@ -265,8 +265,17 @@ class Activity
 	 * @param User $trainer
 	 * @return Activity
 	 */
-	public function setTrainers(User $trainer): Activity
+	public function setTrainers($trainer): Activity
 	{
+
+		if (null === $trainer){
+			return $this;
+		}
+
+
+		if ($this->trainers->contains($trainer)){
+			return $this;
+		}
 
 		$trainer->setTrainersActivities($this);
 
@@ -301,8 +310,18 @@ class Activity
 	 * @param User $client
 	 * @return Activity
 	 */
-	public function setClients(User $client): Activity
+	public function setClients($client): Activity
 	{
+
+		if (null === $client){
+			return $this;
+		}
+
+
+		if ($this->trainers->contains($client)){
+			return $this;
+		}
+
 		$client->setClientsActivities($this);
 
 		$this->clients[] = $client;

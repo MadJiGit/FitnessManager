@@ -65,8 +65,24 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 	}
 
 
+	public function getAllUsersWIthRole($role)
+	{
+		return $this->createQueryBuilder('u')
+			// add this to also load the related roles entities
+			->addSelect('r')
+			// Where roles is your property name in the User entity
+			->leftJoin('u.roles', 'r')
+			->where('r.name = :roleName')
+			->setParameter('roleName', $role)
+//			->getQuery()
+//			->getResult()
+			;
 
-	public function selectByIdAscWhere($param): \Doctrine\ORM\QueryBuilder
+	}
+
+
+	public
+	function selectByIdAscWhere($param): \Doctrine\ORM\QueryBuilder
 	{
 //		return $this->createQueryBuilder('user')
 //			->select('user')
@@ -89,29 +105,31 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 //			->setParameter('param', $param);
 	}
 
-	public function findOneById($id): ?User
+	public
+	function findOneById($id): ?User
 	{
-		try{
+		try {
 			return $this->find($id);
 
-		} catch (\Exception $e){
+		} catch (\Exception $e) {
 
 			return null;
 		}
 	}
 
 
-	public function findByCriteriaUsername($username)
+	public
+	function findByCriteriaUsername($username)
 	{
 
 		/** User $user */
-		$user = $this-> findBy(['username' => $username]);
+		$user = $this->findBy(['username' => $username]);
 
 
-		try{
+		try {
 
 			return $user[0]->getId();
-		} catch (\Exception $e){
+		} catch (\Exception $e) {
 
 			return null;
 		}
@@ -119,12 +137,13 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
 	}
 
-	public function findByCriteriaEmail($email)
+	public
+	function findByCriteriaEmail($email)
 	{
 
 		$user = $this->findBy(['email' => $email]);
 
-		if($user){
+		if ($user) {
 
 			return $user[0]->getId();
 		}
@@ -132,11 +151,12 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 		return null;
 	}
 
-	public function findByCriteriaCardNumber($searchedNumber)
+	public
+	function findByCriteriaCardNumber($searchedNumber)
 	{
 		$user = $this->findBy(['cardnumber' => $searchedNumber]);
 
-		if($user){
+		if ($user) {
 
 			return $user[0]->getId();
 		}

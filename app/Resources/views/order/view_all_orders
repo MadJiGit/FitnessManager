@@ -20,22 +20,25 @@
         </tr>
         </thead>
         {% for order in orders %}
-        <tbody>
-            <tr>
+            <tbody>
+        <tr>
             <td>{{ loop.index }}</td>
-                <td>{{ order.startDate|date("d/m/Y") }}</td>
-                <td>{{ order.dueDate|date("d/m/Y") }}</td>
-                <td>{{ order.visitsOrder }}</td>
-                <td>{{ order.visitsLeft }}</td>
-                <td><a href="{{ path('view_one_order', {id: order.getId}) }}" class="btn btn-success btn-xs" >View order</a></td>
-                <td><a href="{{ path('edit_order', {id:order.getId}) }}" class="btn btn-success btn-xs">Edit order</a></td>
+            <td>{{ order.startDate|date("d/m/Y") }}</td>
+            <td>{{ order.dueDate|date("d/m/Y") }}</td>
+            <td>{{ order.visitsOrder }}</td>
+            <td>{{ order.visitsLeft }}</td>
+            <td><a href="{{ path('view_one_order', {id: order.getId}) }}" class="btn btn-success btn-xs">View order</a>
+            </td>
+            <td><a href="{{ path('edit_order', {id:order.getId}) }}" class="btn btn-success btn-xs">Edit order</a></td>
+            <td><a href="{{ path('remove_order', {id: order.id}) }}" class="btn btn-danger btn-xs">Remove order</a>
+            </td>
 
         {% else %}
 
             <td> User have not any cards yet </td>
 
             </tr>
-        </tbody>
+            </tbody>
         {% endfor %}
     </table>
     <div class="pagination">
@@ -44,9 +47,9 @@
 
     <br/>
     <div>
-    <a href="{{ path('view_all_cards', {id: user.getId}) }}" class="btn btn-primary btn-xs">View All Cards</a>
-    {#</div>#}
-    {#<div>#}
+        <a href="{{ path('view_all_cards', {id: user.getId}) }}" class="btn btn-primary btn-xs">View All Cards</a>
+        {#</div>#}
+        {#<div>#}
         <a href="{{ path('index') }}" class="btn btn-primary btn-xs">Back</a>
     </div>
     </body>

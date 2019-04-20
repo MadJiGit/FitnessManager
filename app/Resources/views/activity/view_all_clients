@@ -35,7 +35,9 @@
                     {% endif %}
                     <td><a href="{{ path("admin_view_one", {id: user.id}) }}" class="btn btn-default btn-xs">View</a>
                     </td>
-                    <td><a href="{{ path("remove_client", {'userId': user.id, activityId: id}) }}" class="btn btn-success btn-xs">Remove from class</a>
+                    <td><a href="{{ path("add_client", {id: id}) }}" class="btn btn-success btn-xs">Add client</a>
+                    </td>
+                    <td><a href="{{ path("remove_client", {'userId': user.id, activityId: id}) }}" class="btn btn-danger btn-xs">Remove from class</a>
                     </td>
                     {#<td><form action="{{ path("admin_delete_user_prepare", {id: user.id}) }}" method="post">#}
                             {#<button class="btn btn-danger delete-item btn-xs" type="submit">Delete</button>#}

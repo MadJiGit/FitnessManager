@@ -6,9 +6,11 @@ use FitnessBundle\Entity\Card;
 use FitnessBundle\Entity\CardOrder;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\CardOrderType;
+use FitnessBundle\Service\Admin\AdminServiceInterface;
 use FitnessBundle\Service\Card\CardServiceInterface;
 use FitnessBundle\Service\CardOrder\CardOrderServiceInterface;
 use FitnessBundle\Service\FormError\FormErrorService;
+use FitnessBundle\Service\User\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,19 +35,28 @@ class CardOrderController extends Controller
 	/** @var FormErrorService $formErrorService */
 	private $formErrorService;
 
+	/** @var UserServiceInterface $userService */
+	private $userService;
+
+	/** @var AdminServiceInterface $adminService */
+	private $adminService;
+
 	/**
 	 * CardOrderController constructor.
+	 * @param UserServiceInterface $userService
 	 * @param Security $security
 	 * @param CardServiceInterface $cardService
 	 * @param CardOrderServiceInterface $cardOrderService
 	 * @param FormErrorService $formErrorService
 	 */
-	public function __construct(Security $security, CardServiceInterface $cardService, CardOrderServiceInterface $cardOrderService, FormErrorService $formErrorService)
+	public function __construct(AdminServiceInterface $adminService, UserServiceInterface $userService, Security $security, CardServiceInterface $cardService, CardOrderServiceInterface $cardOrderService, FormErrorService $formErrorService)
 	{
 		$this->security = $security;
 		$this->cardService = $cardService;
 		$this->cardOrderService = $cardOrderService;
 		$this->formErrorService = $formErrorService;
+		$this->userService = $userService;
+		$this->adminService = $adminService;
 	}
 
 
@@ -85,7 +96,7 @@ class CardOrderController extends Controller
 				$em->flush();
 
 				$this->addFlash('info', 'successful add new order');
-				return $this->viewAllOrdersByCardId($request, $cardId);
+				return $this->viewAllOrdersByCardId($cardId, $request);
 
 			}
 			return $this->render('order/add', [
@@ -236,6 +247,39 @@ class CardOrderController extends Controller
 			'id' => $id,
 		]);
 	}
+
+	/**
+	 * @Route ("/order/remove_order/{id}", name="remove_order")
+	 * @param $id
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 */
+
+	public function deleteOrder($id): \Symfony\Component\HttpFoundation\RedirectResponse
+	{
+		/** @var CardOrder $order */
+		$order = $this->cardOrderService->findOneOrderById($id);
+
+		/** @var Card $card */
+		$card = $order->getCard();
+
+		$result = $card->removeOrder($order);
+
+
+		if (false === $result){
+
+			$this->addFlash('danger', 'Order is not removed from card!');
+
+		} else {
+
+			$this->addFlash('success', 'Order is removed successfully from card!');
+		}
+
+		return $this->redirectToRoute('view_all_orders', [
+			'cardId' => $card->getId(),
+		]);
+
+	}
+
 
 	/**
 	 * @Route ("/receptionist/visit/{cardId}", name="visit")
