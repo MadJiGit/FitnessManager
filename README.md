@@ -7,7 +7,7 @@ A Symfony project created on November 27, 2018, 10:29 am.
 
 ### About
 
-This is the project for my final exam on “PHP MVC Frameworks - Symfony” course at SoftUni. It is a Fitness Manager. The whole project is created using Symfony's components, Doctrine and Twig. Also using base Bootstrap and MySQL as database.  
+This is the project for my final exam on “PHP MVC Frameworks - Symfony” course at SoftUni. It is a Fitness Manager. The whole project is created using Symfony's components, Doctrine and Twig. And MySQL as database.  
 
 
 ### Features
