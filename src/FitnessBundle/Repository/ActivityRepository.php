@@ -5,6 +5,8 @@ namespace FitnessBundle\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use FitnessBundle\Entity\Activity;
+use FitnessBundle\Entity\User;
+
 
 /**
  * ActivityRepository
@@ -30,12 +32,12 @@ class ActivityRepository extends \Doctrine\ORM\EntityRepository
 
 	public function save(Activity $activity): bool
 	{
-		try{
+		try {
 			$this->em->persist($activity);
 			$this->em->flush();
 
 			return true;
-		}catch (\Exception $e){
+		} catch (\Exception $e) {
 
 			return false;
 		}
@@ -43,21 +45,33 @@ class ActivityRepository extends \Doctrine\ORM\EntityRepository
 
 	public function findOneById(int $id)
 	{
-		try{
+		try {
 
+			return $this->em->find(Activity::class, $id);
 //			$result = $this
 //				->createQueryBuilder('u')
-//				// add this to also load the related roles entities
-//				->addSelect('r')
-//				// Where roles is your property name in the User entity
-//				->leftJoin('u.', 'r')
-//				->where('r.name = :roleName')
-//				->setParameter('roleName', $role)
+////				 add this to also load the related roles entities
+//				->addSelect('a')
+////				 Where roles is your property name in the User entity
+//				->leftJoin('u.trainersActivities', 'a')
+//				->where('a.id = :id')
+//				->setParameter('id', $id)
 //				->getQuery()
 //				->getResult();
 
-			return $this->find($id);
-		}catch (\Exception $e){
+//			$result = $this->getEntityManager()
+//				->createQuery(
+//					'SELECT a, u FROM Activity a
+//                            join  u.user u
+//                            WHERE u.id = :id'
+//				)->setParameter('id', $id)
+//				->getResult();
+
+
+
+			return $result;
+
+		} catch (\Exception $e) {
 
 			return null;
 		}
@@ -65,11 +79,34 @@ class ActivityRepository extends \Doctrine\ORM\EntityRepository
 
 	public function findAllActivities()
 	{
-		try{
+		try {
 
 			return $this->findAll();
-		}catch (\Exception $e){
 
+		} catch (\Exception $e) {
+
+			return null;
+		}
+	}
+
+	public function addClient($data)
+	{
+
+		try {
+
+			return $this->findAll();
+		} catch (\Exception $e) {
+
+			return null;
+		}
+	}
+
+	public function selectById($id)
+	{
+		try {
+			$activity = $this->find($id);
+			return $activity->getClients();
+		} catch (\Exception $e) {
 			return null;
 		}
 	}

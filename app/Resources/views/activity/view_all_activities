@@ -30,7 +30,7 @@
 
                 <td><a href="{{ path('add_trainer', {id: activity.id}) }}" class="btn btn-success btn-xs">Add trainer
                     </a></td>
-                <td><a href="{{ path('view_all_activities') }}" class="btn btn-success btn-xs">View all activities
+                <td><a href="{{ path('add_client', {id: activity.id}) }}" class="btn btn-success btn-xs">Add client
                     </a></td>
 
             {% else %}

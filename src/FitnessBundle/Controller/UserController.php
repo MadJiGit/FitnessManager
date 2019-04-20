@@ -97,7 +97,7 @@ class UserController extends Controller
 
 
 	/**
-	 * @Route("/user/view_one_user/{id}", name="view_one_user")
+	 * @Route("/user/view_all_users/{id}", name="view_all_users")
 	 * @param $id
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */

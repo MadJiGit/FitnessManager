@@ -62,4 +62,9 @@ class AdminService implements AdminServiceInterface
 	{
 		return $this->adminRepository->findByRole($role);
 	}
+
+	public function update(User $user)
+	{
+		return $this->adminRepository->updateUser($user);
+	}
 }

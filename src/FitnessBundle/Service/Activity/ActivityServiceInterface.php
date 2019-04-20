@@ -9,6 +9,7 @@
 namespace FitnessBundle\Service\Activity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FitnessBundle\Entity\Activity;
 
 interface ActivityServiceInterface
@@ -19,4 +20,6 @@ interface ActivityServiceInterface
 	public function findOneActivityById(int $id): ?Activity;
 
 	public function findAllActivities(): ?array;
+
+	public function addClient($data): bool;
 }

@@ -280,6 +280,11 @@ class User implements UserInterface, \Serializable
 		return $this;
 	}
 
+	public function removeTrainersActivities(Activity $activity)
+	{
+		return $this->trainersActivities->removeElement($activity);
+	}
+
 	/**
 	 * @return ArrayCollection|Activity[]
 	 */
@@ -297,6 +302,11 @@ class User implements UserInterface, \Serializable
 		$this->clientsActivities[] = $clientsActivities;
 
 		return $this;
+	}
+
+	public function removeClientsActivities(Activity $activity)
+	{
+		return $this->clientsActivities->removeElement($activity);
 	}
 
 

@@ -102,4 +102,16 @@ class AdminRepository extends \Doctrine\ORM\EntityRepository
 
 		return $result;
 	}
+
+	public function updateUser(User $user)
+	{
+		try {
+
+			$this->em->flush();
+
+			return true;
+		} catch (\Exception $e) {
+			return false;
+		}
+	}
 }

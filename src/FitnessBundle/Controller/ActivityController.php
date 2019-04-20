@@ -5,12 +5,15 @@ namespace FitnessBundle\Controller;
 use FitnessBundle\Entity\Activity;
 use FitnessBundle\Entity\User;
 use FitnessBundle\Form\ActivityType;
+use FitnessBundle\Form\ClientType;
 use FitnessBundle\Service\Activity\ActivityServiceInterface;
 use FitnessBundle\Service\Admin\AdminService;
 use FitnessBundle\Service\Admin\AdminServiceInterface;
 use FitnessBundle\Service\FormError\FormErrorServiceInterface;
 use FitnessBundle\Service\User\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,10 +77,6 @@ class ActivityController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-
-//			dump($form);
-//			exit;
-
 			$admin = $this->userService->findOneUserById(1);
 
 			if (null === $admin) {
@@ -89,14 +88,11 @@ class ActivityController extends Controller
 			$trainer = $form->get('trainers')->getData();
 			$trainer->setTrainersActivities($activity);
 
-//			dump($trainer);
-//			exit;
-
 			$activity->setTrainers($trainer);
-//			$activity->setClients($admin);
 			$activity->setUpdatedAt(new \DateTime('now'));
 
 			$result = $this->activityService->saveActivity($activity);
+
 
 			if (false === $result) {
 				$this->addFlash('danger', 'something is wrong!');
@@ -104,10 +100,6 @@ class ActivityController extends Controller
 					'form' => $form->createView(),
 				]);
 			}
-
-//			dump($activity);
-//			dump($trainer);
-//			exit;
 
 			$this->addFlash('success', 'successful add new sport activity!');
 
@@ -141,6 +133,7 @@ class ActivityController extends Controller
 			return $this->redirectToRoute('add_activity');
 		}
 
+
 		return $this->render('activity/view_all_activities', [
 			'activities' => $activities,
 		]);
@@ -153,7 +146,7 @@ class ActivityController extends Controller
 	 * @param int $id
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function oneActivity(int $id)
+	public function oneActivity(int $id): \Symfony\Component\HttpFoundation\Response
 	{
 
 		if (false === $this->isAdminHere()) {
@@ -162,14 +155,8 @@ class ActivityController extends Controller
 			return $this->redirectToRoute('index');
 		}
 
+
 		$activity = $this->activityService->findOneActivityById($id);
-
-
-		dump($activity);
-//		dump($activity->getCapacity());
-		exit;
-
-		$trainer = $activity->getTrainers()->first();
 
 
 		if (null === $activity) {
@@ -177,10 +164,19 @@ class ActivityController extends Controller
 			return $this->redirectToRoute('view_all_activities');
 		}
 
+		$users = $activity->getTrainers();
+
+
+		if (null === $users) {
+
+			$this->addFlash('info', 'Sorry, there are not trainers yet!');
+			return $this->redirectToRoute('view_all_activities');
+		}
+
 
 		return $this->render('activity/view_one_activity', [
 			'activity' => $activity,
-			'trainer' => $trainer,
+			'users' => $users
 		]);
 
 	}
@@ -188,10 +184,11 @@ class ActivityController extends Controller
 
 	/**
 	 * @Route ("/activity/add_trainer/{id}", name="add_trainer")
+	 * @param Request $request
 	 * @param $id
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function addTrainer($id)
+	public function addTrainer(Request $request, $id): \Symfony\Component\HttpFoundation\Response
 	{
 		if (false === $this->isAdminHere()) {
 
@@ -206,8 +203,50 @@ class ActivityController extends Controller
 			return $this->redirectToRoute('view_all_activities');
 		}
 
-		return $trainers = $this->adminService->findAllUsersByRole('ROLE_TRAINER');
 
+		$form = $this->createForm(ClientType::class);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			$searchedId = (int)$form->get('id')->getData();
+
+			if (null === $searchedId) {
+				$this->addFlash('info', 'Enter ID!');
+				return $this->render('activity/add_trainer');
+			}
+
+			$trainer = $this->userService->findOneUserById($searchedId);
+
+			if (null === $trainer || false === $trainer){
+				$this->addFlash('danger', 'There are not trainer with THAT Id!');
+				return $this->render('activity/add_trainer');
+			}
+
+			$result = $activity->setTrainers($trainer);
+			$this->activityService->saveActivity($activity);
+			$this->adminService->save($trainer);
+
+
+			if (null === $result || false === $result){
+				$this->addFlash('info', 'Enter ID!');
+				return $this->render('activity/add_trainer');
+			}
+
+
+			return $this->redirectToRoute('view_one_activity', [
+				'id' => $id
+			]);
+
+
+		}
+
+
+		return $this->render('activity/add_trainer', [
+			'id' => $id,
+			'activity' => $activity,
+			'form' => $form->createView()
+		]);
 
 	}
 
@@ -216,13 +255,15 @@ class ActivityController extends Controller
 	 * @param $id
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 	 */
-	public function editActivity($id)
+	public function editActivity($id): \Symfony\Component\HttpFoundation\RedirectResponse
 	{
 		if (false === $this->isAdminHere()) {
 
 			$this->addFlash('info', 'Sorry, you have no permission!');
 			return $this->redirectToRoute('index');
 		}
+
+		//TODO
 
 		return null;
 	}
@@ -230,10 +271,11 @@ class ActivityController extends Controller
 
 	/**
 	 * @Route ("/activity/clients/{id}", name="view_clients")
+	 * @param Request $request
 	 * @param $id
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function viewClients($id)
+	public function viewClients(Request $request, $id): \Symfony\Component\HttpFoundation\Response
 	{
 		if (false === $this->isAdminHere()) {
 
@@ -241,15 +283,42 @@ class ActivityController extends Controller
 			return $this->redirectToRoute('index');
 		}
 
-		return null;
+		$activity = $this->activityService->findOneActivityById($id);
+
+		if (null === $activity) {
+			$this->addFlash('info', 'Sorry, there are not activity!');
+			return $this->redirectToRoute('view_all_activities');
+		}
+
+		$paginator = $this->get('knp_paginator');
+
+		$users = $paginator->paginate(
+			$this
+				->getDoctrine()
+				->getRepository(Activity::class)
+				->selectById($id),
+			$request->query->getInt('page', 1), 6
+		);
+
+		if (null === $users) {
+
+			$this->addFlash('info', 'Sorry, there are not clients yet!');
+			return $this->redirectToRoute('view_all_activities');
+		}
+
+		return $this->render('activity/view_all_clients', [
+			'id' => $id,
+//			'activity' => $activity,
+			'users' => $users
+		]);
 	}
 
 	/**
 	 * @Route ("/activity/trainers/{id}", name="view_trainers")
 	 * @param $id
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function viewTrainers($id)
+	public function viewTrainers($id): \Symfony\Component\HttpFoundation\Response
 	{
 		if (false === $this->isAdminHere()) {
 
@@ -257,9 +326,194 @@ class ActivityController extends Controller
 			return $this->redirectToRoute('index');
 		}
 
-		return null;
+		$activity = $this->activityService->findOneActivityById($id);
+
+		if (null === $activity) {
+			$this->addFlash('info', 'Sorry, there are not activity!');
+			return $this->redirectToRoute('view_all_activities');
+		}
+
+
+//		$users = $activity->getTrainers()->first();
+		$users = $activity->getTrainers();
+
+		if (null === $users) {
+
+			$this->addFlash('info', 'Sorry, there are not trainers yet!');
+			return $this->redirectToRoute('view_all_activities');
+		}
+
+
+		return $this->render('activity/view_all_users', [
+			'activity' => $activity,
+			'users' => $users
+		]);
 	}
 
+	/**
+	 * @Route ("/activity/add_client/{id}", name="add_client")
+	 * @param Request $request
+	 * @param $id
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function addClient(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+	{
+		if (false === $this->isAdminHere()) {
+
+			$this->addFlash('info', 'Sorry, you have no permission!');
+			return $this->redirectToRoute('index');
+		}
+
+		$activity = $this->activityService->findOneActivityById($id);
+
+		if (null === $activity) {
+			$this->addFlash('info', 'Sorry, there are not activity!');
+			return $this->redirectToRoute('view_all_activities');
+		}
+
+		$form = $this->createForm(ClientType::class);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			$searchedId = (int)$form->get('id')->getData();
+
+			if (null === $searchedId) {
+				$this->addFlash('info', 'Enter ID!');
+				return $this->render('activity/add_client');
+			}
+
+			$client = $this->userService->findOneUserById($searchedId);
+
+			if (null === $client || false === $client){
+				$this->addFlash('danger', 'There are not client with THAT Id!');
+				return $this->render('activity/add_client');
+			}
+
+			$result = $activity->setClients($client);
+			$this->activityService->saveActivity($activity);
+			$this->adminService->save($client);
+
+			if (null === $result || false === $result){
+				$this->addFlash('info', 'Enter ID!');
+				return $this->render('activity/add_client');
+			}
+
+			return $this->redirectToRoute('view_clients', [
+				'id' => $id
+			]);
+
+		}
+
+
+		return $this->render('activity/add_client', [
+			'id' => $id,
+			'activity' => $activity,
+			'form' => $form->createView()
+		]);
+	}
+
+	/**
+	 * @Route ("/activity/edit_user/{id}", name="edit_user")
+	 * @param $id
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function editUser($id): \Symfony\Component\HttpFoundation\Response
+	{
+
+		if (false === $this->isAdminHere()) {
+
+			$this->addFlash('info', 'Sorry, you have no permission!');
+			return $this->redirectToRoute('index');
+		}
+
+		//TODO
+
+		return null;
+
+	}
+
+	/**
+	 * @Route ("/activity/remove_user/{userId}/{activityId}", methods={"GET"},  name="remove_trainer")
+	 * @param $userId
+	 * @param $activityId
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function removeTrainer($userId, $activityId): \Symfony\Component\HttpFoundation\Response
+	{
+
+		if (false === $this->isAdminHere()) {
+
+			$this->addFlash('info', 'Sorry, you have no permission!');
+			return $this->redirectToRoute('index');
+		}
+
+
+		$trainerToRemove = $this->adminService->findOneById($userId);
+		$activity = $this->activityService->findOneActivityById($activityId);
+
+
+		$result1 = $activity->removeTrainer($trainerToRemove);
+		$result2 = $trainerToRemove->removeTrainersActivities($activity);
+		$this->activityService->saveActivity($activity);
+		$this->adminService->save($trainerToRemove);
+
+
+		if (false === $result1 || false === $result2){
+			$this->addFlash('danger', 'Sorry, there are not that trainer!');
+
+		} else {
+			$this->addFlash('success', 'Successfully remove trainer!');
+		}
+
+
+		return $this->redirectToRoute('view_one_activity', [
+			'id' => $activityId,
+		]);
+
+
+	}
+
+	/**
+	 * @Route ("/activity/remove_user/{userId}/{activityId}", methods={"GET"},  name="remove_client")
+	 * @param $userId
+	 * @param $activityId
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function removeClient($userId, $activityId): \Symfony\Component\HttpFoundation\Response
+	{
+
+		if (false === $this->isAdminHere()) {
+
+			$this->addFlash('info', 'Sorry, you have no permission!');
+			return $this->redirectToRoute('index');
+		}
+
+
+		$clientToRemove = $this->adminService->findOneById($userId);
+		$activity = $this->activityService->findOneActivityById($activityId);
+
+
+		$result1 = $activity->removeClient($clientToRemove);
+		$result2 = $clientToRemove->removeClientsActivities($activity);
+		$this->activityService->saveActivity($activity);
+		$this->adminService->save($clientToRemove);
+
+
+		if (false === $result1 || false === $result2){
+			$this->addFlash('danger', 'Sorry, there are not that client!');
+
+		} else {
+			$this->addFlash('success', 'Successfully remove client!');
+		}
+
+
+		return $this->redirectToRoute('view_one_activity', [
+			'id' => $activityId,
+		]);
+
+
+	}
 
 	/**
 	 * @return bool

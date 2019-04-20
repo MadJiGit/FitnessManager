@@ -3,6 +3,7 @@
 namespace FitnessBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,6 +71,7 @@ class Activity
      * @ORM\Column(name="current_capacity", type="integer")
      */
     private $currentCapacity;
+
 
 
 	/**
@@ -229,42 +231,46 @@ class Activity
      */
     public function getCurrentCapacity(): ?int
     {
+
+	    $clients = $this->getClients();
+
+	    $this->currentCapacity = $this->getCapacity() - count($clients);
+
         return $this->currentCapacity;
     }
 
 	/**
-	 * @return ArrayCollection
+	 * @return ArrayCollection|User[]
 	 */
 	public function getTrainers(): ?ArrayCollection
 	{
 
-//		$stringTrainers = [];
-//
-//		if ($this->trainers){
-//
-//			/** @var User $user */
-//			foreach ($this->trainers as $trainer) {
-//
-//				$stringTrainers[] = $trainer->getTrainer();
-//			}
-//		}
+		$result = new ArrayCollection();
 
-//		return $stringTrainers;
-//		dump($stringTrainers);
+		if ($this->trainers){
 
 
-//		dump($this->trainers);
-//		exit;
-		return $this->trainers;
+			foreach ($this->trainers as $trainer ){
+
+				$result[] = $trainer;
+
+			}
+
+		}
+
+		return $result;
 	}
 
 	/**
-	 * @param User $trainers
+	 * @param User $trainer
 	 * @return Activity
 	 */
-	public function setTrainers(User $trainers): Activity
+	public function setTrainers(User $trainer): Activity
 	{
-		$this->trainers[] = $trainers;
+
+		$trainer->setTrainersActivities($this);
+
+		$this->trainers[] = $trainer;
 
 		return $this;
 	}
@@ -272,18 +278,34 @@ class Activity
 	/**
 	 * @return ArrayCollection|User[]
 	 */
-	public function getClients(): ArrayCollection
+	public function getClients()
 	{
-		return $this->clients;
+		$result = new ArrayCollection();
+
+		if ($this->clients){
+
+
+			foreach ($this->clients as $client ){
+
+				$result[] = $client;
+
+			}
+
+		}
+
+		return $result;
+
 	}
 
 	/**
-	 * @param User $clients
+	 * @param User $client
 	 * @return Activity
 	 */
-	public function setClients(User $clients): Activity
+	public function setClients(User $client): Activity
 	{
-		$this->clients[] = $clients;
+		$client->setClientsActivities($this);
+
+		$this->clients[] = $client;
 
 		return $this;
 	}
@@ -326,6 +348,24 @@ class Activity
 	public function getUpdatedAt(): string
 	{
 		return $this->updatedAt->format('Y-m-d H:m:s');
+	}
+
+	/**
+	 * @param $trainer
+	 * @return bool
+	 */
+	public function removeTrainer($trainer): bool
+	{
+		return $this->trainers->removeElement($trainer);
+	}
+
+	/**
+	 * @param $client
+	 * @return bool
+	 */
+	public function removeClient($client): bool
+	{
+		return $this->clients->removeElement($client);
 	}
 
 }

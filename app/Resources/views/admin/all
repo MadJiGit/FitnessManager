@@ -43,6 +43,9 @@
                 </td>
             </tr>
             </tbody>
+            {% else %}
+
+                <td> There are not users yet </td>
 
             {% endfor %}
 

@@ -21,5 +21,7 @@ interface AdminServiceInterface
 
 	public function findAllUsersByRole($role): ?array;
 
+	public function update(User $trainer);
+
 
 }

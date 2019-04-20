@@ -19,7 +19,7 @@
                         </div>
                         {% else %}
                         <div class="class col-sm-offset col-sm-10">
-                            <a href="{{ path("view_one_user", {id:user.id}) }}" class="btn btn-primary btn-xs">Back</a>
+                            <a href="{{ path("view_all_users", {id:user.id}) }}" class="btn btn-primary btn-xs">Back</a>
                         </div>
                         {% endif %}
                     </div>

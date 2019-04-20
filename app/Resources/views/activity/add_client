@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h4> Name of activity where add trainer {{ activity.name|upper }}</h4>
+    <h4> Name of activity where add client {{ activity.name|upper }}</h4>
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="row">
         <div class="col-md-6">
