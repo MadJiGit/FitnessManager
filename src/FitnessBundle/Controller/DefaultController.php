@@ -15,7 +15,6 @@ use FitnessBundle\Service\FormError\FormErrorServiceInterface;
 use FitnessBundle\Service\User\UserServiceInterface;
 use FitnessBundle\Service\Role\RoleServiceInterface;
 
-//$counter = false;
 
 class DefaultController extends Controller
 {
@@ -51,7 +50,7 @@ class DefaultController extends Controller
 	{
 
 		$em = $this->getDoctrine()->getManager();
-		$isSuperAdminRegister = $em->getRepository(User::class)->findBy(array(), array('id' => 'DESC'), 1);
+//		$isSuperAdminRegister = $em->getRepository(User::class)->findBy(array(), array('id' => 'DESC'), 1);
 
 		$user = $this->getUser();
 
@@ -63,10 +62,10 @@ class DefaultController extends Controller
 			]);
 		}
 
-		if ($isSuperAdminRegister === null) {
-			return $this->redirectToRoute('register_super_admin');
-
-		}
+//		if ($isSuperAdminRegister === null) {
+//			return $this->redirectToRoute('register_super_admin');
+//
+//		}
 
 		$this->addFlash('success', 'Successful logout!');
 		return $this->redirectToRoute('security_login');

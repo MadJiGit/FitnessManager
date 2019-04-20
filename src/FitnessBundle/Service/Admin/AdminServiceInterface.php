@@ -23,5 +23,9 @@ interface AdminServiceInterface
 
 	public function update(User $trainer);
 
+	public function findUserByEmail($email);
+
+	public function findUserByUsername($username);
+
 
 }

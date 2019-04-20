@@ -67,4 +67,14 @@ class AdminService implements AdminServiceInterface
 	{
 		return $this->adminRepository->updateUser($user);
 	}
+
+	public function findUserByEmail($email)
+	{
+		return $this->adminRepository->findOneBy(['email' => $email]);
+	}
+
+	public function findUserByUsername($username)
+	{
+		return $this->adminRepository->findOneBy(['username' => $username]);
+	}
 }

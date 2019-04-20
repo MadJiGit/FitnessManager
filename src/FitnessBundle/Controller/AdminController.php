@@ -72,6 +72,32 @@ class AdminController extends Controller
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
+			$email = $form->get('email')->getData();
+			$username = $form->get('username')->getData();
+
+			$resultEmail = $this->checkIsEmailIsFree($email);
+			$resultUsername = $this->checkIsUsernameIsFree($username);
+
+//			dump($resultEmail);
+//			dump($resultUsername);
+//			exit;
+
+			if (false === $resultEmail){
+				$this->addFlash('danger', 'This Email is already used');
+				return $this->render('admin/register_user', [
+					'form' => $form->createView(),
+				]);
+			}
+
+
+			if (false === $resultUsername){
+				$this->addFlash('danger', 'This Username is already used');
+				return $this->render('admin/register_user', [
+					'form' => $form->createView(),
+				]);
+			}
+
+
 			$passwordHash = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPassword());
 			$user->setPassword($passwordHash);
@@ -102,7 +128,7 @@ class AdminController extends Controller
 
 			}
 
-			$this->addFlash('info', 'successful register new user');
+			$this->addFlash('info', 'Successful register new user');
 			return $this->redirectToRoute('index');
 
 
@@ -319,6 +345,22 @@ class AdminController extends Controller
 		$this->addFlash('info', 'You have not rights!!');
 		return $this->redirectToRoute('index');
 
+	}
+
+	private function checkIsEmailIsFree($email): ?bool
+	{
+		/** @var User $newUser */
+		$newUser = $this->adminService->findUserByEmail($email);
+
+		return (null === $newUser);
+	}
+
+	private function checkIsUsernameIsFree($username): ?bool
+	{
+		/** @var User $newUser */
+		$newUser = $this->adminService->findUserByUsername($username);
+
+		return (null === $newUser);
 	}
 
 
