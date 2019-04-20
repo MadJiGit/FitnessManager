@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f83a051e-78e9-4d1d-8a75-78dd2601879c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Resources/views/first_user_only" beforeDir="false" afterPath="$PROJECT_DIR$/app/Resources/views/first_user_only" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/FitnessBundle/Service/Admin/AdminServiceInterface.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,8 +58,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="530">
-                <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
+              <first_editor relative-caret-position="153">
+                <caret line="9" column="193" selection-start-line="9" selection-start-column="193" selection-end-line="9" selection-end-column="193" />
               </first_editor>
               <second_editor />
             </state>
@@ -136,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>BlogBundle</find>
       <find>user.</find>
       <find>$user</find>
       <find>Client</find>
@@ -166,6 +157,7 @@
       <find>$instructors</find>
       <find>cardId</find>
       <find>$userToRemove</find>
+      <find>fail</find>
     </findStrings>
     <replaceStrings>
       <replace>$client</replace>
@@ -516,7 +508,7 @@
       <workItem from="1553262974293" duration="4528000" />
       <workItem from="1553523669632" duration="19000" />
       <workItem from="1553523709333" duration="31082000" />
-      <workItem from="1553951810135" duration="132573000" />
+      <workItem from="1553951810135" duration="132872000" />
     </task>
     <task id="LOCAL-00001" summary="test commit">
       <created>1543313224219</created>
@@ -770,7 +762,21 @@
       <option name="project" value="LOCAL" />
       <updated>1555784363365</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="add readme file.">
+      <created>1555796135568</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1555796135568</updated>
+    </task>
+    <task id="LOCAL-00038" summary="add readme file.">
+      <created>1555796165969</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1555796165969</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -782,7 +788,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="460293000" />
+    <option name="totallyTimeSpent" value="460592000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -866,7 +872,8 @@
     <MESSAGE value="receptionist added" />
     <MESSAGE value="receptionist panel added" />
     <MESSAGE value="final" />
-    <option name="LAST_COMMIT_MESSAGE" value="final" />
+    <MESSAGE value="add readme file." />
+    <option name="LAST_COMMIT_MESSAGE" value="add readme file." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1303,8 +1310,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="530">
-            <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
+          <first_editor relative-caret-position="153">
+            <caret line="9" column="193" selection-start-line="9" selection-start-column="193" selection-end-line="9" selection-end-column="193" />
           </first_editor>
           <second_editor />
         </state>
